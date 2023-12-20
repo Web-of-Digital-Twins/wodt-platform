@@ -8,6 +8,8 @@ kotest-assertions-core = { module = "io.kotest:kotest-assertions-core", version.
 kotest-assertions-core-jvm = { module = "io.kotest:kotest-assertions-core-jvm", version.ref = "kotest" }
 kotlin-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version = "1.8.0-RC" }
 kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib", version.ref = "kotlin" }
+logging = { module = "io.github.oshai:kotlin-logging-jvm", version = "5.1.1" }
+sl4j = { module = "org.slf4j:slf4j-simple", version = "2.0.3" }
 
 [bundles]
 kotlin-testing = ["kotest-junit5", "kotest-assertions-core", "kotest-assertions-core-jvm"]
