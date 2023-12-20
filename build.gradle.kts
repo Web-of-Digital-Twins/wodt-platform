@@ -21,7 +21,7 @@ plugins {
     alias(libs.plugins.dokka)
 }
 
-group = "io.github.smartoperatingblock"
+group = "io.github.webbasedwodt"
 
 repositories {
     mavenCentral()

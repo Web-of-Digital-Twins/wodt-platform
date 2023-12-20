@@ -19,7 +19,7 @@ plugins {
     id("org.danilopianini.gradle-pre-commit-git-hooks") version "1.1.16"
 }
 
-rootProject.name = "kotlin-template-project"
+rootProject.name = "wodt-dts-platform"
 
 gradleEnterprise {
     buildScan {
