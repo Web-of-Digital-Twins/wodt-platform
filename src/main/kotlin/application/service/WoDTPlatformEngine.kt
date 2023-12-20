@@ -1,6 +1,3 @@
-import application.service.WoDTPlatformEngine
-import kotlinx.coroutines.runBlocking
-
 /*
  * Copyright (c) 2023. Andrea Giulianelli
  *
@@ -17,9 +14,18 @@ import kotlinx.coroutines.runBlocking
  * limitations under the License.
  */
 
+package application.service
+
+import kotlinx.coroutines.coroutineScope
+
 /**
- * Function to start the WoDT Digital Twins Platform.
+ * The Engine that runs the WoDT Digital Twins Platform connecting all the events from components.
  */
-fun main(): Unit = runBlocking {
-    WoDTPlatformEngine().start()
+class WoDTPlatformEngine {
+    /**
+     * Method to start the [WoDTPlatformEngine].
+     */
+    suspend fun start() = coroutineScope {
+        println("Hello world")
+    }
 }
