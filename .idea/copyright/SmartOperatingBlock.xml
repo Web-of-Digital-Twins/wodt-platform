@@ -1,0 +1,6 @@
+<component name="CopyrightManager">
+  <copyright>
+    <option name="notice" value="Copyright (c) &amp;#36;originalComment.match(&quot;Copyright \(c\) (\d+)&quot;, 1, &quot;-&quot;, &quot;&amp;#36;today.year&quot;)&amp;#36;today.year. Smart Operating Block&#10;&#10;Use of this source code is governed by an MIT-style&#10;license that can be found in the LICENSE file or at&#10;https://opensource.org/licenses/MIT." />
+    <option name="myName" value="SmartOperatingBlock" />
+  </copyright>
+</component>

@@ -1,0 +1,22 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "github>AndreaGiulianelli/renovate-config"
+  ],
+  "packageRules": [
+    {
+      "description": "Trigger a patch update on Kotlin upgrades",
+      "matchPackagePrefixes": [
+        "org.jetbrains.kotlin"
+      ],
+      "semanticCommitScope": "core-deps"
+    },
+    {
+      "description": "Dokka updates have docs type",
+      "matchPackageNames": [
+        "org.jetbrains.dokka"
+      ],
+      "semanticCommitType": "docs"
+    }
+  ]
+}

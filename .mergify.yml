@@ -1,0 +1,16 @@
+pull_request_rules:
+  - name: Automatic PR Update
+    conditions:
+      - check-success=success
+    actions:
+      update:
+  - name: rebase-merge working updates
+    conditions:
+      - author=renovate[bot]
+      - label=dependencies
+      - -draft
+      - -conflict
+      - check-success=success
+    actions:
+      merge:
+        method: rebase
