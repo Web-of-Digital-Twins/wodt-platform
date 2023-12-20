@@ -28,6 +28,7 @@ repositories {
 }
 
 dependencies {
+    implementation(libs.kotlin.coroutines)
     implementation(libs.kotlin.stdlib)
     testImplementation(libs.bundles.kotlin.testing)
 }
