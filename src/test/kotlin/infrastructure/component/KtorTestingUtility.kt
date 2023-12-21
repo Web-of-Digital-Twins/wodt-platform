@@ -16,6 +16,7 @@
 
 package infrastructure.component
 
+import application.service.EcosystemRegistryService
 import io.ktor.client.engine.mock.MockEngine
 import io.ktor.client.engine.mock.respondOk
 import io.ktor.server.testing.ApplicationTestBuilder
@@ -29,7 +30,7 @@ object KtorTestingUtility {
     fun apiTestApplication(
         tests: suspend ApplicationTestBuilder.(ecosystemManagementInterface: BaseEcosystemManagementInterface) -> Unit,
     ) {
-        val ecosystemManagementInterface = BaseEcosystemManagementInterface(httpClient)
+        val ecosystemManagementInterface = BaseEcosystemManagementInterface(EcosystemRegistryService(), httpClient)
         testApplication {
             install(WebSockets)
             application {

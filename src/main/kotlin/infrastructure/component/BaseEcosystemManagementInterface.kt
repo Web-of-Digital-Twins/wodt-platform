@@ -17,6 +17,7 @@
 package infrastructure.component
 
 import application.component.EcosystemManagementInterface
+import application.component.EcosystemRegistry
 import application.component.WoDTPlatformHttpClient
 import application.presenter.dtd.DigitalTwinDescriptorDeserialization.toDTD
 import entity.digitaltwin.DigitalTwinDescriptorImplementationType
@@ -36,11 +37,11 @@ import kotlinx.coroutines.launch
  * This class provides an implementation of the [EcosystemManagementInterface] component.
  */
 class BaseEcosystemManagementInterface(
+    private val ecosystemRegistry: EcosystemRegistry,
     private val httpClient: WoDTPlatformHttpClient,
     private val dispatcher: CoroutineDispatcher = Dispatchers.Default,
 ) : EcosystemManagementInterface {
     private val _ecosystemEvents = MutableSharedFlow<EcosystemEvent>()
-    private var registeredDigitalTwins: Set<DigitalTwinURI> = setOf()
 
     override val ecosystemEvents = this._ecosystemEvents.asSharedFlow()
 
@@ -49,8 +50,8 @@ class BaseEcosystemManagementInterface(
             if (supportedContentTypes.contains(contentType)) {
                 val dtd = rawDtd.toDTD(contentType)
                 dtd?.let {
-                    if (!registeredDigitalTwins.contains(dtd.digitalTwinUri)) {
-                        registeredDigitalTwins = registeredDigitalTwins + dtd.digitalTwinUri
+                    if (!ecosystemRegistry.getRegisteredDigitalTwins().contains(dtd.digitalTwinUri)) {
+                        ecosystemRegistry.signalRegistration(dtd.digitalTwinUri)
                         _ecosystemEvents.emit(NewDigitalTwinRegistered(dtd))
                         if (shouldNotify) {
                             httpClient.sendRegistrationNotification(dtd.digitalTwinUri.uri)
@@ -64,12 +65,14 @@ class BaseEcosystemManagementInterface(
             }
         }
 
-    override fun deleteDigitalTwin(dtUri: DigitalTwinURI): Boolean = if (registeredDigitalTwins.contains(dtUri)) {
-        CoroutineScope(this.dispatcher).launch { _ecosystemEvents.emit(DigitalTwinDeleted(dtUri)) }
-        true
-    } else {
-        false
-    }
+    override fun deleteDigitalTwin(dtUri: DigitalTwinURI): Boolean =
+        if (this.ecosystemRegistry.getRegisteredDigitalTwins().contains(dtUri)) {
+            this.ecosystemRegistry.signalDeletion(dtUri)
+            CoroutineScope(this.dispatcher).launch { _ecosystemEvents.emit(DigitalTwinDeleted(dtUri)) }
+            true
+        } else {
+            false
+        }
 
     companion object {
         private val supportedContentTypes = DigitalTwinDescriptorImplementationType.entries.map { it.contentType }
