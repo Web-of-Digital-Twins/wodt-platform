@@ -16,7 +16,8 @@
 
 package infrastructure.component
 
-import application.component.WoDTPlatformHttpClient
+import application.component.EcosystemManagementHttpClient
+import application.component.WoDTDigitalTwinsObserverWsClient
 import application.presenter.api.PlatformRegistration
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.HttpClientEngine
@@ -36,7 +37,8 @@ import io.ktor.serialization.kotlinx.json.json
 class KtorWoDTPlatformHttpClient(
     engine: HttpClientEngine = CIO.create(),
     exposedPort: Int? = null,
-) : WoDTPlatformHttpClient {
+) : EcosystemManagementHttpClient, WoDTDigitalTwinsObserverWsClient {
+    private val webSockets: MutableMap<String, DefaultClientWebSocketSession> = mutableMapOf()
     private val httpClient = HttpClient(engine) {
         install(ContentNegotiation) {
             json()

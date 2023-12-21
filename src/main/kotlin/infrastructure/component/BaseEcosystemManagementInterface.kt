@@ -16,9 +16,9 @@
 
 package infrastructure.component
 
+import application.component.EcosystemManagementHttpClient
 import application.component.EcosystemManagementInterface
 import application.component.EcosystemRegistry
-import application.component.WoDTPlatformHttpClient
 import application.presenter.dtd.DigitalTwinDescriptorDeserialization.toDTD
 import entity.digitaltwin.DigitalTwinDescriptorImplementationType
 import entity.digitaltwin.DigitalTwinURI
@@ -38,7 +38,7 @@ import kotlinx.coroutines.launch
  */
 class BaseEcosystemManagementInterface(
     private val ecosystemRegistry: EcosystemRegistry,
-    private val httpClient: WoDTPlatformHttpClient,
+    private val httpClient: EcosystemManagementHttpClient,
     private val dispatcher: CoroutineDispatcher = Dispatchers.Default,
 ) : EcosystemManagementInterface {
     private val _ecosystemEvents = MutableSharedFlow<EcosystemEvent>()

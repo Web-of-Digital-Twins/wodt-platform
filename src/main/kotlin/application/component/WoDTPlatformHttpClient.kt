@@ -17,11 +17,27 @@
 package application.component
 
 /**
- * This interface models the Http client that send request for the various components of the Abstract Architecture.
+ * This interface models the Http client that send request for the [EcosystemManagementInterface] component
+ * of the Abstract Architecture.
  */
-interface WoDTPlatformHttpClient {
+interface EcosystemManagementHttpClient {
     /**
      * Http request to notify the registration of a WoDT Digital Twin, identified by its [dtUri], by an administrator.
      */
     suspend fun sendRegistrationNotification(dtUri: String): Boolean
+}
+
+/**
+ * This interface models the Web Socket client that observe the registered WoDT Digital Twins
+ * for the [WoDTDigitalTwinsObserver] component of the Abstract Architecture.
+ */
+interface WoDTDigitalTwinsObserverWsClient {
+    /**
+     * Observe a Digital Twin using a websocket at a [dtUri] and handling new data with [onData] and
+     * the close of the websocket with [onClose] lambdas.
+     */
+    suspend fun observeDigitalTwin(dtUri: String, onData: suspend (String) -> Unit, onClose: suspend () -> Unit)
+
+    /** Stop observation of the Digital Twin at its [dtUri]. */
+    suspend fun stopObservationOfDigitalTwin(dtUri: String)
 }
