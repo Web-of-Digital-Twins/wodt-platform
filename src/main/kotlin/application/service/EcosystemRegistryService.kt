@@ -27,12 +27,12 @@ class EcosystemRegistryService : EcosystemRegistry {
     private var registeredDigitalTwins: Set<DigitalTwinURI> = Collections.synchronizedSet(setOf())
 
     override fun signalRegistration(digitalTwinUri: DigitalTwinURI) {
-        registeredDigitalTwins = registeredDigitalTwins + digitalTwinUri
+        registeredDigitalTwins = Collections.synchronizedSet(registeredDigitalTwins + digitalTwinUri)
     }
 
     override fun getRegisteredDigitalTwins(): Set<DigitalTwinURI> = registeredDigitalTwins
 
     override fun signalDeletion(digitalTwinURI: DigitalTwinURI) {
-        registeredDigitalTwins = registeredDigitalTwins - digitalTwinURI
+        registeredDigitalTwins = Collections.synchronizedSet(registeredDigitalTwins - digitalTwinURI)
     }
 }
