@@ -36,7 +36,6 @@ dependencies {
     implementation(libs.ktor.client.cio)
     implementation(libs.ktor.client.content.negotiation)
     implementation(libs.ktor.server.core)
-    implementation(libs.ktor.server.content.negotiation)
     implementation(libs.ktor.server.engine.netty)
     implementation(libs.ktor.server.websockets)
     implementation(libs.ktor.content.negotiation.json)
