@@ -47,14 +47,16 @@ data class Form(val href: String, val protocol: FormProtocol)
 
 /**
  * This enum lists the supported protocol within the form of a WoDT Digital Twin.
+ * Each protocol has a [protocolName].
  */
-enum class FormProtocol {
-    WEBSOCKET,
+enum class FormProtocol(val protocolName: String) {
+    WEBSOCKET("websocket"),
 }
 
 /**
  * This enum lists the supported implementation of the Digital Twin Descriptor.
+ * Each implementation is associated to its [contentType].
  */
-enum class DigitalTwinDescriptorImplementationType {
-    THING_DESCRIPTION,
+enum class DigitalTwinDescriptorImplementationType(val contentType: String) {
+    THING_DESCRIPTION("application/td+json"),
 }
