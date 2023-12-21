@@ -1,11 +1,3 @@
-import application.service.EcosystemRegistryService
-import application.service.WoDTDigitalTwinsObserverComponent
-import application.service.WoDTPlatformEngine
-import infrastructure.component.BaseEcosystemManagementInterface
-import infrastructure.component.KtorWoDTPlatformHttpClient
-import infrastructure.component.KtorWoDTPlatformWebServer
-import kotlinx.coroutines.runBlocking
-
 /*
  * Copyright (c) 2023. Andrea Giulianelli
  *
@@ -21,6 +13,14 @@ import kotlinx.coroutines.runBlocking
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+import application.service.BaseEcosystemManagementInterface
+import application.service.EcosystemRegistryService
+import application.service.WoDTDigitalTwinsObserverComponent
+import application.service.WoDTPlatformEngine
+import infrastructure.component.KtorWoDTPlatformHttpClient
+import infrastructure.component.KtorWoDTPlatformWebServer
+import kotlinx.coroutines.runBlocking
 
 /**
  * Function to start the WoDT Digital Twins Platform.

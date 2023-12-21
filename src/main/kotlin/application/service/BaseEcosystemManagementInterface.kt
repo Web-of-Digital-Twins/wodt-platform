@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package infrastructure.component
+package application.service
 
 import application.component.EcosystemManagementHttpClient
 import application.component.EcosystemManagementInterface

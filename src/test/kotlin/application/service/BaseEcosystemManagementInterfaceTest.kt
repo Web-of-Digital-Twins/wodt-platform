@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 
-package infrastructure.component
+package application.service
 
 import TestingUtils.readResourceFile
-import application.service.EcosystemRegistryService
 import entity.digitaltwin.DigitalTwinDescriptorImplementationType
 import entity.digitaltwin.DigitalTwinURI
 import entity.digitaltwin.WoTDigitalTwinDescriptor
+import infrastructure.component.KtorWoDTPlatformHttpClient
 import io.kotest.common.runBlocking
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe

@@ -16,6 +16,7 @@
 
 package infrastructure.component
 
+import application.service.BaseEcosystemManagementInterface
 import application.service.EcosystemRegistryService
 import io.ktor.client.engine.mock.MockEngine
 import io.ktor.client.engine.mock.respondOk
