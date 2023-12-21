@@ -19,10 +19,14 @@ package infrastructure.component
 import application.component.EcosystemManagementHttpClient
 import application.component.WoDTDigitalTwinsObserverWsClient
 import application.presenter.api.PlatformRegistration
+import io.github.oshai.kotlinlogging.KotlinLogging
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.HttpClientEngine
 import io.ktor.client.engine.cio.CIO
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
+import io.ktor.client.plugins.websocket.DefaultClientWebSocketSession
+import io.ktor.client.plugins.websocket.WebSockets
+import io.ktor.client.plugins.websocket.webSocket
 import io.ktor.client.request.post
 import io.ktor.client.request.setBody
 import io.ktor.http.ContentType
@@ -30,9 +34,13 @@ import io.ktor.http.HttpStatusCode
 import io.ktor.http.appendPathSegments
 import io.ktor.http.contentType
 import io.ktor.serialization.kotlinx.json.json
+import io.ktor.websocket.Frame
+import io.ktor.websocket.close
+import io.ktor.websocket.readText
+import kotlinx.coroutines.channels.ClosedReceiveChannelException
 
 /**
- * Implementation of the [WoDTPlatformHttpClient] for the Platform.
+ * Implementation of the Http and Ws client for the Platform.
  */
 class KtorWoDTPlatformHttpClient(
     engine: HttpClientEngine = CIO.create(),
@@ -40,6 +48,7 @@ class KtorWoDTPlatformHttpClient(
 ) : EcosystemManagementHttpClient, WoDTDigitalTwinsObserverWsClient {
     private val webSockets: MutableMap<String, DefaultClientWebSocketSession> = mutableMapOf()
     private val httpClient = HttpClient(engine) {
+        install(WebSockets)
         install(ContentNegotiation) {
             json()
         }
@@ -59,7 +68,36 @@ class KtorWoDTPlatformHttpClient(
         url { appendPathSegments("platform") }
     }.status == HttpStatusCode.OK
 
+    override suspend fun observeDigitalTwin(
+        dtUri: String,
+        onData: suspend (String) -> Unit,
+        onClose: suspend () -> Unit,
+    ) {
+        try {
+            this.httpClient.webSocket(dtUri) {
+                webSockets[dtUri] = this
+                while (true) {
+                    val incomingData = incoming.receive()
+                    if (incomingData is Frame.Text) {
+                        onData(incomingData.readText())
+                    } else if (incomingData is Frame.Close) {
+                        onClose()
+                    }
+                }
+            }
+        } catch (e: ClosedReceiveChannelException) {
+            // websocket close unexpectedly
+            logger.info { e.message }
+            onClose()
+        }
+    }
+
+    override suspend fun stopObservationOfDigitalTwin(dtUri: String) {
+        webSockets[dtUri]?.close()
+    }
+
     companion object {
         private const val EXPOSED_PORT_VARIABLE = "EXPOSED_PORT"
+        private val logger = KotlinLogging.logger {}
     }
 }
