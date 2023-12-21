@@ -1,19 +1,25 @@
 [versions]
 kotlin = "1.9.22"
 kotest = "5.8.0"
+ktor = "2.3.7"
 
 [libraries]
 kotest-junit5 = { module = "io.kotest:kotest-runner-junit5", version.ref = "kotest" }
 kotest-assertions-core = { module = "io.kotest:kotest-assertions-core", version.ref = "kotest" }
 kotest-assertions-core-jvm = { module = "io.kotest:kotest-assertions-core-jvm", version.ref = "kotest" }
 kotlin-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version = "1.8.0-RC" }
-kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib", version.ref = "kotlin" }
 kotlin-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version = "1.6.2" }
+kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib", version.ref = "kotlin" }
+ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
+ktor-client-cio = { module = "io.ktor:ktor-client-cio", version.ref = "ktor" }
+ktor-client-content-negotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor" }
+ktor-client-mock = { module = "io.ktor:ktor-client-mock", version.ref = "ktor" }
+ktor-content-negotiation-json = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktor" }
 logging = { module = "io.github.oshai:kotlin-logging-jvm", version = "5.1.1" }
 sl4j = { module = "org.slf4j:slf4j-simple", version = "2.0.3" }
 
 [bundles]
-kotlin-testing = ["kotest-junit5", "kotest-assertions-core", "kotest-assertions-core-jvm"]
+kotlin-testing = ["kotest-junit5", "kotest-assertions-core", "kotest-assertions-core-jvm", "ktor-client-mock"]
 
 [plugins]
 dokka = { id ="org.jetbrains.dokka", version = "1.9.10" }

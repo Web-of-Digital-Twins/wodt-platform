@@ -30,8 +30,12 @@ repositories {
 
 dependencies {
     implementation(libs.kotlin.coroutines)
-    implementation(libs.kotlin.stdlib)
     implementation(libs.kotlin.serialization.json)
+    implementation(libs.kotlin.stdlib)
+    implementation(libs.ktor.client.core)
+    implementation(libs.ktor.client.cio)
+    implementation(libs.ktor.client.content.negotiation)
+    implementation(libs.ktor.content.negotiation.json)
     implementation(libs.logging)
     implementation(libs.sl4j)
     testImplementation(libs.bundles.kotlin.testing)
