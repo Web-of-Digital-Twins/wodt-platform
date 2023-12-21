@@ -17,6 +17,7 @@
 package application.service
 
 import application.component.EcosystemManagementInterface
+import application.component.WoDTPlatformWebServer
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 
@@ -25,6 +26,7 @@ import kotlinx.coroutines.launch
  */
 class WoDTPlatformEngine(
     private val ecosystemManagementInterface: EcosystemManagementInterface,
+    private val platformWebServer: WoDTPlatformWebServer,
 ) {
     /**
      * Method to start the [WoDTPlatformEngine].
@@ -35,5 +37,6 @@ class WoDTPlatformEngine(
                 println(it)
             }
         }
+        platformWebServer.start()
     }
 }

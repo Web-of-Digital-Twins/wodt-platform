@@ -1,6 +1,7 @@
 import application.service.WoDTPlatformEngine
 import infrastructure.component.BaseEcosystemManagementInterface
 import infrastructure.component.KtorWoDTPlatformHttpClient
+import infrastructure.component.KtorWoDTPlatformWebServer
 import kotlinx.coroutines.runBlocking
 
 /*
@@ -25,8 +26,10 @@ import kotlinx.coroutines.runBlocking
 fun main(): Unit = runBlocking {
     val platformHttpClient = KtorWoDTPlatformHttpClient()
     val ecosystemManagementInterface = BaseEcosystemManagementInterface(platformHttpClient)
+    val platformWebServer = KtorWoDTPlatformWebServer(ecosystemManagementInterface)
 
     WoDTPlatformEngine(
         ecosystemManagementInterface,
+        platformWebServer,
     ).start()
 }
