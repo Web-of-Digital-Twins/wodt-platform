@@ -94,6 +94,7 @@ class KtorWoDTPlatformHttpClient(
 
     override suspend fun stopObservationOfDigitalTwin(dtUri: String) {
         webSockets[dtUri]?.close()
+        webSockets.remove(dtUri)
     }
 
     companion object {
