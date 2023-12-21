@@ -88,6 +88,7 @@ class KtorWoDTPlatformHttpClient(
         } catch (e: ClosedReceiveChannelException) {
             // websocket close unexpectedly
             logger.info { e.message }
+            webSockets.remove(dtUri)
             onClose()
         }
     }
