@@ -1,4 +1,5 @@
 import application.service.EcosystemRegistryService
+import application.service.WoDTDigitalTwinsObserverComponent
 import application.service.WoDTPlatformEngine
 import infrastructure.component.BaseEcosystemManagementInterface
 import infrastructure.component.KtorWoDTPlatformHttpClient
@@ -28,10 +29,12 @@ fun main(): Unit = runBlocking {
     val platformHttpClient = KtorWoDTPlatformHttpClient()
     val ecosystemRegistry = EcosystemRegistryService()
     val ecosystemManagementInterface = BaseEcosystemManagementInterface(ecosystemRegistry, platformHttpClient)
+    val woDTDigitalTwinsObserver = WoDTDigitalTwinsObserverComponent(ecosystemRegistry, platformHttpClient)
     val platformWebServer = KtorWoDTPlatformWebServer(ecosystemManagementInterface)
 
     WoDTPlatformEngine(
         ecosystemManagementInterface,
+        woDTDigitalTwinsObserver,
         platformWebServer,
     ).start()
 }

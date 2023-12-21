@@ -17,7 +17,10 @@
 package application.service
 
 import application.component.EcosystemManagementInterface
+import application.component.WoDTDigitalTwinsObserver
 import application.component.WoDTPlatformWebServer
+import entity.event.DigitalTwinDeleted
+import entity.event.NewDigitalTwinRegistered
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 
@@ -26,6 +29,7 @@ import kotlinx.coroutines.launch
  */
 class WoDTPlatformEngine(
     private val ecosystemManagementInterface: EcosystemManagementInterface,
+    private val woDTDigitalTwinsObserver: WoDTDigitalTwinsObserver,
     private val platformWebServer: WoDTPlatformWebServer,
 ) {
     /**
@@ -34,6 +38,14 @@ class WoDTPlatformEngine(
     suspend fun start() = coroutineScope {
         launch {
             ecosystemManagementInterface.ecosystemEvents.collect {
+                when (it) {
+                    is NewDigitalTwinRegistered -> woDTDigitalTwinsObserver.observeDigitalTwin(it.dtd)
+                    is DigitalTwinDeleted -> woDTDigitalTwinsObserver.stopObservationOfDigitalTwin(it.dtURI)
+                }
+            }
+        }
+        launch {
+            woDTDigitalTwinsObserver.dtkgRawEvents.collect {
                 println(it)
             }
         }
