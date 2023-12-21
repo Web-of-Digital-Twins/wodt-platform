@@ -17,9 +17,11 @@
 package infrastructure.component
 
 import TestingUtils.readResourceFile
+import application.presenter.dtd.DigitalTwinDescriptorDeserialization.toDTD
 import infrastructure.component.KtorTestingUtility.apiTestApplication
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
+import io.ktor.client.request.delete
 import io.ktor.client.request.post
 import io.ktor.client.request.setBody
 import io.ktor.http.ContentType
@@ -60,6 +62,21 @@ class BaseEcosystemManagementInterfaceAPITest : StringSpec({
                 setBody(dtd)
             }
             response.status shouldBe HttpStatusCode.Conflict
+        }
+    }
+
+    "It should be possible to delete a registered Digital Twin" {
+        apiTestApplication {
+            it.registerNewDigitalTwin(dtd, contentType, false)
+            val response = client.delete("/wodt/${dtd.toDTD(contentType)?.digitalTwinUri?.uri.orEmpty()}")
+            response.status shouldBe HttpStatusCode.Accepted
+        }
+    }
+
+    "If someone try to delete a Digital Twin that is not registered, the api should respond properly" {
+        apiTestApplication {
+            val response = client.delete("/wodt/${dtd.toDTD(contentType)?.digitalTwinUri?.uri.orEmpty()}")
+            response.status shouldBe HttpStatusCode.NotFound
         }
     }
 })
