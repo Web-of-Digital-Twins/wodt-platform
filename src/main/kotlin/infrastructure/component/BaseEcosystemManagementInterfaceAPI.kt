@@ -63,9 +63,10 @@ private fun Route.registerNewDigitalTwin(ecosystemManagementInterface: Ecosystem
 
 private fun Route.deleteDigitalTwin(ecosystemManagementInterface: EcosystemManagementInterface) {
     delete("/wodt/{dtUri...}") {
-        call.parameters.getAll("dtUri")?.also {
-            if (it.size >= 2) {
-                val dtUri = it[0] + "//" + it[1] + it.subList(2, it.size).joinToString(prefix = "/", separator = "/")
+        call.parameters.getAll("dtUri")?.also { pathParameters ->
+            if (pathParameters.size >= 2) {
+                val dtUri = pathParameters[0] + "//" + pathParameters[1] +
+                    pathParameters.subList(2, pathParameters.size).joinToString(prefix = "/", separator = "/")
                 call.respond(
                     if (ecosystemManagementInterface.deleteDigitalTwin(DigitalTwinURI(dtUri))) {
                         HttpStatusCode.Accepted
