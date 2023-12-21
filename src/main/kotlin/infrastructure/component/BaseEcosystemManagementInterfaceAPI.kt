@@ -18,6 +18,7 @@ package infrastructure.component
 
 import application.component.EcosystemManagementInterface
 import application.presenter.dtd.DigitalTwinDescriptorDeserialization.toDTD
+import entity.digitaltwin.DigitalTwinURI
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.Application
 import io.ktor.server.application.call
@@ -25,6 +26,7 @@ import io.ktor.server.request.contentType
 import io.ktor.server.request.receiveText
 import io.ktor.server.response.respond
 import io.ktor.server.routing.Route
+import io.ktor.server.routing.delete
 import io.ktor.server.routing.post
 import io.ktor.server.routing.routing
 
@@ -35,6 +37,7 @@ import io.ktor.server.routing.routing
 fun Application.ecosystemManagementAPI(ecosystemManagementInterface: EcosystemManagementInterface) {
     routing {
         registerNewDigitalTwin(ecosystemManagementInterface)
+        deleteDigitalTwin(ecosystemManagementInterface)
     }
 }
 
@@ -54,6 +57,25 @@ private fun Route.registerNewDigitalTwin(ecosystemManagementInterface: Ecosystem
                     HttpStatusCode.Conflict
                 },
             )
+        }
+    }
+}
+
+private fun Route.deleteDigitalTwin(ecosystemManagementInterface: EcosystemManagementInterface) {
+    delete("/wodt/{dtUri...}") {
+        call.parameters.getAll("dtUri")?.also {
+            if (it.size >= 2) {
+                val dtUri = it[0] + "//" + it[1] + it.subList(2, it.size).joinToString(prefix = "/", separator = "/")
+                call.respond(
+                    if (ecosystemManagementInterface.deleteDigitalTwin(DigitalTwinURI(dtUri))) {
+                        HttpStatusCode.Accepted
+                    } else {
+                        HttpStatusCode.NotFound
+                    },
+                )
+            } else {
+                call.respond(HttpStatusCode.BadRequest)
+            }
         }
     }
 }
