@@ -5,3 +5,7 @@
 ![Version](https://img.shields.io/github/v/release/WebBased-WoDT/wodt-dts-platform?style=plastic)
 
 This is an implementation of the WoDT Digital Twins Platform.
+
+## Usage
+You need to specify the following environment variable:
+- `EXPOSED_PORT`: the port where the WoDT Digital Twins Platform expose its services
