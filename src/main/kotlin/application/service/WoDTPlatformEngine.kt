@@ -16,16 +16,24 @@
 
 package application.service
 
+import application.component.EcosystemManagementInterface
 import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.launch
 
 /**
  * The Engine that runs the WoDT Digital Twins Platform connecting all the events from components.
  */
-class WoDTPlatformEngine {
+class WoDTPlatformEngine(
+    private val ecosystemManagementInterface: EcosystemManagementInterface,
+) {
     /**
      * Method to start the [WoDTPlatformEngine].
      */
     suspend fun start() = coroutineScope {
-        println("Hello world")
+        launch {
+            ecosystemManagementInterface.ecosystemEvents.collect {
+                println(it)
+            }
+        }
     }
 }

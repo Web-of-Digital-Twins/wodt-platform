@@ -1,4 +1,6 @@
 import application.service.WoDTPlatformEngine
+import infrastructure.component.BaseEcosystemManagementInterface
+import infrastructure.component.KtorWoDTPlatformHttpClient
 import kotlinx.coroutines.runBlocking
 
 /*
@@ -21,5 +23,10 @@ import kotlinx.coroutines.runBlocking
  * Function to start the WoDT Digital Twins Platform.
  */
 fun main(): Unit = runBlocking {
-    WoDTPlatformEngine().start()
+    val platformHttpClient = KtorWoDTPlatformHttpClient()
+    val ecosystemManagementInterface = BaseEcosystemManagementInterface(platformHttpClient)
+
+    WoDTPlatformEngine(
+        ecosystemManagementInterface,
+    ).start()
 }
