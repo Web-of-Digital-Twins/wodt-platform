@@ -16,9 +16,10 @@
 
 plugins {
     application
+    alias(libs.plugins.dokka)
     alias(libs.plugins.kotlin.jvm)
     alias(libs.plugins.kotlin.qa)
-    alias(libs.plugins.dokka)
+    alias(libs.plugins.kotlin.serialization)
 }
 
 group = "io.github.webbasedwodt"
@@ -30,6 +31,7 @@ repositories {
 dependencies {
     implementation(libs.kotlin.coroutines)
     implementation(libs.kotlin.stdlib)
+    implementation(libs.kotlin.serialization.json)
     implementation(libs.logging)
     implementation(libs.sl4j)
     testImplementation(libs.bundles.kotlin.testing)
