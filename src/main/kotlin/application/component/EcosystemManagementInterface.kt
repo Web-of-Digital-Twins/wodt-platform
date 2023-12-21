@@ -34,7 +34,7 @@ interface EcosystemManagementInterface {
      * to the new registered WoDT Digital Twin.
      * @return true if the Digital Twin is correctly registered, false instead.
      */
-    fun registerNewDigitalTwin(rawDtd: String, contentType: String, shouldNotify: Boolean): Boolean
+    suspend fun registerNewDigitalTwin(rawDtd: String, contentType: String, shouldNotify: Boolean): Boolean
 
     /**
      * A registered WoDT Digital Twin, identified by its [dtUri], signals its deletion from the ecosystem.
