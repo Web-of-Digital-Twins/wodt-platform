@@ -31,14 +31,14 @@ interface PlatformKnowledgeGraphEngineReader {
     /** Obtain the current status of the WoDT Digital Twins Platform Knowledge Graph. */
     fun currentPlatformKnowledgeGraph(): String?
 
-    /** Obtain the cached current status of a registered WoDT Digital Twin identified by its [cachedDtUri]. */
-    fun currentCachedDigitalTwinKnowledgeGraph(cachedDtUri: DigitalTwinURI): String?
+    /** Obtain the cached current status of a registered WoDT Digital Twin identified by its [cachedDtUrl]. */
+    fun currentCachedDigitalTwinKnowledgeGraph(cachedDtUrl: String): String?
 
     /**
      * Query the WoDT Digital Twins Platform Knowledge Graph. The query will be returned in the [responseContentType]
      * if possible.
      */
-    fun query(query: String, responseContentType: String): String?
+    fun query(query: String, responseContentType: String?): String?
 
     /** Get the WoDT Digital Twins that are associated with a specific [physicalAssetId]. */
     fun getDigitalTwinsFromPhysicalAsset(physicalAssetId: String): Set<DigitalTwinURI>
@@ -57,15 +57,15 @@ interface PlatformKnowledgeGraphEngineWriter {
 
     /**
      * Merge the updated [dtkg] of the registered WoDT Digital Twin identified via its [dtUri].
-     * The [dtUri] is the original one, and not the mapped one.
+     * The [digitalTwinUri] is the original one, and not the mapped one.
      */
-    fun mergeDigitalTwinKnowledgeGraphUpdate(dtUri: String, dtkg: String)
+    fun mergeDigitalTwinKnowledgeGraphUpdate(digitalTwinUri: DigitalTwinURI, dtkg: String)
 
     /**
-     * Delete the Digital Twin Knowledge Graph of the Digital Twin identified by its [dtUri].
-     * The [dtUri] is the original one, and not the mapped one.
+     * Delete the Digital Twin identified by its [digitalTwinUri].
+     * The [digitalTwinUri] is the original one, and not the mapped one.
      */
-    fun deleteDigitalTwinKnowledgeGraph(dtUri: String): Boolean
+    fun deleteDigitalTwin(digitalTwinUri: DigitalTwinURI): Boolean
 }
 
 /**
