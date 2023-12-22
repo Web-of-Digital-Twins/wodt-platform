@@ -63,7 +63,9 @@ class EcosystemRegistryServiceTest : StringSpec({
         val ecosystemRegistry = EcosystemRegistryService(testPort)
         ecosystemRegistry.signalRegistration(digitalTwinUri)
 
-        ecosystemRegistry.getDigitalTwinUri("http://localhost:$testPort/wodt/${digitalTwinUri.uri}") shouldBe digitalTwinUri
+        ecosystemRegistry.getDigitalTwinUri(
+            "http://localhost:$testPort/wodt/${digitalTwinUri.uri}",
+        ) shouldBe digitalTwinUri
     }
 
     "it should not be possible to obtain the WoDT Digital Twin URI from a local url of a not-registered Digital Twin" {
