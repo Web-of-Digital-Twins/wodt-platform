@@ -128,7 +128,7 @@ class JenaPlatformKnowledgeGraphEngine(
                     ?.get("value")
                     ?.jsonPrimitive
                     ?.content
-                    ?.let { DigitalTwinURI(it) }
+                    ?.let { ecosystemRegistryMapper.getDigitalTwinUri(it) }
             }?.toSet()
         }.orEmpty()
     }
