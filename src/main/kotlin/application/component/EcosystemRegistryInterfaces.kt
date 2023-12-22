@@ -27,9 +27,21 @@ interface EcosystemRegistryDeletionSignaler {
 }
 
 /**
+ * This interface models the mapping part of the [EcosystemRegistry] to be used to obtain the uri/url mappings
+ * of WoDT Digital Twins.
+ */
+interface EcosystemRegistryMapper {
+    /** Obtain the mapped local url from [digitalTwinUri]. It returns null if the Digital Twin is not registered. */
+    fun getLocalUrl(digitalTwinUri: DigitalTwinURI): String?
+
+    /** Obtain the WoDT Digital Twin URI from a [localDigitalTwinUrl]. It returns null if it is not registered. */
+    fun getDigitalTwinUri(localDigitalTwinUrl: String): DigitalTwinURI?
+}
+
+/**
  * This interface models the Ecosystem Registry component of the Abstract Architecture.
  */
-interface EcosystemRegistry : EcosystemRegistryDeletionSignaler {
+interface EcosystemRegistry : EcosystemRegistryDeletionSignaler, EcosystemRegistryMapper {
     /** Signal the registration of a new Digital Twin to the Platform. */
     fun signalRegistration(digitalTwinUri: DigitalTwinURI)
 

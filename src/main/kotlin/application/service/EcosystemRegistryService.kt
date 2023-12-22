@@ -44,6 +44,22 @@ class EcosystemRegistryService(exposedPort: Int? = null) : EcosystemRegistry {
         registeredDigitalTwins = Collections.synchronizedSet(registeredDigitalTwins - digitalTwinURI)
     }
 
+    override fun getLocalUrl(digitalTwinUri: DigitalTwinURI): String? =
+        if (registeredDigitalTwins.contains(digitalTwinUri)) {
+            "http://localhost:${this.exposedPort}/wodt/${digitalTwinUri.uri}"
+        } else {
+            null
+        }
+
+    override fun getDigitalTwinUri(localDigitalTwinUrl: String): DigitalTwinURI? =
+        with(DigitalTwinURI(localDigitalTwinUrl.removePrefix("http://localhost:${this.exposedPort}/wodt/"))) {
+            if (registeredDigitalTwins.contains(this)) {
+                this
+            } else {
+                null
+            }
+        }
+
     companion object {
         private const val EXPOSED_PORT_VARIABLE = "EXPOSED_PORT"
     }
