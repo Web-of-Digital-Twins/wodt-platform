@@ -14,4 +14,4 @@ kotlin-testing = ["kotest-junit5", "kotest-assertions-core", "kotest-assertions-
 [plugins]
 dokka = { id ="org.jetbrains.dokka", version = "1.9.10" }
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
-kotlin-qa = { id = "org.danilopianini.gradle-kotlin-qa", version = "0.57.0" }
+kotlin-qa = { id = "org.danilopianini.gradle-kotlin-qa", version = "0.57.1" }
