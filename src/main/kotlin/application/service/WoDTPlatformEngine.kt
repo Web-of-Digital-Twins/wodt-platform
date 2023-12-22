@@ -17,6 +17,7 @@
 package application.service
 
 import application.component.EcosystemManagementInterface
+import application.component.PlatformKnowledgeGraphEngine
 import application.component.WoDTDigitalTwinsObserver
 import application.component.WoDTPlatformWebServer
 import entity.event.DigitalTwinDeleted
@@ -30,6 +31,7 @@ import kotlinx.coroutines.launch
 class WoDTPlatformEngine(
     private val ecosystemManagementInterface: EcosystemManagementInterface,
     private val woDTDigitalTwinsObserver: WoDTDigitalTwinsObserver,
+    private val platformKnowledgeGraphEngine: PlatformKnowledgeGraphEngine,
     private val platformWebServer: WoDTPlatformWebServer,
 ) {
     /**
@@ -38,14 +40,23 @@ class WoDTPlatformEngine(
     suspend fun start() = coroutineScope {
         launch {
             ecosystemManagementInterface.ecosystemEvents.collect {
-                when (it) {
-                    is NewDigitalTwinRegistered -> woDTDigitalTwinsObserver.observeDigitalTwin(it.dtd)
-                    is DigitalTwinDeleted -> woDTDigitalTwinsObserver.stopObservationOfDigitalTwin(it.dtURI)
+                if (it is NewDigitalTwinRegistered) {
+                    launch { woDTDigitalTwinsObserver.observeDigitalTwin(it.dtd) }
+                    platformKnowledgeGraphEngine.mergeDigitalTwinDescriptor(it.dtd)
+                } else if (it is DigitalTwinDeleted) {
+                    woDTDigitalTwinsObserver.stopObservationOfDigitalTwin(it.dtURI)
+                    platformKnowledgeGraphEngine.deleteDigitalTwin(it.dtURI)
                 }
             }
         }
         launch {
             woDTDigitalTwinsObserver.dtkgRawEvents.collect {
+                platformKnowledgeGraphEngine.mergeDigitalTwinKnowledgeGraphUpdate(it.first, it.second)
+            }
+        }
+        launch {
+            platformKnowledgeGraphEngine.platformKnowledgeGraphs.collect {
+                println("--".repeat(10))
                 println(it)
             }
         }

@@ -18,6 +18,7 @@ import application.service.BaseEcosystemManagementInterface
 import application.service.EcosystemRegistryService
 import application.service.WoDTDigitalTwinsObserverComponent
 import application.service.WoDTPlatformEngine
+import infrastructure.component.JenaPlatformKnowledgeGraphEngine
 import infrastructure.component.KtorWoDTPlatformHttpClient
 import infrastructure.component.KtorWoDTPlatformWebServer
 import kotlinx.coroutines.runBlocking
@@ -30,11 +31,13 @@ fun main(): Unit = runBlocking {
     val ecosystemRegistry = EcosystemRegistryService()
     val ecosystemManagementInterface = BaseEcosystemManagementInterface(ecosystemRegistry, platformHttpClient)
     val woDTDigitalTwinsObserver = WoDTDigitalTwinsObserverComponent(ecosystemRegistry, platformHttpClient)
+    val platformKnowledgeGraphEngine = JenaPlatformKnowledgeGraphEngine(ecosystemRegistry)
     val platformWebServer = KtorWoDTPlatformWebServer(ecosystemManagementInterface)
 
     WoDTPlatformEngine(
         ecosystemManagementInterface,
         woDTDigitalTwinsObserver,
+        platformKnowledgeGraphEngine,
         platformWebServer,
     ).start()
 }
