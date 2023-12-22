@@ -35,6 +35,7 @@ import kotlinx.serialization.json.jsonObject
 import kotlinx.serialization.json.jsonPrimitive
 import org.apache.jena.query.QueryExecutionFactory
 import org.apache.jena.query.QueryFactory
+import org.apache.jena.query.QueryParseException
 import org.apache.jena.query.ResultSetFormatter
 import org.apache.jena.rdf.model.Model
 import org.apache.jena.rdf.model.ModelFactory
@@ -75,7 +76,11 @@ class JenaPlatformKnowledgeGraphEngine(
 
     override fun query(query: String, responseContentType: String?): String? {
         val inferenceModel = ModelFactory.createInfModel(ReasonerRegistry.getOWLReasoner(), platformKnowledgeGraphModel)
-        val parsedQuery = QueryFactory.create(query)
+        val parsedQuery = try {
+            QueryFactory.create(query)
+        } catch (e: QueryParseException) {
+            return null
+        }
         val queryExecution = QueryExecutionFactory.create(parsedQuery, inferenceModel)
         return if (parsedQuery.isSelectType) {
             val resultSet = queryExecution.execSelect()
