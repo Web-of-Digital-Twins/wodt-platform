@@ -21,6 +21,7 @@ import application.component.PlatformKnowledgeGraphEngine
 import entity.digitaltwin.DigitalTwinDescriptor
 import entity.digitaltwin.DigitalTwinDescriptorImplementationType
 import entity.digitaltwin.DigitalTwinURI
+import entity.ontology.WoDTVocabulary
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -118,7 +119,7 @@ class JenaPlatformKnowledgeGraphEngine(
         val query = """
             SELECT ?dtUri
             WHERE
-                { ?dtUri <https://purl.org/wodt/physicalAssetId> "$physicalAssetId" }
+                { ?dtUri <${WoDTVocabulary.PHYSICAL_ASSET_ID}> "$physicalAssetId" }
         """.trimIndent()
         return this.query(query, CONTENT_TYPE_SPARQL_JSON)?.let { queryResult ->
             val jsonQueryResult = Json.decodeFromString<JsonObject>(queryResult)
