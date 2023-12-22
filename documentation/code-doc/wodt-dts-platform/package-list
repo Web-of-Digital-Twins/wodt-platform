@@ -1,0 +1,6 @@
+$dokka.format:html-v1
+$dokka.linkExtension:html
+$dokka.location:////PointingToDeclaration/wodt-dts-platform/[root]/index.html
+$dokka.location://main/#/PointingToDeclaration/wodt-dts-platform/[root]/main.html
+
+
