@@ -21,15 +21,16 @@ import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
 
 class EcosystemRegistryServiceTest : StringSpec({
+    val testPort = 3000
     val digitalTwinUri = DigitalTwinURI("http://example.it")
 
     "initial size of the registry should be 0" {
-        val ecosystemRegistry = EcosystemRegistryService()
+        val ecosystemRegistry = EcosystemRegistryService(testPort)
         ecosystemRegistry.getRegisteredDigitalTwins().size shouldBe 0
     }
 
     "it should be possible to add a Digital Twin" {
-        val ecosystemRegistry = EcosystemRegistryService()
+        val ecosystemRegistry = EcosystemRegistryService(testPort)
         ecosystemRegistry.signalRegistration(digitalTwinUri)
 
         ecosystemRegistry.getRegisteredDigitalTwins().contains(digitalTwinUri) shouldBe true
@@ -37,7 +38,7 @@ class EcosystemRegistryServiceTest : StringSpec({
     }
 
     "it should be possible to delete a Digital Twin" {
-        val ecosystemRegistry = EcosystemRegistryService()
+        val ecosystemRegistry = EcosystemRegistryService(testPort)
         ecosystemRegistry.signalRegistration(digitalTwinUri)
         ecosystemRegistry.signalDeletion(digitalTwinUri)
 

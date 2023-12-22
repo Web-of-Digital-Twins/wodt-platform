@@ -23,8 +23,16 @@ import java.util.Collections
 /**
  * This class models the Ecosystem Registry component of the Abstract Architecture.
  */
-class EcosystemRegistryService : EcosystemRegistry {
+class EcosystemRegistryService(exposedPort: Int? = null) : EcosystemRegistry {
     private var registeredDigitalTwins: Set<DigitalTwinURI> = Collections.synchronizedSet(setOf())
+    private val exposedPort: Int
+
+    init {
+        if (exposedPort == null) {
+            checkNotNull(System.getenv(EXPOSED_PORT_VARIABLE)) { "Please provide the exposed port" }
+        }
+        this.exposedPort = exposedPort ?: System.getenv(EXPOSED_PORT_VARIABLE).toInt()
+    }
 
     override fun signalRegistration(digitalTwinUri: DigitalTwinURI) {
         registeredDigitalTwins = Collections.synchronizedSet(registeredDigitalTwins + digitalTwinUri)
@@ -34,5 +42,9 @@ class EcosystemRegistryService : EcosystemRegistry {
 
     override fun signalDeletion(digitalTwinURI: DigitalTwinURI) {
         registeredDigitalTwins = Collections.synchronizedSet(registeredDigitalTwins - digitalTwinURI)
+    }
+
+    companion object {
+        private const val EXPOSED_PORT_VARIABLE = "EXPOSED_PORT"
     }
 }

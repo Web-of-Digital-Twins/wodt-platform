@@ -26,12 +26,16 @@ import io.ktor.server.websocket.WebSockets
 
 object KtorTestingUtility {
     private val mockEngine = MockEngine { _ -> respondOk() }
-    private val httpClient = KtorWoDTPlatformHttpClient(engine = mockEngine, 3000)
+    private val testPort = 3000
+    private val httpClient = KtorWoDTPlatformHttpClient(engine = mockEngine, testPort)
 
     fun apiTestApplication(
         tests: suspend ApplicationTestBuilder.(ecosystemManagementInterface: BaseEcosystemManagementInterface) -> Unit,
     ) {
-        val ecosystemManagementInterface = BaseEcosystemManagementInterface(EcosystemRegistryService(), httpClient)
+        val ecosystemManagementInterface = BaseEcosystemManagementInterface(
+            EcosystemRegistryService(testPort),
+            httpClient
+        )
         testApplication {
             install(WebSockets)
             application {

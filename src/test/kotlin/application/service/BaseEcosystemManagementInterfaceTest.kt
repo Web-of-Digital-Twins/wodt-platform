@@ -33,10 +33,14 @@ class BaseEcosystemManagementInterfaceTest : StringSpec({
     val mockEngine = MockEngine { _ ->
         respondOk()
     }
-    val httpClient = KtorWoDTPlatformHttpClient(engine = mockEngine, 3000)
+    val testPort = 3000
+    val httpClient = KtorWoDTPlatformHttpClient(engine = mockEngine, testPort)
 
     "it should be possible to register a not-registered digital twin" {
-        val ecosystemManagementInterface = BaseEcosystemManagementInterface(EcosystemRegistryService(), httpClient)
+        val ecosystemManagementInterface = BaseEcosystemManagementInterface(
+            EcosystemRegistryService(testPort),
+            httpClient,
+        )
         val dtd = readResourceFile("wotDtd.json").orEmpty()
         runBlocking {
             ecosystemManagementInterface.registerNewDigitalTwin(
@@ -48,7 +52,10 @@ class BaseEcosystemManagementInterfaceTest : StringSpec({
     }
 
     "it should not be possible to register an already registered digital twin" {
-        val ecosystemManagementInterface = BaseEcosystemManagementInterface(EcosystemRegistryService(), httpClient)
+        val ecosystemManagementInterface = BaseEcosystemManagementInterface(
+            EcosystemRegistryService(testPort),
+            httpClient,
+        )
         val dtd = readResourceFile("wotDtd.json").orEmpty()
         runBlocking {
             ecosystemManagementInterface.registerNewDigitalTwin(
@@ -65,7 +72,10 @@ class BaseEcosystemManagementInterfaceTest : StringSpec({
     }
 
     "it should be possible to delete a registered digital twin from the ecosystem" {
-        val ecosystemManagementInterface = BaseEcosystemManagementInterface(EcosystemRegistryService(), httpClient)
+        val ecosystemManagementInterface = BaseEcosystemManagementInterface(
+            EcosystemRegistryService(testPort),
+            httpClient,
+        )
         val dtd = readResourceFile("wotDtd.json").orEmpty()
         runBlocking {
             ecosystemManagementInterface.registerNewDigitalTwin(
@@ -82,7 +92,10 @@ class BaseEcosystemManagementInterfaceTest : StringSpec({
     }
 
     "it should not be possible to delete a not-registered digital twin from the ecosystem" {
-        val ecosystemManagementInterface = BaseEcosystemManagementInterface(EcosystemRegistryService(), httpClient)
+        val ecosystemManagementInterface = BaseEcosystemManagementInterface(
+            EcosystemRegistryService(testPort),
+            httpClient,
+        )
         runBlocking {
             ecosystemManagementInterface.deleteDigitalTwin(
                 DigitalTwinURI("http://not-registered.it"),
