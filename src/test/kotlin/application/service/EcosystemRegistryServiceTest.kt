@@ -45,4 +45,30 @@ class EcosystemRegistryServiceTest : StringSpec({
         ecosystemRegistry.getRegisteredDigitalTwins().contains(digitalTwinUri) shouldBe false
         ecosystemRegistry.getRegisteredDigitalTwins().size shouldBe 0
     }
+
+    "it should be possible to get the mapped local url of a registered WoDT Digital Twin" {
+        val ecosystemRegistry = EcosystemRegistryService(testPort)
+        ecosystemRegistry.signalRegistration(digitalTwinUri)
+
+        ecosystemRegistry.getLocalUrl(digitalTwinUri) shouldBe "http://localhost:$testPort/wodt/${digitalTwinUri.uri}"
+    }
+
+    "it should not be possible to obtain the mapped local url of a not-registered Digital Twin" {
+        val ecosystemRegistry = EcosystemRegistryService(testPort)
+
+        ecosystemRegistry.getLocalUrl(digitalTwinUri) shouldBe null
+    }
+
+    "it should be possible to obtain the WoDT Digital Twin URI from a mapped local url of a registered Digital Twin" {
+        val ecosystemRegistry = EcosystemRegistryService(testPort)
+        ecosystemRegistry.signalRegistration(digitalTwinUri)
+
+        ecosystemRegistry.getDigitalTwinUri("http://localhost:$testPort/wodt/${digitalTwinUri.uri}") shouldBe digitalTwinUri
+    }
+
+    "it should not be possible to obtain the WoDT Digital Twin URI from a local url of a not-registered Digital Twin" {
+        val ecosystemRegistry = EcosystemRegistryService(testPort)
+
+        ecosystemRegistry.getDigitalTwinUri("http://localhost:$testPort/wodt/${digitalTwinUri.uri}") shouldBe null
+    }
 })
