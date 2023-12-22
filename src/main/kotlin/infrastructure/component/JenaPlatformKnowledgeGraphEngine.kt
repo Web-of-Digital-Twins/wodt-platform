@@ -136,6 +136,7 @@ class JenaPlatformKnowledgeGraphEngine(
                 .build()
                 .toModel()
                 .mapLocalDigitalTwinModel()
+            this.dtdsModelMap[dtd.digitalTwinUri]?.also { this.dtdsModel.remove(it) }
             this.dtdsModelMap += (dtd.digitalTwinUri to dtdModel)
             this.dtdsModel.add(dtdModel)
             this.emitEvent()
