@@ -125,7 +125,7 @@ class JenaPlatformKnowledgeGraphEngine(
                     ?.content
                     ?.let { DigitalTwinURI(it) }
             }?.toSet()
-        } ?: setOf()
+        }.orEmpty()
     }
 
     override fun mergeDigitalTwinDescriptor(dtd: DigitalTwinDescriptor) {
