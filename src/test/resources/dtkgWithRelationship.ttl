@@ -1,0 +1,7 @@
+<https://example.com/dt>
+        <https://healthcareontology.com/ontology#hasFuelLevel>
+                "37.0"^^<http://www.w3.org/2001/XMLSchema#double>;
+        <https://healthcareontology.com/ontology#isBusy>
+                true;
+        <https://smartcityontology.com/ontology#isApproaching>
+                <http://example.com/intersection> .
