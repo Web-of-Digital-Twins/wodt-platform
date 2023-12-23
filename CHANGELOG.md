@@ -1,3 +1,10 @@
+## [1.1.1](https://github.com/WebBased-WoDT/wodt-dts-platform/compare/1.1.0...1.1.1) (2023-12-23)
+
+
+### Dependency updates
+
+* **core-deps:** update dependency org.jetbrains.kotlinx:kotlinx-coroutines-core to v1.8.0-rc2 ([afa1667](https://github.com/WebBased-WoDT/wodt-dts-platform/commit/afa16678b268be3195681f56fa353eb974fe74d9))
+
 ## [1.1.0](https://github.com/WebBased-WoDT/wodt-dts-platform/compare/1.0.0...1.1.0) (2023-12-23)
 
 
