@@ -108,9 +108,7 @@ class JenaPlatformKnowledgeGraphEngineTest : StringSpec({
         ecosystemRegistry.signalRegistration(dtUri)
         insertDTKG(platformKnowledgeGraphEngine)
         readResourceFile("mappedDtkgWithRelationship.ttl")?.run {
-            platformKnowledgeGraphEngine.currentCachedDigitalTwinKnowledgeGraph(
-                "http://localhost:$testPort/wodt/${dtUri.uri}",
-            ) shouldBe this
+            platformKnowledgeGraphEngine.currentCachedDigitalTwinKnowledgeGraph(dtUri) shouldBe this
         }
     }
 
@@ -124,58 +122,34 @@ class JenaPlatformKnowledgeGraphEngineTest : StringSpec({
                 .contains(dtUri) shouldBe true
         }
 
-    "it should be possible to perform SPARQL SELECT Queries using XML content-type" {
-        val ecosystemRegistry = EcosystemRegistryService(testPort)
-        val platformKnowledgeGraphEngine = JenaPlatformKnowledgeGraphEngine(ecosystemRegistry)
-        platformKnowledgeGraphEngine.query(
-            selectQuery,
-            "application/sparql-results+xml",
-        ) shouldNotBe null
+    listOf(
+        "application/sparql-results+xml",
+        "application/sparql-results+json",
+        "text/csv",
+        "text/tab-separated-values",
+    ).forEach {
+        "it should be possible to perform SPARQL SELECT Queries using the $it content-type" {
+            val ecosystemRegistry = EcosystemRegistryService(testPort)
+            val platformKnowledgeGraphEngine = JenaPlatformKnowledgeGraphEngine(ecosystemRegistry)
+            platformKnowledgeGraphEngine.query(
+                selectQuery,
+                it,
+            ) shouldNotBe null
+        }
     }
 
-    "it should be possible to perform SPARQL SELECT Queries using JSON content-type" {
-        val ecosystemRegistry = EcosystemRegistryService(testPort)
-        val platformKnowledgeGraphEngine = JenaPlatformKnowledgeGraphEngine(ecosystemRegistry)
-        platformKnowledgeGraphEngine.query(
-            selectQuery,
-            "application/sparql-results+json",
-        ) shouldNotBe null
-    }
-
-    "it should be possible to perform SPARQL SELECT Queries using CSV content-type" {
-        val ecosystemRegistry = EcosystemRegistryService(testPort)
-        val platformKnowledgeGraphEngine = JenaPlatformKnowledgeGraphEngine(ecosystemRegistry)
-        platformKnowledgeGraphEngine.query(
-            selectQuery,
-            "text/csv",
-        ) shouldNotBe null
-    }
-
-    "it should be possible to perform SPARQL SELECT Queries using TSV content-type" {
-        val ecosystemRegistry = EcosystemRegistryService(testPort)
-        val platformKnowledgeGraphEngine = JenaPlatformKnowledgeGraphEngine(ecosystemRegistry)
-        platformKnowledgeGraphEngine.query(
-            selectQuery,
-            "text/tab-separated-values",
-        ) shouldNotBe null
-    }
-
-    "it should be possible to perform SPARQL ASK Queries using XML content-type" {
-        val ecosystemRegistry = EcosystemRegistryService(testPort)
-        val platformKnowledgeGraphEngine = JenaPlatformKnowledgeGraphEngine(ecosystemRegistry)
-        platformKnowledgeGraphEngine.query(
-            askQuery,
-            "application/sparql-results+xml",
-        ) shouldNotBe null
-    }
-
-    "it should be possible to perform SPARQL ASK Queries using JSON content-type" {
-        val ecosystemRegistry = EcosystemRegistryService(testPort)
-        val platformKnowledgeGraphEngine = JenaPlatformKnowledgeGraphEngine(ecosystemRegistry)
-        platformKnowledgeGraphEngine.query(
-            askQuery,
-            "application/sparql-results+json",
-        ) shouldNotBe null
+    listOf(
+        "application/sparql-results+xml",
+        "application/sparql-results+json",
+    ).forEach {
+        "it should be possible to perform SPARQL ASK Queries using $it content-type" {
+            val ecosystemRegistry = EcosystemRegistryService(testPort)
+            val platformKnowledgeGraphEngine = JenaPlatformKnowledgeGraphEngine(ecosystemRegistry)
+            platformKnowledgeGraphEngine.query(
+                askQuery,
+                it,
+            ) shouldNotBe null
+        }
     }
 
     "it should be possible to perform SPARQL CONSTRUCT Queries" {
