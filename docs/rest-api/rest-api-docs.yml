@@ -1,0 +1,229 @@
+openapi: 3.0.0
+servers:
+  - description: WoDT Digital Twins Platform API
+    url: http://localhost:<port>/
+info:
+  description: This is the API of exposed by the WoDT Digital Twins Platform
+  version: 1.0.0
+  title: WoDT Digital Twins Platform API
+  contact:
+    email: andrea.giulianelli4@studio.unibo.it
+  license:
+    name: Apache 2.0 License
+    url: 'https://www.apache.org/licenses/LICENSE-2.0'
+
+tags:
+  - name: Ecosystem Management Interface API
+    description: This is the API exposed by the Ecosystem Management Interface.
+  - name: WoDT Digital Twins Platform Interface API
+    description: This is the API exposed by the WoDT Digital Twins Platform Interface for Consumers.
+
+paths:
+  /wodt:
+    get:
+      tags:
+        - WoDT Digital Twins Platform Interface API
+      summary: obtain the complete WoDT Digital Twins Platform Knowledge Graph
+      operationId: getWoDTDigitalTwinsPlatformKnowledgeGraph
+      description: obtain the complete view over the WoDT Digital Twins Platform Knowledge Graph
+      responses:
+        '200':
+          description: current view over the WoDT Digital Twins Platform Knowledge Graph
+          content:
+            text/turtle:
+              schema:
+                type: string
+                example: |
+                  <https://example.com/dt>
+                      <https://healthcareontology.com/ontology#hasFuelLevel>
+                              "37.0"^^<http://www.w3.org/2001/XMLSchema#double>;
+                      <https://healthcareontology.com/ontology#isBusy>
+                              true;
+                      <https://smartcityontology.com/ontology#isApproaching>
+                              <http://example.com/intersection> .
+        '204':
+          description: WoDT Digital Twins Knowledge Graph currently empty
+    post:
+      tags:
+        - Ecosystem Management Interface API
+      summary: register a new Digital Twin to the WoDT Digital Twins Platform
+      operationId: registerDigitalTwin
+      description: Register a new Digital Twin to the WoDT Digital Twins Platform
+      responses:
+        '202':
+          description: registration request accepted
+        '400':
+          description: the Digital Twin Descriptor was not structured properly or its mime type was not supported
+        '409':
+          description: the Digital Twin is already registered to the WoDT Digital Twins Platform
+      requestBody:
+        content:
+          application/td+json:
+            schema:
+              example: |
+                {
+                  "id": "https://example.com/dt",
+                  "properties": {
+                    "is-on-property-key": {
+                      "type": "string",
+                      "observable": true,
+                      "readOnly": true,
+                      "@type": "https://www.w3.org/2001/XMLSchema#boolean",
+                      "https://purl.org/wodt/domainPredicate": "https://lampontology.com/ontology#isOn",
+                      "https://purl.org/wodt/augmentedInteraction": false
+                    },
+                    "located-inside": {
+                      "type": "string",
+                      "observable": true,
+                      "readOnly": true,
+                      "@type": "https://homeontology/ontology#Room",
+                      "https://purl.org/wodt/domainPredicate": "https://lampontology/ontology#isLocatedInside"
+                    },
+                    "snapshot": {
+                      "forms": [
+                        {
+                          "href": "ws://localhost:3000/dtkg",
+                          "op": [
+                            "observeproperty"
+                          ],
+                          "subprotocol": "websocket"
+                        }
+                      ],
+                      "type": "string",
+                      "observable": true,
+                      "readOnly": true
+                    }
+                  },
+                  "actions": {
+                    "switch-action-key": {
+                      "forms": [
+                        {
+                          "href": "http://localhost:3000/action/switch-action-key",
+                          "op": [
+                            "invokeaction"
+                          ]
+                        }
+                      ]
+                    }
+                  },
+                  "@context": "https://www.w3.org/2019/wot/td/v1",
+                  "https://purl.org/wodt/version": "1.0.0",
+                  "links": [],
+                  "https://purl.org/wodt/physicalAssetId": "lampPA"
+                }
+        description: the Digital Twin Descriptor implemented with a Thing Description following the WoDT Digital Twin Specification
+
+  /wodt/{digitalTwinUri}:
+    get:
+      tags:
+        - WoDT Digital Twins Platform Interface API
+      summary: obtain the current local view over the interested Digital Twin Knowledge Graph
+      operationId: getLocalDigitalTwinKnowledgeGraph
+      description: Obtain the current local view over the interested Digital Twin Knowledge Graph
+      parameters:
+        - in: path
+          name: digitalTwinUri
+          description: the URI of the registered WoDT Digital Twin for which the Digital Twin Knowledge Graph is requested
+          example: http://example.it/dt
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: local cached view over the Digital Twin Knowledge Graph
+          content:
+            text/turtle:
+              schema:
+                type: string
+                example: |
+                  <http://localhost:4000/wodt/https://example.com/dt>
+                    <https://healthcareontology.com/ontology#hasFuelLevel>
+                            "37.0"^^<http://www.w3.org/2001/XMLSchema#double>;
+                    <https://healthcareontology.com/ontology#isBusy>
+                            true;
+                    <https://smartcityontology.com/ontology#isApproaching>
+                            <http://example.com/intersection> .
+
+        '204':
+          description: the WoDT Digital Twin is registered but its Digital Twin Knowledge Graph is currently empty
+        '400':
+          description: the Digital Twin URI path parameter is not structured properly
+        '404':
+          description: the interested Digital Twin is not registered to the WoDT Digital Twins Platform
+    delete:
+      tags:
+        - Ecosystem Management Interface API
+      summary: api to signal the deletion of a registered WoDT Digital Twin
+      operationId: deleteDigitalTwin
+      description: a registered WoDT Digital Twin use this api to signal its deletion from the ecosystem
+      parameters:
+        - in: path
+          name: digitalTwinUri
+          description: the URI of the registered WoDT Digital Twin to delete
+          example: http://example.it/dt
+          required: true
+          schema:
+            type: string
+      responses:
+        '202':
+          description: deletion request accepted
+        '400':
+          description: the Digital Twin URI is not specified correctly
+        '404':
+          description: Digital Twin not
+
+  /wodt/sparql:
+    post:
+      tags:
+        - WoDT Digital Twins Platform Interface API
+      summary: perform a SPARQL Query over the WoDT Digital Twins Knowledge Graph
+      operationId: queryPlatformKnowledgeGraph
+      description: perform a SPARQL Query over the WoDT Digital Twins Knowledge Graph using the SPARQL Protocol
+      responses:
+        '200':
+          description: valid query, return the results in the specified mime type following the SPARQL Protocol
+        '400':
+          description: the query is not structured properly or it is specified with the wrong content-type
+      requestBody:
+        content:
+          application/sparql-query:
+            schema:
+              type: string
+              example: |
+                PREFIX healthcare: <https://healthcareontology.com/ontology#>
+                PREFIX smartcity: <https://smartcityontology.com/ontology#>
+                
+                SELECT ?fuelLevel ?isBusy ?isApproaching
+                WHERE {
+                  <http://localhost:4000/wodt/https://example.com/dt> healthcare:hasFuelLevel ?fuelLevel .
+                  <http://localhost:4000/wodt/https://example.com/dt> healthcare:isBusy ?isBusy .
+                  <http://localhost:4000/wodt/https://example.com/dt> smartcity:isApproaching ?isApproaching .
+                }
+        description: SPARQL Query to perform
+
+  /wodt/directory:
+    get:
+      tags:
+        - WoDT Digital Twins Platform Interface API
+      summary: get the Digital Twins that are associated with a particular Physical Asset identifier
+      operationId: multiModelDirectory
+      description: get the Digital Twins that are associated with a particular Physical Asset identifier
+      parameters:
+        - in: query
+          name: pa
+          description: the Physical Asset identifier
+          required: true
+          schema:
+            type: string
+            example: AM3030T
+      responses:
+        '200':
+          description: the list of Digital Twins URI
+          content:
+            application/json:
+              schema:
+                example: [ "https://example.it/dt", "http://second-example.it/dt" ]
+        '204':
+          description: any registered WoDT Digital Twin is associated with that Physical Asset identifier
+        '400':
+          description: the request is malformed, missed Physical Asset identifier
