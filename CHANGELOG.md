@@ -1,3 +1,10 @@
+## [1.1.3](https://github.com/WebBased-WoDT/wodt-dts-platform/compare/1.1.2...1.1.3) (2023-12-23)
+
+
+### Documentation
+
+* improve rest-api documentation example ([4cfc177](https://github.com/WebBased-WoDT/wodt-dts-platform/commit/4cfc1775628c8036c29e062a65185b53980fa885))
+
 ## [1.1.2](https://github.com/WebBased-WoDT/wodt-dts-platform/compare/1.1.1...1.1.2) (2023-12-23)
 
 
