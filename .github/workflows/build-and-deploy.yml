@@ -96,7 +96,7 @@ jobs:
         with:
           submodules: recursive
           fetch-depth: 0
-      - name: Generate and deploy documenation
+      - name: Generate and deploy documentation
         uses: SmartOperatingBlock/documentation-ghp-action@1.1.0
         with:
           should-generate-code-documentation: true
