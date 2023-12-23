@@ -1,3 +1,15 @@
+## [1.1.4](https://github.com/WebBased-WoDT/wodt-dts-platform/compare/1.1.3...1.1.4) (2023-12-23)
+
+
+### Documentation
+
+* typo in the rest api doc ([70fec8d](https://github.com/WebBased-WoDT/wodt-dts-platform/commit/70fec8d9be2d02f224892e2c18793689ccc7d1c3))
+
+
+### Build and continuous integration
+
+* typo in step name ([627f872](https://github.com/WebBased-WoDT/wodt-dts-platform/commit/627f872ad68c8c4e775dabf25f522a78d41e09f3))
+
 ## [1.1.3](https://github.com/WebBased-WoDT/wodt-dts-platform/compare/1.1.2...1.1.3) (2023-12-23)
 
 
