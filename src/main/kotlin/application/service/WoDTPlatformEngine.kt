@@ -54,12 +54,6 @@ class WoDTPlatformEngine(
                 platformKnowledgeGraphEngine.mergeDigitalTwinKnowledgeGraphUpdate(it.first, it.second)
             }
         }
-        launch {
-            platformKnowledgeGraphEngine.platformKnowledgeGraphs.collect {
-                println("--".repeat(10))
-                println(it)
-            }
-        }
         platformWebServer.start()
     }
 }
