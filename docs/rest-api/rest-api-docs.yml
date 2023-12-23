@@ -34,13 +34,16 @@ paths:
               schema:
                 type: string
                 example: |
-                  <https://example.com/dt>
+                  <http://localhost:4000/wodt/https://example.com/dt>
                       <https://healthcareontology.com/ontology#hasFuelLevel>
                               "37.0"^^<http://www.w3.org/2001/XMLSchema#double>;
                       <https://healthcareontology.com/ontology#isBusy>
                               true;
                       <https://smartcityontology.com/ontology#isApproaching>
                               <http://example.com/intersection> .
+                  <http://localhost:4000/wodt/https://second-example.com/dt>
+                      <https://healthcareontology.com/ontology#isBusy>
+                              false;
         '204':
           description: WoDT Digital Twins Knowledge Graph currently empty
     post:
