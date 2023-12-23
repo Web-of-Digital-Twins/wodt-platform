@@ -31,8 +31,8 @@ interface PlatformKnowledgeGraphEngineReader {
     /** Obtain the current status of the WoDT Digital Twins Platform Knowledge Graph. */
     fun currentPlatformKnowledgeGraph(): String?
 
-    /** Obtain the cached current status of a registered WoDT Digital Twin identified by its [cachedDtUrl]. */
-    fun currentCachedDigitalTwinKnowledgeGraph(cachedDtUrl: String): String?
+    /** Obtain the cached current status of a registered WoDT Digital Twin identified by its [dtUri]. */
+    fun currentCachedDigitalTwinKnowledgeGraph(dtUri: DigitalTwinURI): String?
 
     /**
      * Query the WoDT Digital Twins Platform Knowledge Graph. The query will be returned in the [responseContentType]

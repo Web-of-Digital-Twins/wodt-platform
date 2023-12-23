@@ -70,10 +70,8 @@ class JenaPlatformKnowledgeGraphEngine(
 
     override fun currentPlatformKnowledgeGraph(): String? = this.platformKnowledgeGraphModel.toTurtle()
 
-    override fun currentCachedDigitalTwinKnowledgeGraph(cachedDtUrl: String): String? =
-        this.ecosystemRegistryMapper.getDigitalTwinUri(cachedDtUrl)?.let {
-            this.dtkgsModelMap[it]?.toTurtle()
-        }
+    override fun currentCachedDigitalTwinKnowledgeGraph(dtUri: DigitalTwinURI): String? =
+        this.dtkgsModelMap[dtUri]?.toTurtle()
 
     override fun query(query: String, responseContentType: String?): String? {
         val inferenceModel = ModelFactory.createInfModel(ReasonerRegistry.getOWLReasoner(), platformKnowledgeGraphModel)
