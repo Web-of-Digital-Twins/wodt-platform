@@ -1,7 +1,7 @@
 openapi: 3.0.0
 servers:
   - description: WoDT Digital Twins Platform API
-    url: http://localhost:<port>/
+    url: http://localhost:<port>
 info:
   description: This is the API of exposed by the WoDT Digital Twins Platform
   version: 1.0.0
