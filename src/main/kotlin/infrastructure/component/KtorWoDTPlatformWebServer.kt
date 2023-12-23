@@ -17,6 +17,7 @@
 package infrastructure.component
 
 import application.component.EcosystemManagementInterface
+import application.component.PlatformKnowledgeGraphEngineReader
 import application.component.WoDTPlatformWebServer
 import io.ktor.server.application.Application
 import io.ktor.server.application.install
@@ -29,6 +30,7 @@ import io.ktor.server.websocket.WebSockets
  */
 class KtorWoDTPlatformWebServer(
     private val ecosystemManagementInterface: EcosystemManagementInterface,
+    private val platformKnowledgeGraphEngineReader: PlatformKnowledgeGraphEngineReader,
     exposedPort: Int? = null,
 ) : WoDTPlatformWebServer {
     private val exposedPort: Int
@@ -50,6 +52,7 @@ class KtorWoDTPlatformWebServer(
     private fun dispatcher(app: Application) {
         with(app) {
             ecosystemManagementAPI(ecosystemManagementInterface)
+            wodtDigitalTwinsPlatformInterfaceAPI(platformKnowledgeGraphEngineReader)
         }
     }
 

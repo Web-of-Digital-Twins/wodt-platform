@@ -32,7 +32,7 @@ fun main(): Unit = runBlocking {
     val ecosystemManagementInterface = BaseEcosystemManagementInterface(ecosystemRegistry, platformHttpClient)
     val woDTDigitalTwinsObserver = WoDTDigitalTwinsObserverComponent(ecosystemRegistry, platformHttpClient)
     val platformKnowledgeGraphEngine = JenaPlatformKnowledgeGraphEngine(ecosystemRegistry)
-    val platformWebServer = KtorWoDTPlatformWebServer(ecosystemManagementInterface)
+    val platformWebServer = KtorWoDTPlatformWebServer(ecosystemManagementInterface, platformKnowledgeGraphEngine)
 
     WoDTPlatformEngine(
         ecosystemManagementInterface,
