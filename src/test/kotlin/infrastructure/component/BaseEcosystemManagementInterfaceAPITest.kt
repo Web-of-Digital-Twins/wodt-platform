@@ -33,30 +33,32 @@ class BaseEcosystemManagementInterfaceAPITest : StringSpec({
     val contentType = "application/td+json"
 
     "It should be possible to request the registration of a Digital Twin" {
-        apiTestApplication {
+        apiTestApplication { ecosystemManagementInterface, _, _ ->
             val response = client.post("/wodt") {
                 contentType(ContentType.parse(contentType))
                 setBody(dtd)
             }
             response.status shouldBe HttpStatusCode.Accepted
-            it.registerNewDigitalTwin(dtd, contentType, false) shouldBe false // ok registered
+            // ok registered
+            ecosystemManagementInterface.registerNewDigitalTwin(dtd, contentType, false) shouldBe false
         }
     }
 
     "If someone try to register with a malformed dtd the api should respond properly" {
-        apiTestApplication {
+        apiTestApplication { ecosystemManagementInterface, _, _ ->
             val response = client.post("/wodt") {
                 contentType(ContentType.parse(contentType))
                 setBody("{}")
             }
             response.status shouldBe HttpStatusCode.BadRequest
-            it.registerNewDigitalTwin(dtd, contentType, false) shouldBe true // ok it wasn't registered
+            // ok it wasn't registered
+            ecosystemManagementInterface.registerNewDigitalTwin(dtd, contentType, false) shouldBe true
         }
     }
 
     "If someone try to register an already registered Digital Twin, the api should respond properly" {
-        apiTestApplication {
-            it.registerNewDigitalTwin(dtd, contentType, false)
+        apiTestApplication { ecosystemManagementInterface, _, _ ->
+            ecosystemManagementInterface.registerNewDigitalTwin(dtd, contentType, false)
             val response = client.post("/wodt") {
                 contentType(ContentType.parse(contentType))
                 setBody(dtd)
@@ -66,15 +68,15 @@ class BaseEcosystemManagementInterfaceAPITest : StringSpec({
     }
 
     "It should be possible to delete a registered Digital Twin" {
-        apiTestApplication {
-            it.registerNewDigitalTwin(dtd, contentType, false)
+        apiTestApplication { ecosystemManagementInterface, _, _ ->
+            ecosystemManagementInterface.registerNewDigitalTwin(dtd, contentType, false)
             val response = client.delete("/wodt/${dtd.toDTD(contentType)?.digitalTwinUri?.uri.orEmpty()}")
             response.status shouldBe HttpStatusCode.Accepted
         }
     }
 
     "If someone try to delete a Digital Twin that is not registered, the api should respond properly" {
-        apiTestApplication {
+        apiTestApplication { _, _, _ ->
             val response = client.delete("/wodt/${dtd.toDTD(contentType)?.digitalTwinUri?.uri.orEmpty()}")
             response.status shouldBe HttpStatusCode.NotFound
         }

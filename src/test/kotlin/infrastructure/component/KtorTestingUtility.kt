@@ -16,6 +16,8 @@
 
 package infrastructure.component
 
+import application.component.EcosystemRegistry
+import application.component.PlatformKnowledgeGraphEngine
 import application.service.BaseEcosystemManagementInterface
 import application.service.EcosystemRegistryService
 import io.ktor.client.engine.mock.MockEngine
@@ -25,23 +27,30 @@ import io.ktor.server.testing.testApplication
 import io.ktor.server.websocket.WebSockets
 
 object KtorTestingUtility {
-    private const val TEST_PORT = 3000
+    private const val TEST_PORT = 4000
     private val mockEngine = MockEngine { _ -> respondOk() }
     private val httpClient = KtorWoDTPlatformHttpClient(engine = mockEngine, TEST_PORT)
 
     fun apiTestApplication(
-        tests: suspend ApplicationTestBuilder.(ecosystemManagementInterface: BaseEcosystemManagementInterface) -> Unit,
+        tests: suspend ApplicationTestBuilder.(
+            ecosystemManagementInterface: BaseEcosystemManagementInterface,
+            ecosystemRegistry: EcosystemRegistry,
+            platformKnowledgeGraphEngine: PlatformKnowledgeGraphEngine,
+        ) -> Unit,
     ) {
         val ecosystemManagementInterface = BaseEcosystemManagementInterface(
             EcosystemRegistryService(TEST_PORT),
             httpClient,
         )
+        val ecosystemRegistry = EcosystemRegistryService(TEST_PORT)
+        val platformKnowledgeGraphEngine = JenaPlatformKnowledgeGraphEngine(ecosystemRegistry)
         testApplication {
             install(WebSockets)
             application {
                 ecosystemManagementAPI(ecosystemManagementInterface)
+                wodtDigitalTwinsPlatformInterfaceAPI(platformKnowledgeGraphEngine)
             }
-            tests(ecosystemManagementInterface)
+            tests(ecosystemManagementInterface, ecosystemRegistry, platformKnowledgeGraphEngine)
         }
     }
 }
