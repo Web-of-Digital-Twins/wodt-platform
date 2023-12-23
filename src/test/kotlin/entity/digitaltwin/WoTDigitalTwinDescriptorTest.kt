@@ -64,4 +64,12 @@ class WoTDigitalTwinDescriptorTest : StringSpec({
     "if the observation affordance for the snapshot property is not present then it can't be built" {
         testIncompleteWoTDTDFromFile("wotDtdWithoutObservation.json")
     }
+
+    "if the observation subprotocol for the snapshot property is not supported then it can't be built" {
+        readResourceFile("wotDtdWithoutSupportedObservation.json")?.let {
+            val jsonDtd = Json.decodeFromString<JsonObject>(it)
+            val dtd = WoTDigitalTwinDescriptor.fromJson(jsonDtd)
+            dtd shouldBe null
+        }
+    }
 })
