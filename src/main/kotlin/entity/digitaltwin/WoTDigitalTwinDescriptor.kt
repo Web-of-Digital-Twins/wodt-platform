@@ -72,14 +72,13 @@ class WoTDigitalTwinDescriptor private constructor(
                 ?.jsonObject
                 ?.get(FORM_LIST)
                 ?.jsonArray
-                ?.find { it.jsonObject[FORM_OP]?.jsonArray?.contains(JsonPrimitive(FORM_OP_OBSERVE_PROPERTY)) == true }
+                ?.find {
+                    it.jsonObject[FORM_OP]?.jsonArray?.contains(JsonPrimitive(FORM_OP_OBSERVE_PROPERTY)) == true &&
+                        it.jsonObject[FORM_SUBPROTOCOL]?.jsonPrimitive?.content == FormProtocol.WEBSOCKET.protocolName
+                }
                 ?.jsonObject
                 ?.let { form ->
-                    if (form[FORM_SUBPROTOCOL]?.jsonPrimitive?.content == FormProtocol.WEBSOCKET.protocolName) {
-                        form[FORM_HREF]?.jsonPrimitive?.content?.let { href -> Form(href, FormProtocol.WEBSOCKET) }
-                    } else {
-                        null
-                    }
+                    form[FORM_HREF]?.jsonPrimitive?.content?.let { href -> Form(href, FormProtocol.WEBSOCKET) }
                 }
             return if (paId != null && dtUri != null && snapshotForm != null) {
                 WoTDigitalTwinDescriptor(paId, dtUri, snapshotForm, rawDTD.toString())
