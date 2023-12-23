@@ -1,3 +1,20 @@
+## [1.1.2](https://github.com/WebBased-WoDT/wodt-dts-platform/compare/1.1.1...1.1.2) (2023-12-23)
+
+
+### Dependency updates
+
+* **deps:** update dependency org.slf4j:slf4j-simple to v2.0.9 ([dbde6cb](https://github.com/WebBased-WoDT/wodt-dts-platform/commit/dbde6cbcf273c3ec2ec779b61db1600183321515))
+
+
+### Documentation
+
+* add rest api documentation ([f6e8984](https://github.com/WebBased-WoDT/wodt-dts-platform/commit/f6e8984049d2890267589f7fb2126c11dfa6893b))
+
+
+### Build and continuous integration
+
+* configure openapi documentation deploy ([7718d53](https://github.com/WebBased-WoDT/wodt-dts-platform/commit/7718d53a19c1fd0d07e59b08cb04ec4e4a54a53a))
+
 ## [1.1.1](https://github.com/WebBased-WoDT/wodt-dts-platform/compare/1.1.0...1.1.1) (2023-12-23)
 
 
