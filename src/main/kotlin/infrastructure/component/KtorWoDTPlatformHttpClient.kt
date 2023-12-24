@@ -48,7 +48,9 @@ class KtorWoDTPlatformHttpClient(
 ) : EcosystemManagementHttpClient, WoDTDigitalTwinsObserverWsClient {
     private val webSockets: MutableMap<String, DefaultClientWebSocketSession> = mutableMapOf()
     private val httpClient = HttpClient(engine) {
-        install(WebSockets)
+        install(WebSockets) {
+            pingInterval = WEBSOCKET_PING_INTERVAL
+        }
         install(ContentNegotiation) {
             json()
         }
@@ -100,6 +102,7 @@ class KtorWoDTPlatformHttpClient(
 
     companion object {
         private const val EXPOSED_PORT_VARIABLE = "EXPOSED_PORT"
+        private const val WEBSOCKET_PING_INTERVAL = 1_000L
         private val logger = KotlinLogging.logger {}
     }
 }
