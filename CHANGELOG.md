@@ -1,3 +1,15 @@
+## [1.1.5](https://github.com/WebBased-WoDT/wodt-dts-platform/compare/1.1.4...1.1.5) (2023-12-24)
+
+
+### Performance improvements
+
+* improve websocket session time ([dff6eef](https://github.com/WebBased-WoDT/wodt-dts-platform/commit/dff6eef8467ec9c468b6d5af6e29b5b0d9436ef0))
+
+
+### General maintenance
+
+* update README ([373c2af](https://github.com/WebBased-WoDT/wodt-dts-platform/commit/373c2afae4445c1fb70b5ed54821a7aef08bf841))
+
 ## [1.1.4](https://github.com/WebBased-WoDT/wodt-dts-platform/compare/1.1.3...1.1.4) (2023-12-23)
 
 
