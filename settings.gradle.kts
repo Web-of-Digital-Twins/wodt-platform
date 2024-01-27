@@ -15,7 +15,7 @@
  */
 
 plugins {
-    id("com.gradle.enterprise") version "3.16.1"
+    id("com.gradle.enterprise") version "3.16.2"
     id("org.danilopianini.gradle-pre-commit-git-hooks") version "2.0.0"
 }
 
