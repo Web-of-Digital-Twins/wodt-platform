@@ -1,3 +1,10 @@
+## [1.1.7](https://github.com/WebBased-WoDT/wodt-dts-platform/compare/1.1.6...1.1.7) (2024-02-17)
+
+
+### Dependency updates
+
+* **core-deps:** update dependency org.jetbrains.kotlinx:kotlinx-serialization-json to v1.6.3 ([176c8f6](https://github.com/WebBased-WoDT/wodt-dts-platform/commit/176c8f64c2253ef4a0b752b2afabd76a4779dacd))
+
 ## [1.1.6](https://github.com/WebBased-WoDT/wodt-dts-platform/compare/1.1.5...1.1.6) (2024-02-15)
 
 
