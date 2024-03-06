@@ -1,3 +1,21 @@
+## [1.1.8](https://github.com/WebBased-WoDT/wodt-dts-platform/compare/1.1.7...1.1.8) (2024-03-06)
+
+
+### Dependency updates
+
+* **deps:** update ktor to v2.3.9 ([1bf5fde](https://github.com/WebBased-WoDT/wodt-dts-platform/commit/1bf5fde30d51b10febfffe45dbfb0b94920b4f90))
+
+
+### Documentation
+
+* **deps:** update plugin dokka to v1.9.20 ([442b3d6](https://github.com/WebBased-WoDT/wodt-dts-platform/commit/442b3d62d87e68c2dc6ae9da67b59adf1eaffc85))
+
+
+### Build and continuous integration
+
+* **deps:** update codecov/codecov-action action to v4.0.2 ([bd7f035](https://github.com/WebBased-WoDT/wodt-dts-platform/commit/bd7f035171aef6d10682d6b2066081ab2b1efa6e))
+* **deps:** update codecov/codecov-action action to v4.1.0 ([910216f](https://github.com/WebBased-WoDT/wodt-dts-platform/commit/910216fbba6b017531872780569cc17e717f1b65))
+
 ## [1.1.7](https://github.com/WebBased-WoDT/wodt-dts-platform/compare/1.1.6...1.1.7) (2024-02-17)
 
 
