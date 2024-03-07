@@ -1,3 +1,11 @@
+## [1.1.9](https://github.com/WebBased-WoDT/wodt-dts-platform/compare/1.1.8...1.1.9) (2024-03-07)
+
+
+### Dependency updates
+
+* **core-deps:** update dependency org.jetbrains.kotlin:kotlin-stdlib to v1.9.23 ([1a8a627](https://github.com/WebBased-WoDT/wodt-dts-platform/commit/1a8a6279459242086794c3d01940593f8548db3b))
+* **deps:** update plugin org.danilopianini.gradle-pre-commit-git-hooks to v2.0.2 ([196e542](https://github.com/WebBased-WoDT/wodt-dts-platform/commit/196e5420dcca0af87d7fa5c2b3821b3f7c283708))
+
 ## [1.1.8](https://github.com/WebBased-WoDT/wodt-dts-platform/compare/1.1.7...1.1.8) (2024-03-06)
 
 
