@@ -1,3 +1,38 @@
+## [1.1.10](https://github.com/WebBased-WoDT/wodt-dts-platform/compare/1.1.9...1.1.10) (2024-05-08)
+
+
+### Dependency updates
+
+* **core-deps:** update dependency org.jetbrains.kotlin:kotlin-stdlib to v1.9.24 ([85633b7](https://github.com/WebBased-WoDT/wodt-dts-platform/commit/85633b759f06a4ef4079ba9e3679c7af61847437))
+* **deps:** update dependency com.tngtech.archunit:archunit-junit5 to v1.3.0 ([e54feac](https://github.com/WebBased-WoDT/wodt-dts-platform/commit/e54feac2b45cd6583fa0f921c860f86b3898474f))
+* **deps:** update dependency gradle to v8.7 ([cb840d1](https://github.com/WebBased-WoDT/wodt-dts-platform/commit/cb840d1302246c5cbe5b05710a4678154579ffb5))
+* **deps:** update dependency org.slf4j:slf4j-simple to v2.0.13 ([cf3f40f](https://github.com/WebBased-WoDT/wodt-dts-platform/commit/cf3f40f340ed52a440fb3175823568495cee8167))
+* **deps:** update kotest to v5.8.1 ([4cacaae](https://github.com/WebBased-WoDT/wodt-dts-platform/commit/4cacaae9a5f4b485d2004a6af77e179b01df4611))
+* **deps:** update ktor to v2.3.10 ([0cc79ca](https://github.com/WebBased-WoDT/wodt-dts-platform/commit/0cc79ca983ee41eb2ffe2fd1aef7bb429a97073b))
+* **deps:** update node.js to 20.12 ([ee90daf](https://github.com/WebBased-WoDT/wodt-dts-platform/commit/ee90daf049a9bac2aa49a4d6389092a0f4912c34))
+* **deps:** update node.js to 20.13 ([c99af8e](https://github.com/WebBased-WoDT/wodt-dts-platform/commit/c99af8ec9a2a1c516672cf7c3ed6413a7e1eac58))
+* **deps:** update plugin com.gradle.enterprise to v3.17 ([3abbfe9](https://github.com/WebBased-WoDT/wodt-dts-platform/commit/3abbfe9a93cfc574e2fbb16fc73ae95070d05f24))
+* **deps:** update plugin com.gradle.enterprise to v3.17.2 ([5e8d123](https://github.com/WebBased-WoDT/wodt-dts-platform/commit/5e8d12347b9067a3103af581dab4f0aea7dbf372))
+* **deps:** update plugin kotlin-qa to v0.60.2 ([6245a8d](https://github.com/WebBased-WoDT/wodt-dts-platform/commit/6245a8d9253bcf71ee1cd3df4f19c6d5c2c68252))
+* **deps:** update plugin kotlin-qa to v0.60.3 ([6e57073](https://github.com/WebBased-WoDT/wodt-dts-platform/commit/6e5707378c07be700e02eb139c514df66177fcdb))
+* **deps:** update plugin kotlin-qa to v0.60.4 ([9eb5e8a](https://github.com/WebBased-WoDT/wodt-dts-platform/commit/9eb5e8a14fc4291ab9bdec947edeaeac9dfb09c7))
+* **deps:** update plugin kotlin-qa to v0.61.0 ([d677436](https://github.com/WebBased-WoDT/wodt-dts-platform/commit/d677436523171ff873ba3555ba41a6f40f2ac505))
+* **deps:** update plugin org.danilopianini.gradle-pre-commit-git-hooks to v2.0.3 ([b00a32b](https://github.com/WebBased-WoDT/wodt-dts-platform/commit/b00a32b4f9c01d7d9dbfb45e284b5ab1ad895dc2))
+* **deps:** update plugin org.danilopianini.gradle-pre-commit-git-hooks to v2.0.4 ([578948a](https://github.com/WebBased-WoDT/wodt-dts-platform/commit/578948a879b473d0ab2ea19fd5f0eb78d5826677))
+
+
+### Build and continuous integration
+
+* **deps:** update codecov/codecov-action action to v4.1.1 ([6ca2717](https://github.com/WebBased-WoDT/wodt-dts-platform/commit/6ca2717b0c0315364e7a25c4e9933c9c7be2cd2f))
+* **deps:** update codecov/codecov-action action to v4.2.0 ([279aa09](https://github.com/WebBased-WoDT/wodt-dts-platform/commit/279aa096c010e6d8c9c32b8e4453b0b093b6e8fa))
+* **deps:** update codecov/codecov-action action to v4.3.0 ([62911af](https://github.com/WebBased-WoDT/wodt-dts-platform/commit/62911aff1906764cfdbeced0e9d19aa95dc312cc))
+* **deps:** update codecov/codecov-action action to v4.3.1 ([ff0a58c](https://github.com/WebBased-WoDT/wodt-dts-platform/commit/ff0a58c996962f4a005d329e2a78353165079af6))
+* **deps:** update gradle/wrapper-validation-action action to v2.1.2 ([f619ef0](https://github.com/WebBased-WoDT/wodt-dts-platform/commit/f619ef02f540f1f8e98677675f436efbe57f6b2d))
+* **deps:** update gradle/wrapper-validation-action action to v2.1.3 ([c4178ab](https://github.com/WebBased-WoDT/wodt-dts-platform/commit/c4178ab5e7b6d497638a5b2f4c87680b805843a8))
+* **deps:** update gradle/wrapper-validation-action action to v3 ([2bc3c4c](https://github.com/WebBased-WoDT/wodt-dts-platform/commit/2bc3c4cb6ae18afbb6d3ebd2c06e41fa86f37c51))
+* **deps:** update gradle/wrapper-validation-action action to v3.3.1 ([c0cbba0](https://github.com/WebBased-WoDT/wodt-dts-platform/commit/c0cbba032731a0d2f7907081764e5502024b5b62))
+* **deps:** update gradle/wrapper-validation-action action to v3.3.2 ([99d2c60](https://github.com/WebBased-WoDT/wodt-dts-platform/commit/99d2c60f7f9c0071b64762da12af8ed18b355303))
+
 ## [1.1.9](https://github.com/WebBased-WoDT/wodt-dts-platform/compare/1.1.8...1.1.9) (2024-03-07)
 
 
