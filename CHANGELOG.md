@@ -1,3 +1,12 @@
+## [1.1.11](https://github.com/WebBased-WoDT/wodt-dts-platform/compare/1.1.10...1.1.11) (2024-05-11)
+
+
+### Dependency updates
+
+* **core-deps:** update dependency org.jetbrains.kotlinx:kotlinx-coroutines-core to v1.8.1 ([e3bab52](https://github.com/WebBased-WoDT/wodt-dts-platform/commit/e3bab52c2ad8c483a7cf03154d1f40ced9c6632f))
+* **deps:** update kotest to v5.9.0 ([fd7daef](https://github.com/WebBased-WoDT/wodt-dts-platform/commit/fd7daef073c7f44e1b2405968595d578d9767a2d))
+* **deps:** update ktor to v2.3.11 ([7eb70d7](https://github.com/WebBased-WoDT/wodt-dts-platform/commit/7eb70d7b3c5342ad86a49d91b2d9f8824b31fe1c))
+
 ## [1.1.10](https://github.com/WebBased-WoDT/wodt-dts-platform/compare/1.1.9...1.1.10) (2024-05-08)
 
 
