@@ -1,3 +1,19 @@
+## [1.1.12](https://github.com/WebBased-WoDT/wodt-dts-platform/compare/1.1.11...1.1.12) (2024-05-21)
+
+
+### Dependency updates
+
+* **core-deps:** update dependency org.jetbrains.kotlin:kotlin-stdlib to v2 ([f35fa12](https://github.com/WebBased-WoDT/wodt-dts-platform/commit/f35fa1259b4ba0caf44faa5d9391525bb76e7098))
+* **deps:** update plugin com.gradle.enterprise to v3.17.3 ([ccabc4b](https://github.com/WebBased-WoDT/wodt-dts-platform/commit/ccabc4bac4d437c8fb0173c9178094d6d3722c3f))
+* **deps:** update plugin kotlin-qa to v0.61.1 ([4c1f689](https://github.com/WebBased-WoDT/wodt-dts-platform/commit/4c1f689beea1d7d5294a60d92c0f0435d2f8add2))
+* **deps:** update plugin org.danilopianini.gradle-pre-commit-git-hooks to v2.0.5 ([952027b](https://github.com/WebBased-WoDT/wodt-dts-platform/commit/952027bc7ddac39b9fa4acd7317b7f001c7d619f))
+
+
+### Build and continuous integration
+
+* **deps:** update codecov/codecov-action action to v4.4.0 ([a0fb007](https://github.com/WebBased-WoDT/wodt-dts-platform/commit/a0fb007ec384f9e715705a920797a5ee64b8c141))
+* **deps:** update codecov/codecov-action action to v4.4.1 ([f4db87c](https://github.com/WebBased-WoDT/wodt-dts-platform/commit/f4db87cbf140bd38467a4d2dc295102583b0782e))
+
 ## [1.1.11](https://github.com/WebBased-WoDT/wodt-dts-platform/compare/1.1.10...1.1.11) (2024-05-11)
 
 
