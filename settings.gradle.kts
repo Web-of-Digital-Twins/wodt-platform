@@ -16,7 +16,7 @@
 
 plugins {
     id("com.gradle.enterprise") version "3.17.3"
-    id("org.danilopianini.gradle-pre-commit-git-hooks") version "2.0.5"
+    id("org.danilopianini.gradle-pre-commit-git-hooks") version "2.0.6"
 }
 
 rootProject.name = "wodt-dts-platform"
