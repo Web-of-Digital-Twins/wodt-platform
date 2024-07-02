@@ -1,3 +1,31 @@
+## [1.1.13](https://github.com/WebBased-WoDT/wodt-dts-platform/compare/1.1.12...1.1.13) (2024-07-02)
+
+### Dependency updates
+
+* **core-deps:** update dependency org.jetbrains.kotlinx:kotlinx-serialization-json to v1.7.0 ([4ce9b6d](https://github.com/WebBased-WoDT/wodt-dts-platform/commit/4ce9b6d36db3a14d0b0c9d25bd2e34bafdd08759))
+* **core-deps:** update dependency org.jetbrains.kotlinx:kotlinx-serialization-json to v1.7.1 ([98da9e6](https://github.com/WebBased-WoDT/wodt-dts-platform/commit/98da9e6ad962d9e2f1ca218c54c20789c321c6dd))
+* **deps:** force update semantic release configuration ([1f18384](https://github.com/WebBased-WoDT/wodt-dts-platform/commit/1f18384990b9491a027d173775c4786cd116ab04))
+* **deps:** update alpine docker tag to v3.20 ([70758d8](https://github.com/WebBased-WoDT/wodt-dts-platform/commit/70758d8159cb1236795ea4f162fbc7fc930cc59b))
+* **deps:** update dependency gradle to v8.8 ([b340579](https://github.com/WebBased-WoDT/wodt-dts-platform/commit/b340579e323991480446b27d382ba0f0d2c57897))
+* **deps:** update dependency io.github.oshai:kotlin-logging-jvm to v7 ([bfb627c](https://github.com/WebBased-WoDT/wodt-dts-platform/commit/bfb627cb20ef7097225e3ecf64a276ed6de09e5d))
+* **deps:** update kotest to v5.9.1 ([0081db1](https://github.com/WebBased-WoDT/wodt-dts-platform/commit/0081db10d4f45f9a172816a5dbe9a60ae77d6a38))
+* **deps:** update ktor monorepo to v2.3.12 ([77d2a2f](https://github.com/WebBased-WoDT/wodt-dts-platform/commit/77d2a2f1530b3b30dae689590dc7b46458c1155e))
+* **deps:** update node.js to 20.14 ([0675f9d](https://github.com/WebBased-WoDT/wodt-dts-platform/commit/0675f9d73d312757b2f0084e9a94f4ad392ee174))
+* **deps:** update node.js to 20.15 ([7d70694](https://github.com/WebBased-WoDT/wodt-dts-platform/commit/7d7069405b406a8db1b7795096f31b3fb77ec6c9))
+* **deps:** update plugin com.gradle.enterprise to v3.17.4 ([b1d6e20](https://github.com/WebBased-WoDT/wodt-dts-platform/commit/b1d6e205f322e717a1e344e8fdda1acecc262d48))
+* **deps:** update plugin com.gradle.enterprise to v3.17.5 ([56e3c90](https://github.com/WebBased-WoDT/wodt-dts-platform/commit/56e3c90507c3f0ded55750850ae7997623345c45))
+* **deps:** update plugin org.danilopianini.gradle-pre-commit-git-hooks to v2.0.6 ([03d0315](https://github.com/WebBased-WoDT/wodt-dts-platform/commit/03d031527fb8697c7098f1b98634ab1ec30a3e83))
+* **deps:** update plugin org.danilopianini.gradle-pre-commit-git-hooks to v2.0.7 ([3465766](https://github.com/WebBased-WoDT/wodt-dts-platform/commit/3465766d6b2896a35f07ccfd53313517b37bb7b9))
+
+### Build and continuous integration
+
+* align node versions ([ba3d15e](https://github.com/WebBased-WoDT/wodt-dts-platform/commit/ba3d15ef0af75ef3492e319f68acceacc4c454af))
+* **deps:** update codecov/codecov-action action to v4.5.0 ([8d0ad6e](https://github.com/WebBased-WoDT/wodt-dts-platform/commit/8d0ad6ee902ae25b936ceabfa7820cd76730edb2))
+* **deps:** update gradle/wrapper-validation-action action to v3.4.0 ([5f1ee30](https://github.com/WebBased-WoDT/wodt-dts-platform/commit/5f1ee3045fb092cc58aa637ede10973241dad1a1))
+* **deps:** update gradle/wrapper-validation-action action to v3.4.1 ([c8845ca](https://github.com/WebBased-WoDT/wodt-dts-platform/commit/c8845cad738d82ffd60e303018ccdfa6b6798f78))
+* **deps:** update gradle/wrapper-validation-action action to v3.4.2 ([7012398](https://github.com/WebBased-WoDT/wodt-dts-platform/commit/7012398e4f1c6fe613792cb83b6b5d751aae7ef4))
+* simplify semantic release git config ([7722de1](https://github.com/WebBased-WoDT/wodt-dts-platform/commit/7722de1ab075ba75142e3f0bb66e71b310fd325f))
+
 ## [1.1.12](https://github.com/WebBased-WoDT/wodt-dts-platform/compare/1.1.11...1.1.12) (2024-05-21)
 
 
