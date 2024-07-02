@@ -66,10 +66,18 @@ jobs:
         || github.event.pull_request.head.repo.full_name == github.repository
       )
     steps:
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - name: Checkout the repository
+        uses: actions/checkout@v4
         with:
-          node-version: "lts/*"
+          submodules: recursive
+          fetch-depth: 0
+      - name: Find the version of Node from package.json
+        id: node-version
+        run: echo "version=$(jq -r .engines.node package.json)" >> $GITHUB_OUTPUT
+      - name: Install Node
+        uses: actions/setup-node@v4.0.2
+        with:
+          node-version: ${{ steps.node-version.outputs.version }}
       - name: Release and container delivery
         uses: SmartOperatingBlock/release-and-delivery-action@1.0.11
         with:
