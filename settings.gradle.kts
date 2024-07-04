@@ -15,17 +15,17 @@
  */
 
 plugins {
-    id("com.gradle.enterprise") version "3.17.5"
     id("org.danilopianini.gradle-pre-commit-git-hooks") version "2.0.7"
+    id("com.gradle.develocity") version("3.17.5")
 }
 
 rootProject.name = "wodt-dts-platform"
 
-gradleEnterprise {
+develocity {
     buildScan {
-        termsOfServiceUrl = "https://gradle.com/terms-of-service"
-        termsOfServiceAgree = "yes"
-        publishOnFailure() // Always publish Gradle Build Scan if there is a failure.
+        termsOfUseUrl.set("https://gradle.com/help/legal-terms-of-use")
+        termsOfUseAgree.set("yes")
+        publishing.onlyIf { it.buildResult.failures.isNotEmpty() } // Publish the build scan when the build fails
     }
 }
 
