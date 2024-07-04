@@ -69,6 +69,7 @@ bin/
 .idea/vcs.xml
 .idea/checkstyle-idea.xml
 .idea/git_toolbox_prj.xml
+.idea/material_theme_project_new.xml
 node_modules/
 .rpt2_cache/
 libraries/tools/kotlin-test-js-runner/lib/
