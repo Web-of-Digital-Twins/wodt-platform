@@ -135,8 +135,7 @@ class JenaPlatformKnowledgeGraphEngine(
     override fun mergeDigitalTwinDescriptor(dtd: DigitalTwinDescriptor) {
         if (dtd.implementationType == DigitalTwinDescriptorImplementationType.THING_DESCRIPTION) {
             this.dtdsModel.enterCriticalSection(Lock.WRITE)
-            val dtdModel = RDFParser.fromString(dtd.obtainRepresentation())
-                .forceLang(Lang.JSONLD11)
+            val dtdModel = RDFParser.fromString(dtd.obtainRepresentation(), Lang.JSONLD11)
                 .build()
                 .toModel()
                 .mapLocalDigitalTwinModel()
@@ -150,8 +149,7 @@ class JenaPlatformKnowledgeGraphEngine(
 
     override fun mergeDigitalTwinKnowledgeGraphUpdate(digitalTwinUri: DigitalTwinURI, dtkg: String) {
         this.dtkgsModel.enterCriticalSection(Lock.WRITE)
-        val dtkgModel = RDFParser.fromString(dtkg)
-            .forceLang(Lang.TTL)
+        val dtkgModel = RDFParser.fromString(dtkg, Lang.TTL)
             .build()
             .toModel()
             .mapLocalDigitalTwinModel()
