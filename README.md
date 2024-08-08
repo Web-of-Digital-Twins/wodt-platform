@@ -16,7 +16,8 @@ If you want to run it via docker container:
    ```bash
     docker run ghcr.io/webbased-wodt/wodt-dts-platform:latest
     ```
-   1. If you want to pass an environment file whose name is different from `.env` use the `--env-file <name>` parameter.
+   1. Provide a port mapping to the exposed port.
+   2. If you want to pass an environment file whose name is different from `.env` use the `--env-file <name>` parameter.
 
 ## Documentation
 - Check out the website [here](https://webbased-wodt.github.io/wodt-dts-platform/)
