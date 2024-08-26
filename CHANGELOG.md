@@ -1,3 +1,24 @@
+## [1.1.15](https://github.com/Web-of-Digital-Twins/wodt-platform/compare/1.1.14...1.1.15) (2024-08-26)
+
+### Dependency updates
+
+* **core-deps:** update dependency org.jetbrains.kotlin:kotlin-stdlib to v2.0.20 ([45361fd](https://github.com/Web-of-Digital-Twins/wodt-platform/commit/45361fda8136331111f61a66cda6abb0847d753e))
+* **deps:** update dependency gradle to v8.10 ([a5f00a9](https://github.com/Web-of-Digital-Twins/wodt-platform/commit/a5f00a9825db3a7769dd87c3b643226acfdbf598))
+* **deps:** update dependency org.slf4j:slf4j-simple to v2.0.14 ([1a2f875](https://github.com/Web-of-Digital-Twins/wodt-platform/commit/1a2f8757d86714a622bca45acce12e17b5ddb7f9))
+* **deps:** update dependency org.slf4j:slf4j-simple to v2.0.15 ([afe8fb1](https://github.com/Web-of-Digital-Twins/wodt-platform/commit/afe8fb16d9318e3f4d24218772da1c3396fe758d))
+* **deps:** update dependency org.slf4j:slf4j-simple to v2.0.16 ([949bcce](https://github.com/Web-of-Digital-Twins/wodt-platform/commit/949bcce4ae12943ea9eac56f535e4c080665f2bb))
+* **deps:** update dependency semantic-release-preconfigured-conventional-commits to v1.1.96 ([2de6df2](https://github.com/Web-of-Digital-Twins/wodt-platform/commit/2de6df277316386cf5e8840539861b5365b62d37))
+* **deps:** update dependency semantic-release-preconfigured-conventional-commits to v1.1.97 ([875fa75](https://github.com/Web-of-Digital-Twins/wodt-platform/commit/875fa755aebf90f9b63b8ad43585b6e74d621860))
+* **deps:** update dependency semantic-release-preconfigured-conventional-commits to v1.1.98 ([d54aeb2](https://github.com/Web-of-Digital-Twins/wodt-platform/commit/d54aeb256a407c34f60c116c81bcae2f4bc111ce))
+* **deps:** update dependency semantic-release-preconfigured-conventional-commits to v1.1.99 ([e19b51d](https://github.com/Web-of-Digital-Twins/wodt-platform/commit/e19b51d44cc79f567f8757316df41c1c1c309111))
+* **deps:** update node.js to 20.17 ([4f7447f](https://github.com/Web-of-Digital-Twins/wodt-platform/commit/4f7447f69173cc57dd921c7bf8a8ce17f5c0fea5))
+* **deps:** update plugin org.danilopianini.gradle-pre-commit-git-hooks to v2.0.9 ([1a7106f](https://github.com/Web-of-Digital-Twins/wodt-platform/commit/1a7106f6a5bc969a29eb191742cc6b280664c93f))
+
+### General maintenance
+
+* change project name ([19c4b26](https://github.com/Web-of-Digital-Twins/wodt-platform/commit/19c4b266b75d408b4280d93cda07946750f14f88))
+* update README ([3287634](https://github.com/Web-of-Digital-Twins/wodt-platform/commit/32876348c2ca20236a8872ee26a801b0105a7304))
+
 ## [1.1.14](https://github.com/WebBased-WoDT/wodt-dts-platform/compare/1.1.13...1.1.14) (2024-08-06)
 
 ### Dependency updates
