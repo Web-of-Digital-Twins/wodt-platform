@@ -23,3 +23,6 @@ If you want to run it via docker container:
 - Check out the website [here](https://web-of-digital-twins.github.io/wodt-platform/)
 - Direct link to the *Code* documentation [here](https://web-of-digital-twins.github.io/wodt-platform/documentation/code-doc/)
 - Direct link to the *REST-API* documentation [here](https://web-of-digital-twins.github.io/wodt-platform/documentation/openapi-doc/)
+
+## Previous versions
+Older versions of this work are archived [here](https://github.com/WebBased-WoDT/wodt-dts-platform).
