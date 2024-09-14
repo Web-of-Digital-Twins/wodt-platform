@@ -1,3 +1,16 @@
+## [1.1.17](https://github.com/Web-of-Digital-Twins/wodt-platform/compare/1.1.16...1.1.17) (2024-09-14)
+
+### Dependency updates
+
+* **core-deps:** update dependency org.jetbrains.kotlinx:kotlinx-coroutines-core to v1.9.0 ([77d351c](https://github.com/Web-of-Digital-Twins/wodt-platform/commit/77d351c3d0eb4ce3c84969940d4854c4e8327d5a))
+* **deps:** update dependency gradle to v8.10.1 ([0dadee0](https://github.com/Web-of-Digital-Twins/wodt-platform/commit/0dadee0f833d8a56fed553f8b44433b081ad7d88))
+* **deps:** update dependency semantic-release-preconfigured-conventional-commits to v1.1.102 ([4c3cbc9](https://github.com/Web-of-Digital-Twins/wodt-platform/commit/4c3cbc92915803754e8c20b84c74ad7760fb2d84))
+* **deps:** update dependency semantic-release-preconfigured-conventional-commits to v1.1.103 ([a04c09e](https://github.com/Web-of-Digital-Twins/wodt-platform/commit/a04c09e7c0723b2db677b2323ca11377d614de16))
+* **deps:** update dependency semantic-release-preconfigured-conventional-commits to v1.1.104 ([1e3cc2a](https://github.com/Web-of-Digital-Twins/wodt-platform/commit/1e3cc2af4df6426ce5f031c10b6b30b2a33b02e3))
+* **deps:** update dependency semantic-release-preconfigured-conventional-commits to v1.1.105 ([044ecb9](https://github.com/Web-of-Digital-Twins/wodt-platform/commit/044ecb9ce23901f92e6a4d59babf715e8de8e196))
+* **deps:** update plugin kotlin-qa to v0.66.0 ([18edb87](https://github.com/Web-of-Digital-Twins/wodt-platform/commit/18edb87eefb2dbcdfd5d51abac1434b437de5a1c))
+* **deps:** update plugin org.danilopianini.gradle-pre-commit-git-hooks to v2.0.10 ([b1868b5](https://github.com/Web-of-Digital-Twins/wodt-platform/commit/b1868b52f76478e8766b4df970e40e046d0853ee))
+
 ## [1.1.16](https://github.com/Web-of-Digital-Twins/wodt-platform/compare/1.1.15...1.1.16) (2024-08-29)
 
 ### Dependency updates
