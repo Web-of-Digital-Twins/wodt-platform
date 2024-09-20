@@ -1,3 +1,13 @@
+## [1.1.18](https://github.com/Web-of-Digital-Twins/wodt-platform/compare/1.1.17...1.1.18) (2024-09-20)
+
+### Dependency updates
+
+* **core-deps:** update dependency org.jetbrains.kotlinx:kotlinx-serialization-json to v1.7.3 ([cac5ad9](https://github.com/Web-of-Digital-Twins/wodt-platform/commit/cac5ad90db5ed9836727ae9e9ee5528ef34c4762))
+* **deps:** update dependency semantic-release-preconfigured-conventional-commits to v1.1.106 ([e96ea7b](https://github.com/Web-of-Digital-Twins/wodt-platform/commit/e96ea7bc6be5ed4e4d32929ed70cd078452b415a))
+* **deps:** update dependency semantic-release-preconfigured-conventional-commits to v1.1.107 ([554f5f5](https://github.com/Web-of-Digital-Twins/wodt-platform/commit/554f5f5f3f227a22df8766a0a0db4c1080da279a))
+* **deps:** update plugin com.gradle.develocity to v3.18.1 ([4ec8c43](https://github.com/Web-of-Digital-Twins/wodt-platform/commit/4ec8c439f2acd50f3497850f7e246fdfaecee308))
+* **deps:** update plugin org.danilopianini.gradle-pre-commit-git-hooks to v2.0.12 ([db65b0a](https://github.com/Web-of-Digital-Twins/wodt-platform/commit/db65b0ada43dc26bcfc2a5927467ef76f779295b))
+
 ## [1.1.17](https://github.com/Web-of-Digital-Twins/wodt-platform/compare/1.1.16...1.1.17) (2024-09-14)
 
 ### Dependency updates
