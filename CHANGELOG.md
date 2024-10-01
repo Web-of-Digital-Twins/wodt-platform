@@ -1,3 +1,30 @@
+## [1.1.19](https://github.com/Web-of-Digital-Twins/wodt-platform/compare/1.1.18...1.1.19) (2024-10-01)
+
+### Dependency updates
+
+* **deps:** update dependency gradle to v8.10.2 ([ed065e3](https://github.com/Web-of-Digital-Twins/wodt-platform/commit/ed065e3acf81ff94c05fabcd8967a6e446a55f45))
+* **deps:** update dependency semantic-release-preconfigured-conventional-commits to v1.1.108 ([49f76b1](https://github.com/Web-of-Digital-Twins/wodt-platform/commit/49f76b1fee71da27b8dde8098b8fb40a94d78331))
+* **deps:** update dependency semantic-release-preconfigured-conventional-commits to v1.1.109 ([8284dd3](https://github.com/Web-of-Digital-Twins/wodt-platform/commit/8284dd34c50fa9102fbe75a18f524bb190ad6ec8))
+* **deps:** update plugin kotlin-qa to v0.66.1 ([15b8b53](https://github.com/Web-of-Digital-Twins/wodt-platform/commit/15b8b539f6423f09faa37ab435518b4e28f01287))
+* **deps:** update plugin org.danilopianini.gradle-pre-commit-git-hooks to v2.0.13 ([87c9856](https://github.com/Web-of-Digital-Twins/wodt-platform/commit/87c9856ff0dc36653fdc32117247c0d1932e6665))
+
+### Bug Fixes
+
+* mapping to local urls in old relationship targets when a new dt is registered ([c51658e](https://github.com/Web-of-Digital-Twins/wodt-platform/commit/c51658e7995a701fbb5e5e70bc8857d2112aeba0))
+
+### Performance improvements
+
+* add retry logic on http client ([ccd2ded](https://github.com/Web-of-Digital-Twins/wodt-platform/commit/ccd2ded6c9992ec89e13d12e7d07fcc436d70d5e))
+
+### Tests
+
+* add tests for testing local urls mapping ([5a1cc26](https://github.com/Web-of-Digital-Twins/wodt-platform/commit/5a1cc26f15120e8e0ef01cf26df9cacb5e20394c))
+
+### Build and continuous integration
+
+* **deps:** update actions/setup-node action to v4.0.4 ([0963453](https://github.com/Web-of-Digital-Twins/wodt-platform/commit/09634539049ecddb6df423fdb708aed2291a400f))
+* update documentation action ([1ba48b4](https://github.com/Web-of-Digital-Twins/wodt-platform/commit/1ba48b49cd1a9d512b99e6c1d32a1cdc8335c712))
+
 ## [1.1.18](https://github.com/Web-of-Digital-Twins/wodt-platform/compare/1.1.17...1.1.18) (2024-09-20)
 
 ### Dependency updates
