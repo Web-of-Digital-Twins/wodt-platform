@@ -23,6 +23,7 @@ import io.github.oshai.kotlinlogging.KotlinLogging
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.HttpClientEngine
 import io.ktor.client.engine.cio.CIO
+import io.ktor.client.plugins.HttpRequestRetry
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.plugins.websocket.DefaultClientWebSocketSession
 import io.ktor.client.plugins.websocket.WebSockets
@@ -48,6 +49,10 @@ class KtorWoDTPlatformHttpClient(
 ) : EcosystemManagementHttpClient, WoDTDigitalTwinsObserverWsClient {
     private val webSockets: MutableMap<String, DefaultClientWebSocketSession> = mutableMapOf()
     private val httpClient = HttpClient(engine) {
+        install(HttpRequestRetry) {
+            exponentialDelay()
+            maxRetries = 5
+        }
         install(WebSockets) {
             pingInterval = WEBSOCKET_PING_INTERVAL
         }
