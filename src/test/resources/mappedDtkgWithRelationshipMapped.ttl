@@ -1,0 +1,7 @@
+<http://localhost:4000/wodt/https://example.com/dt>
+        <https://healthcareontology.com/ontology#hasFuelLevel>
+                "37.0"^^<http://www.w3.org/2001/XMLSchema#double>;
+        <https://healthcareontology.com/ontology#isBusy>
+                true;
+        <https://smartcityontology.com/ontology#isApproaching>
+                <http://localhost:4000/wodt/http://example.com/intersection> .

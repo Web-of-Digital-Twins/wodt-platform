@@ -62,16 +62,19 @@ class JenaPlatformKnowledgeGraphEngineTest : StringSpec({
         }
     """.trimIndent()
 
-    fun insertDTD(platformKnowledgeGraphEngine: PlatformKnowledgeGraphEngine) {
-        readResourceFile("wotDtd.json")?.toDTD("application/td+json")?.run {
+    fun insertDTD(platformKnowledgeGraphEngine: PlatformKnowledgeGraphEngine, fileName: String = "wotDtd.json") {
+        readResourceFile(fileName)?.toDTD("application/td+json")?.run {
             platformKnowledgeGraphEngine.mergeDigitalTwinDescriptor(this)
         }
     }
 
-    fun insertDTKG(platformKnowledgeGraphEngine: PlatformKnowledgeGraphEngine): String =
-        readResourceFile("dtkgWithRelationship.ttl")?.also {
-            platformKnowledgeGraphEngine.mergeDigitalTwinKnowledgeGraphUpdate(dtUri, it)
-        }.orEmpty()
+    fun insertDTKG(
+        platformKnowledgeGraphEngine: PlatformKnowledgeGraphEngine,
+        digitalTwinURI: DigitalTwinURI = dtUri,
+        fileName: String = "dtkgWithRelationship.ttl",
+    ): String = readResourceFile(fileName)?.also {
+        platformKnowledgeGraphEngine.mergeDigitalTwinKnowledgeGraphUpdate(digitalTwinURI, it)
+    }.orEmpty()
 
     "it should be possible to merge a Digital Twin Descriptor" {
         val platformKnowledgeGraphEngine = JenaPlatformKnowledgeGraphEngine(EcosystemRegistryService(testPort))
@@ -121,6 +124,35 @@ class JenaPlatformKnowledgeGraphEngineTest : StringSpec({
             platformKnowledgeGraphEngine.getDigitalTwinsFromPhysicalAsset("lampPA")
                 .contains(dtUri) shouldBe true
         }
+
+    "only registered DT URIs should be mapped to local urls" {
+        val ecosystemRegistry = EcosystemRegistryService(testPort)
+        val platformKnowledgeGraphEngine = JenaPlatformKnowledgeGraphEngine(ecosystemRegistry)
+        ecosystemRegistry.signalRegistration(dtUri)
+        insertDTD(platformKnowledgeGraphEngine)
+        insertDTKG(platformKnowledgeGraphEngine)
+        readResourceFile("mappedDtkgWithRelationship.ttl")?.run {
+            platformKnowledgeGraphEngine.currentCachedDigitalTwinKnowledgeGraph(dtUri) shouldBe this
+        }
+    }
+
+    "when register a new DT old relationships with it should be mapped to local URLs" {
+        val dtToRegisterLater = DigitalTwinURI("http://example.com/intersection")
+        val ecosystemRegistry = EcosystemRegistryService(testPort)
+        val platformKnowledgeGraphEngine = JenaPlatformKnowledgeGraphEngine(ecosystemRegistry)
+        ecosystemRegistry.signalRegistration(dtUri)
+        insertDTD(platformKnowledgeGraphEngine)
+        insertDTKG(platformKnowledgeGraphEngine)
+        readResourceFile("mappedDtkgWithRelationship.ttl")?.run {
+            platformKnowledgeGraphEngine.currentCachedDigitalTwinKnowledgeGraph(dtUri) shouldBe this
+        }
+        ecosystemRegistry.signalRegistration(dtToRegisterLater)
+        insertDTD(platformKnowledgeGraphEngine, "wotDtdInRelationship.json")
+        insertDTKG(platformKnowledgeGraphEngine, dtToRegisterLater, "dtkgInRelationship.ttl")
+        readResourceFile("mappedDtkgWithRelationshipMapped.ttl")?.run {
+            platformKnowledgeGraphEngine.currentCachedDigitalTwinKnowledgeGraph(dtUri) shouldBe this
+        }
+    }
 
     listOf(
         "application/sparql-results+xml",

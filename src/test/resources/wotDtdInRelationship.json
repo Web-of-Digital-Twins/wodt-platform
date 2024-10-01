@@ -1,0 +1,30 @@
+{
+  "id": "https://example.com/intersection",
+  "properties": {
+    "isOccupied": {
+      "observable": true,
+      "readOnly": true,
+      "@type": "https://www.w3.org/2001/XMLSchema#boolean",
+      "https://purl.org/wodt/domainPredicate": "https://smartcityontology.com/ontology#isOccupied",
+      "https://purl.org/wodt/augmentedInteraction": false
+    },
+    "snapshot": {
+      "forms": [
+        {
+          "href": "ws://localhost:3001/dtkg",
+          "op": [
+            "observeproperty"
+          ],
+          "subprotocol": "websocket"
+        }
+      ],
+      "type": "string",
+      "observable": true,
+      "readOnly": true
+    }
+  },
+  "@context": "https://www.w3.org/2019/wot/td/v1",
+  "https://purl.org/wodt/version": "1.0.0",
+  "links": [],
+  "https://purl.org/wodt/physicalAssetId": "intersection"
+}

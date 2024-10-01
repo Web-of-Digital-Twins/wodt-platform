@@ -1,0 +1,3 @@
+<http://example.com/intersection>
+    <https://smartcityontology.com/ontology#isOccupied>
+                    true .
