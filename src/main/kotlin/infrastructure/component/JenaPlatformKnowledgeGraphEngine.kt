@@ -134,16 +134,21 @@ class JenaPlatformKnowledgeGraphEngine(
 
     override fun mergeDigitalTwinDescriptor(dtd: DigitalTwinDescriptor) {
         if (dtd.implementationType == DigitalTwinDescriptorImplementationType.THING_DESCRIPTION) {
+            var newDT = true
             this.dtdsModel.enterCriticalSection(Lock.WRITE)
             val dtdModel = RDFParser.fromString(dtd.obtainRepresentation(), Lang.JSONLD11)
                 .build()
                 .toModel()
                 .mapLocalDigitalTwinModel()
-            this.dtdsModelMap[dtd.digitalTwinUri]?.also { this.dtdsModel.remove(it) }
+            this.dtdsModelMap[dtd.digitalTwinUri]?.also {
+                this.dtdsModel.remove(it)
+                newDT = false
+            }
             this.dtdsModelMap += (dtd.digitalTwinUri to dtdModel)
             this.dtdsModel.add(dtdModel)
-            this.emitEvent()
             this.dtdsModel.leaveCriticalSection()
+            if (newDT) { this.updateLocalURIsInPlatformKG() }
+            this.emitEvent()
         }
     }
 
@@ -203,6 +208,22 @@ class JenaPlatformKnowledgeGraphEngine(
             }
         }
         return mappedModel
+    }
+
+    private fun updateLocalURIsInPlatformKG() {
+        this.dtkgsModel.enterCriticalSection(Lock.WRITE)
+        this.dtkgsModelMap.entries.filter { cachedDTEntry ->
+            cachedDTEntry.value.listStatements().toList()
+                .filter { it.getObject().isURIResource }
+                .map { (it.getObject() as Resource).uri }
+                .any { ecosystemRegistryMapper.getLocalUrl(DigitalTwinURI(it)) != null }
+        }.forEach { cachedDTEntry ->
+            this.dtkgsModel.remove(cachedDTEntry.value)
+            val updatedModel = cachedDTEntry.value.mapLocalDigitalTwinModel()
+            this.dtkgsModelMap += (cachedDTEntry.key to updatedModel)
+            this.dtkgsModel.add(updatedModel)
+        }
+        this.dtkgsModel.leaveCriticalSection()
     }
 
     companion object {
