@@ -1,3 +1,16 @@
+## [1.1.20](https://github.com/Web-of-Digital-Twins/wodt-platform/compare/1.1.19...1.1.20) (2024-10-10)
+
+### Dependency updates
+
+* **core-deps:** update dependency org.jetbrains.kotlin:kotlin-stdlib to v2.0.21 ([a6e64a2](https://github.com/Web-of-Digital-Twins/wodt-platform/commit/a6e64a2810b6016da6d779ff1a1ebbbfe3908415))
+* **deps:** update dependency semantic-release-preconfigured-conventional-commits to v1.1.110 ([3948b0a](https://github.com/Web-of-Digital-Twins/wodt-platform/commit/3948b0ac5ed6ebfed50db067b4bcb0c75343281c))
+* **deps:** update dependency semantic-release-preconfigured-conventional-commits to v1.1.111 ([8edbea0](https://github.com/Web-of-Digital-Twins/wodt-platform/commit/8edbea0ed48f21fcb5be91ad8e17f2e3b14cc699))
+* **deps:** update node.js to 20.18 ([5ac73f9](https://github.com/Web-of-Digital-Twins/wodt-platform/commit/5ac73f961a975d65d33a97e9fe0d1b75e5e9f4fa))
+
+### Build and continuous integration
+
+* **deps:** update codecov/codecov-action action to v4.6.0 ([4e3787c](https://github.com/Web-of-Digital-Twins/wodt-platform/commit/4e3787cb1526d9634685f012f7fd8bc8064c8849))
+
 ## [1.1.19](https://github.com/Web-of-Digital-Twins/wodt-platform/compare/1.1.18...1.1.19) (2024-10-01)
 
 ### Dependency updates
