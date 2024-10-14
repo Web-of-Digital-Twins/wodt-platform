@@ -16,7 +16,7 @@
 
 package application.component
 
-import entity.digitaltwin.DigitalTwinDescriptor
+import entity.digitaltwin.DigitalTwinDescription
 import entity.digitaltwin.DigitalTwinURI
 import kotlinx.coroutines.flow.Flow
 
@@ -28,7 +28,7 @@ interface WoDTDigitalTwinsObserver {
     val dtkgRawEvents: Flow<Pair<DigitalTwinURI, String>>
 
     /** Start the observation of a newly registered WoDT Digital Twin. */
-    suspend fun observeDigitalTwin(dtd: DigitalTwinDescriptor)
+    suspend fun observeDigitalTwin(dtd: DigitalTwinDescription)
 
     /** Stop the observation of a deleted Digital Twin. */
     suspend fun stopObservationOfDigitalTwin(dtUri: DigitalTwinURI)

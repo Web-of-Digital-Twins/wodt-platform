@@ -28,7 +28,7 @@ interface EcosystemManagementInterface {
     val ecosystemEvents: Flow<EcosystemEvent>
 
     /**
-     * Registration of a new Digital Twin to the WoDT Digital Twins Platform.
+     * Registration of a new Digital Twin to the WoDT Platform.
      * It needs the [rawDtd] and its [contentType] in order to be able to understand and validate it.
      * Moreover, if it [shouldNotify] the WoDT Digital Twin about the correct registration it will send the request
      * to the new registered WoDT Digital Twin.

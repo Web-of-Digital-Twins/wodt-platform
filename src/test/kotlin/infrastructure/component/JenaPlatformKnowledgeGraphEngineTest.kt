@@ -18,7 +18,7 @@ package infrastructure.component
 
 import TestingUtils.readResourceFile
 import application.component.PlatformKnowledgeGraphEngine
-import application.presenter.dtd.DigitalTwinDescriptorDeserialization.toDTD
+import application.presenter.dtd.DigitalTwinDescriptionDeserialization.toDTD
 import application.service.EcosystemRegistryService
 import entity.digitaltwin.DigitalTwinURI
 import io.kotest.core.spec.style.StringSpec
@@ -64,7 +64,7 @@ class JenaPlatformKnowledgeGraphEngineTest : StringSpec({
 
     fun insertDTD(platformKnowledgeGraphEngine: PlatformKnowledgeGraphEngine, fileName: String = "wotDtd.json") {
         readResourceFile(fileName)?.toDTD("application/td+json")?.run {
-            platformKnowledgeGraphEngine.mergeDigitalTwinDescriptor(this)
+            platformKnowledgeGraphEngine.mergeDigitalTwinDescription(this)
         }
     }
 
@@ -76,7 +76,7 @@ class JenaPlatformKnowledgeGraphEngineTest : StringSpec({
         platformKnowledgeGraphEngine.mergeDigitalTwinKnowledgeGraphUpdate(digitalTwinURI, it)
     }.orEmpty()
 
-    "it should be possible to merge a Digital Twin Descriptor" {
+    "it should be possible to merge a Digital Twin Description" {
         val platformKnowledgeGraphEngine = JenaPlatformKnowledgeGraphEngine(EcosystemRegistryService(testPort))
         platformKnowledgeGraphEngine.currentPlatformKnowledgeGraph()?.isEmpty() shouldBe true
         insertDTD(platformKnowledgeGraphEngine)

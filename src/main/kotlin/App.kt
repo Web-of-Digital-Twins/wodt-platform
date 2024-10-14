@@ -24,7 +24,7 @@ import infrastructure.component.KtorWoDTPlatformWebServer
 import kotlinx.coroutines.runBlocking
 
 /**
- * Function to start the WoDT Digital Twins Platform.
+ * Function to start the WoDT Platform.
  */
 fun main(): Unit = runBlocking {
     val platformHttpClient = KtorWoDTPlatformHttpClient()

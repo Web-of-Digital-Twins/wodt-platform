@@ -17,9 +17,9 @@
 package application.service
 
 import TestingUtils.readResourceFile
-import entity.digitaltwin.DigitalTwinDescriptorImplementationType
+import entity.digitaltwin.DigitalTwinDescriptionImplementationType
 import entity.digitaltwin.DigitalTwinURI
-import entity.digitaltwin.WoTDigitalTwinDescriptor
+import entity.digitaltwin.WoTDigitalTwinDescription
 import infrastructure.component.KtorWoDTPlatformHttpClient
 import io.kotest.common.runBlocking
 import io.kotest.core.spec.style.StringSpec
@@ -45,7 +45,7 @@ class BaseEcosystemManagementInterfaceTest : StringSpec({
         runBlocking {
             ecosystemManagementInterface.registerNewDigitalTwin(
                 dtd,
-                DigitalTwinDescriptorImplementationType.THING_DESCRIPTION.contentType,
+                DigitalTwinDescriptionImplementationType.THING_DESCRIPTION.contentType,
                 true,
             ) shouldBe true
         }
@@ -60,12 +60,12 @@ class BaseEcosystemManagementInterfaceTest : StringSpec({
         runBlocking {
             ecosystemManagementInterface.registerNewDigitalTwin(
                 dtd,
-                DigitalTwinDescriptorImplementationType.THING_DESCRIPTION.contentType,
+                DigitalTwinDescriptionImplementationType.THING_DESCRIPTION.contentType,
                 true,
             ) shouldBe true
             ecosystemManagementInterface.registerNewDigitalTwin(
                 dtd,
-                DigitalTwinDescriptorImplementationType.THING_DESCRIPTION.contentType,
+                DigitalTwinDescriptionImplementationType.THING_DESCRIPTION.contentType,
                 true,
             ) shouldBe false
         }
@@ -80,11 +80,11 @@ class BaseEcosystemManagementInterfaceTest : StringSpec({
         runBlocking {
             ecosystemManagementInterface.registerNewDigitalTwin(
                 dtd,
-                DigitalTwinDescriptorImplementationType.THING_DESCRIPTION.contentType,
+                DigitalTwinDescriptionImplementationType.THING_DESCRIPTION.contentType,
                 true,
             ) shouldBe true
             ecosystemManagementInterface.deleteDigitalTwin(
-                WoTDigitalTwinDescriptor.fromJson(
+                WoTDigitalTwinDescription.fromJson(
                     Json.decodeFromString<JsonObject>(dtd),
                 )?.digitalTwinUri ?: DigitalTwinURI(""),
             ) shouldBe true

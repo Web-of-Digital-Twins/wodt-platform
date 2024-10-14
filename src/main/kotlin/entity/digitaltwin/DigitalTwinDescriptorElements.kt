@@ -17,17 +17,17 @@
 package entity.digitaltwin
 
 /**
- * This interface represents the abstraction of Digital Twin Descriptor of a WoDT Digital Twin.
+ * This interface represents the abstraction of Digital Twin Description of a WoDT Digital Twin.
  */
-interface DigitalTwinDescriptor {
+interface DigitalTwinDescription {
     /** The physical asset identifier of the associated physical asset. */
     val physicalAssetId: String
 
     /** The URI of the interested WoDT Digital Twin. */
     val digitalTwinUri: DigitalTwinURI
 
-    /** The type of representation used to implement the provided Digital Twin Descriptor. */
-    val implementationType: DigitalTwinDescriptorImplementationType
+    /** The type of representation used to implement the provided Digital Twin Description. */
+    val implementationType: DigitalTwinDescriptionImplementationType
 
     /** Obtain the form to observe the WoDT Digital Twin. */
     fun obtainObservationForm(): Form
@@ -40,7 +40,7 @@ interface DigitalTwinDescriptor {
 }
 
 /**
- * This class represents a form in the [DigitalTwinDescriptor].
+ * This class represents a form in the [DigitalTwinDescription].
  * Each form is described by its [href] and its [protocol].
  */
 data class Form(val href: String, val protocol: FormProtocol)
@@ -54,9 +54,9 @@ enum class FormProtocol(val protocolName: String) {
 }
 
 /**
- * This enum lists the supported implementation of the Digital Twin Descriptor.
+ * This enum lists the supported implementation of the Digital Twin Description.
  * Each implementation is associated to its [contentType].
  */
-enum class DigitalTwinDescriptorImplementationType(val contentType: String) {
+enum class DigitalTwinDescriptionImplementationType(val contentType: String) {
     THING_DESCRIPTION("application/td+json"),
 }

@@ -17,7 +17,7 @@
 package infrastructure.component
 
 import TestingUtils.readResourceFile
-import application.presenter.dtd.DigitalTwinDescriptorDeserialization.toDTD
+import application.presenter.dtd.DigitalTwinDescriptionDeserialization.toDTD
 import infrastructure.component.KtorTestingUtility.apiTestApplication
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
