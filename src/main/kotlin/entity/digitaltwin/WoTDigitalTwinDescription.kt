@@ -19,7 +19,6 @@ package entity.digitaltwin
 import entity.ontology.WoDTVocabulary
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonObject
-import kotlinx.serialization.json.JsonPrimitive
 import kotlinx.serialization.json.jsonArray
 import kotlinx.serialization.json.jsonObject
 import kotlinx.serialization.json.jsonPrimitive
@@ -52,12 +51,10 @@ class WoTDigitalTwinDescription private constructor(
 
     companion object {
         private const val DIGITAL_TWIN_URI_FIELD = "id"
-        private const val PROPERTIES_LIST = "properties"
-        private const val SNAPSHOT_PROPERTY = "snapshot"
         private const val FORM_LIST = "forms"
         private const val FORM_SUBPROTOCOL = "subprotocol"
         private const val FORM_OP = "op"
-        private const val FORM_OP_OBSERVE_PROPERTY = "observeproperty"
+        private const val FORM_OP_OBSERVE_ALL_PROPERTIES = "observeallproperties"
         private const val FORM_HREF = "href"
 
         /**
@@ -66,22 +63,20 @@ class WoTDigitalTwinDescription private constructor(
         fun fromJson(rawDTD: JsonObject): WoTDigitalTwinDescription? {
             val paId = rawDTD[WoDTVocabulary.PHYSICAL_ASSET_ID]?.jsonPrimitive?.content
             val dtUri = rawDTD[DIGITAL_TWIN_URI_FIELD]?.jsonPrimitive?.content?.let { DigitalTwinURI(it) }
-            val snapshotForm = rawDTD[PROPERTIES_LIST]
-                ?.jsonObject
-                ?.get(SNAPSHOT_PROPERTY)
-                ?.jsonObject
-                ?.get(FORM_LIST)
+            val observationForm = rawDTD[FORM_LIST]
                 ?.jsonArray
                 ?.find {
-                    it.jsonObject[FORM_OP]?.jsonArray?.contains(JsonPrimitive(FORM_OP_OBSERVE_PROPERTY)) == true &&
-                        it.jsonObject[FORM_SUBPROTOCOL]?.jsonPrimitive?.content == FormProtocol.WEBSOCKET.protocolName
+                    it.jsonObject[FORM_OP]?.jsonPrimitive?.content
+                        ?.equals(FORM_OP_OBSERVE_ALL_PROPERTIES) == true &&
+                        it.jsonObject[FORM_SUBPROTOCOL]?.jsonPrimitive?.content
+                            ?.equals(FormProtocol.WEBSOCKET.protocolName) == true
                 }
                 ?.jsonObject
                 ?.let { form ->
                     form[FORM_HREF]?.jsonPrimitive?.content?.let { href -> Form(href, FormProtocol.WEBSOCKET) }
                 }
-            return if (paId != null && dtUri != null && snapshotForm != null) {
-                WoTDigitalTwinDescription(paId, dtUri, snapshotForm, rawDTD.toString())
+            return if (paId != null && dtUri != null && observationForm != null) {
+                WoTDigitalTwinDescription(paId, dtUri, observationForm, rawDTD.toString())
             } else {
                 null
             }
