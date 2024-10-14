@@ -4,4 +4,6 @@
         <https://healthcareontology.com/ontology#isBusy>
                 true;
         <https://smartcityontology.com/ontology#isApproaching>
-                <http://example.com/intersection> .
+                <http://example.com/intersection>;
+        <https://smartcityontology.com/ontology#isApproachingNested>
+                [ <https://ontology.com/url>  <http://example.com/intersection> ] .
