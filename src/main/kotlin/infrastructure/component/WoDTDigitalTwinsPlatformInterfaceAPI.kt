@@ -37,7 +37,7 @@ import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 
 /**
- * The WoDT Digital Twins Platform Interface API available to handle requests of Consumers.
+ * The WoDT Platform Interface API available to handle requests of Consumers.
  */
 fun Application.wodtDigitalTwinsPlatformInterfaceAPI(platformKnowledgeGraphEngine: PlatformKnowledgeGraphEngineReader) {
     routing {

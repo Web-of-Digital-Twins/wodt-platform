@@ -17,9 +17,9 @@
 package application.component
 
 /**
- * This interface models the Web Server used by the components of the WoDT Digital Twins Platform.
+ * This interface models the Web Server used by the components of the WoDT Platform.
  */
 interface WoDTPlatformWebServer {
-    /** Start the WoDT Digital Twins Platform Web Server. */
+    /** Start the WoDT Platform Web Server. */
     fun start()
 }

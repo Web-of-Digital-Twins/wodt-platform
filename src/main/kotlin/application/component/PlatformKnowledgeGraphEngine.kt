@@ -16,26 +16,26 @@
 
 package application.component
 
-import entity.digitaltwin.DigitalTwinDescriptor
+import entity.digitaltwin.DigitalTwinDescription
 import entity.digitaltwin.DigitalTwinURI
 import kotlinx.coroutines.flow.Flow
 
 /**
- * This component models the reader part of the WoDT Digital Twins Platform Knowledge Graph Engine component
+ * This component models the reader part of the WoDT Platform Knowledge Graph Engine component
  * of the Abstract Architecture.
  */
 interface PlatformKnowledgeGraphEngineReader {
-    /** Obtain the flow of WoDT Digital Twins Platform Knowledge Graphs emitted by the component. */
+    /** Obtain the flow of Platform Knowledge Graphs emitted by the component. */
     val platformKnowledgeGraphs: Flow<String>
 
-    /** Obtain the current status of the WoDT Digital Twins Platform Knowledge Graph. */
+    /** Obtain the current status of the Platform Knowledge Graph. */
     fun currentPlatformKnowledgeGraph(): String?
 
     /** Obtain the cached current status of a registered WoDT Digital Twin identified by its [dtUri]. */
     fun currentCachedDigitalTwinKnowledgeGraph(dtUri: DigitalTwinURI): String?
 
     /**
-     * Query the WoDT Digital Twins Platform Knowledge Graph. The query will be returned in the [responseContentType]
+     * Query the Platform Knowledge Graph. The query will be returned in the [responseContentType]
      * if possible.
      */
     fun query(query: String, responseContentType: String?): String?
@@ -50,10 +50,10 @@ interface PlatformKnowledgeGraphEngineReader {
  */
 interface PlatformKnowledgeGraphEngineWriter {
     /**
-     * Merge the Digital Twin Descriptor of a WoDT Digital Twin to the current WoDT Digital Twins Platform
+     * Merge the Digital Twin Description of a WoDT Digital Twin to the current Platform
      * Knowledge Graph.
      */
-    fun mergeDigitalTwinDescriptor(dtd: DigitalTwinDescriptor)
+    fun mergeDigitalTwinDescription(dtd: DigitalTwinDescription)
 
     /**
      * Merge the updated [dtkg] of the registered WoDT Digital Twin identified via its [dtUri].

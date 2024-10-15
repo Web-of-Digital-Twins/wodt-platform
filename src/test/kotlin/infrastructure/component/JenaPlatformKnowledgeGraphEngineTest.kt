@@ -18,15 +18,16 @@ package infrastructure.component
 
 import TestingUtils.readResourceFile
 import application.component.PlatformKnowledgeGraphEngine
-import application.presenter.dtd.DigitalTwinDescriptorDeserialization.toDTD
+import application.presenter.dtd.DigitalTwinDescriptionDeserialization.toDTD
 import application.service.EcosystemRegistryService
 import entity.digitaltwin.DigitalTwinURI
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
+import java.net.URI
 
 class JenaPlatformKnowledgeGraphEngineTest : StringSpec({
-    val testPort = 4000
+    val platformExposedUrl = URI.create("http://localhost:4000")
     val dtUri = DigitalTwinURI("https://example.com/dt")
     val selectQuery = """
             SELECT ?subject ?predicate ?object
@@ -64,7 +65,7 @@ class JenaPlatformKnowledgeGraphEngineTest : StringSpec({
 
     fun insertDTD(platformKnowledgeGraphEngine: PlatformKnowledgeGraphEngine, fileName: String = "wotDtd.json") {
         readResourceFile(fileName)?.toDTD("application/td+json")?.run {
-            platformKnowledgeGraphEngine.mergeDigitalTwinDescriptor(this)
+            platformKnowledgeGraphEngine.mergeDigitalTwinDescription(this)
         }
     }
 
@@ -76,22 +77,24 @@ class JenaPlatformKnowledgeGraphEngineTest : StringSpec({
         platformKnowledgeGraphEngine.mergeDigitalTwinKnowledgeGraphUpdate(digitalTwinURI, it)
     }.orEmpty()
 
-    "it should be possible to merge a Digital Twin Descriptor" {
-        val platformKnowledgeGraphEngine = JenaPlatformKnowledgeGraphEngine(EcosystemRegistryService(testPort))
+    "it should be possible to merge a Digital Twin Description" {
+        val platformKnowledgeGraphEngine =
+            JenaPlatformKnowledgeGraphEngine(EcosystemRegistryService(platformExposedUrl))
         platformKnowledgeGraphEngine.currentPlatformKnowledgeGraph()?.isEmpty() shouldBe true
         insertDTD(platformKnowledgeGraphEngine)
         platformKnowledgeGraphEngine.currentPlatformKnowledgeGraph()?.isEmpty() shouldBe false
     }
 
     "it should be possible to merge a Digital Twin Knowledge Graph" {
-        val platformKnowledgeGraphEngine = JenaPlatformKnowledgeGraphEngine(EcosystemRegistryService(testPort))
+        val platformKnowledgeGraphEngine =
+            JenaPlatformKnowledgeGraphEngine(EcosystemRegistryService(platformExposedUrl))
         platformKnowledgeGraphEngine.currentPlatformKnowledgeGraph()?.isEmpty() shouldBe true
         val dtkg = insertDTKG(platformKnowledgeGraphEngine)
         platformKnowledgeGraphEngine.currentPlatformKnowledgeGraph() shouldBe dtkg
     }
 
     "it should be possible to delete a registered WoDT Digital Twin" {
-        val ecosystemRegistry = EcosystemRegistryService(testPort)
+        val ecosystemRegistry = EcosystemRegistryService(platformExposedUrl)
         val platformKnowledgeGraphEngine = JenaPlatformKnowledgeGraphEngine(ecosystemRegistry)
         ecosystemRegistry.signalRegistration(dtUri)
         insertDTD(platformKnowledgeGraphEngine)
@@ -101,12 +104,13 @@ class JenaPlatformKnowledgeGraphEngineTest : StringSpec({
     }
 
     "it should not be possible to delete a not-registered Digital Twin" {
-        val platformKnowledgeGraphEngine = JenaPlatformKnowledgeGraphEngine(EcosystemRegistryService(testPort))
+        val platformKnowledgeGraphEngine =
+            JenaPlatformKnowledgeGraphEngine(EcosystemRegistryService(platformExposedUrl))
         platformKnowledgeGraphEngine.deleteDigitalTwin(dtUri) shouldBe false
     }
 
     "it should be possible to obtain the cached representation of a registered WoDT Digital Twin" {
-        val ecosystemRegistry = EcosystemRegistryService(testPort)
+        val ecosystemRegistry = EcosystemRegistryService(platformExposedUrl)
         val platformKnowledgeGraphEngine = JenaPlatformKnowledgeGraphEngine(ecosystemRegistry)
         ecosystemRegistry.signalRegistration(dtUri)
         insertDTKG(platformKnowledgeGraphEngine)
@@ -117,7 +121,7 @@ class JenaPlatformKnowledgeGraphEngineTest : StringSpec({
 
     "it should be possible to obtain all the registered WoDT Digital Twins that are associated with " +
         "a specific Physical Asset" {
-            val ecosystemRegistry = EcosystemRegistryService(testPort)
+            val ecosystemRegistry = EcosystemRegistryService(platformExposedUrl)
             val platformKnowledgeGraphEngine = JenaPlatformKnowledgeGraphEngine(ecosystemRegistry)
             ecosystemRegistry.signalRegistration(dtUri)
             insertDTD(platformKnowledgeGraphEngine)
@@ -126,7 +130,7 @@ class JenaPlatformKnowledgeGraphEngineTest : StringSpec({
         }
 
     "only registered DT URIs should be mapped to local urls" {
-        val ecosystemRegistry = EcosystemRegistryService(testPort)
+        val ecosystemRegistry = EcosystemRegistryService(platformExposedUrl)
         val platformKnowledgeGraphEngine = JenaPlatformKnowledgeGraphEngine(ecosystemRegistry)
         ecosystemRegistry.signalRegistration(dtUri)
         insertDTD(platformKnowledgeGraphEngine)
@@ -138,7 +142,7 @@ class JenaPlatformKnowledgeGraphEngineTest : StringSpec({
 
     "when register a new DT old relationships with it should be mapped to local URLs" {
         val dtToRegisterLater = DigitalTwinURI("http://example.com/intersection")
-        val ecosystemRegistry = EcosystemRegistryService(testPort)
+        val ecosystemRegistry = EcosystemRegistryService(platformExposedUrl)
         val platformKnowledgeGraphEngine = JenaPlatformKnowledgeGraphEngine(ecosystemRegistry)
         ecosystemRegistry.signalRegistration(dtUri)
         insertDTD(platformKnowledgeGraphEngine)
@@ -161,7 +165,7 @@ class JenaPlatformKnowledgeGraphEngineTest : StringSpec({
         "text/tab-separated-values",
     ).forEach {
         "it should be possible to perform SPARQL SELECT Queries using the $it content-type" {
-            val ecosystemRegistry = EcosystemRegistryService(testPort)
+            val ecosystemRegistry = EcosystemRegistryService(platformExposedUrl)
             val platformKnowledgeGraphEngine = JenaPlatformKnowledgeGraphEngine(ecosystemRegistry)
             platformKnowledgeGraphEngine.query(
                 selectQuery,
@@ -175,7 +179,7 @@ class JenaPlatformKnowledgeGraphEngineTest : StringSpec({
         "application/sparql-results+json",
     ).forEach {
         "it should be possible to perform SPARQL ASK Queries using $it content-type" {
-            val ecosystemRegistry = EcosystemRegistryService(testPort)
+            val ecosystemRegistry = EcosystemRegistryService(platformExposedUrl)
             val platformKnowledgeGraphEngine = JenaPlatformKnowledgeGraphEngine(ecosystemRegistry)
             platformKnowledgeGraphEngine.query(
                 askQuery,
@@ -185,19 +189,19 @@ class JenaPlatformKnowledgeGraphEngineTest : StringSpec({
     }
 
     "it should be possible to perform SPARQL CONSTRUCT Queries" {
-        val ecosystemRegistry = EcosystemRegistryService(testPort)
+        val ecosystemRegistry = EcosystemRegistryService(platformExposedUrl)
         val platformKnowledgeGraphEngine = JenaPlatformKnowledgeGraphEngine(ecosystemRegistry)
         platformKnowledgeGraphEngine.query(constructQuery, null) shouldNotBe null
     }
 
     "it should be possible to perform SPARQL DESCRIBE Queries" {
-        val ecosystemRegistry = EcosystemRegistryService(testPort)
+        val ecosystemRegistry = EcosystemRegistryService(platformExposedUrl)
         val platformKnowledgeGraphEngine = JenaPlatformKnowledgeGraphEngine(ecosystemRegistry)
         platformKnowledgeGraphEngine.query(describeQuery, null) shouldNotBe null
     }
 
     "it should not be possible to perform SPARQL UPDATE queries" {
-        val ecosystemRegistry = EcosystemRegistryService(testPort)
+        val ecosystemRegistry = EcosystemRegistryService(platformExposedUrl)
         val platformKnowledgeGraphEngine = JenaPlatformKnowledgeGraphEngine(ecosystemRegistry)
         platformKnowledgeGraphEngine.query(sparqlUpdateQuery, null) shouldBe null
     }

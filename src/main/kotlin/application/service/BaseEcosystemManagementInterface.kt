@@ -19,8 +19,8 @@ package application.service
 import application.component.EcosystemManagementHttpClient
 import application.component.EcosystemManagementInterface
 import application.component.EcosystemRegistry
-import application.presenter.dtd.DigitalTwinDescriptorDeserialization.toDTD
-import entity.digitaltwin.DigitalTwinDescriptorImplementationType
+import application.presenter.dtd.DigitalTwinDescriptionDeserialization.toDTD
+import entity.digitaltwin.DigitalTwinDescriptionImplementationType
 import entity.digitaltwin.DigitalTwinURI
 import entity.event.DigitalTwinDeleted
 import entity.event.EcosystemEvent
@@ -75,6 +75,6 @@ class BaseEcosystemManagementInterface(
         }
 
     companion object {
-        private val supportedContentTypes = DigitalTwinDescriptorImplementationType.entries.map { it.contentType }
+        private val supportedContentTypes = DigitalTwinDescriptionImplementationType.entries.map { it.contentType }
     }
 }

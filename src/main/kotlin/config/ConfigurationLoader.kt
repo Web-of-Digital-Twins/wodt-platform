@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023. Andrea Giulianelli
+ * Copyright (c) 2024. Andrea Giulianelli
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,17 +14,17 @@
  * limitations under the License.
  */
 
-package infrastructure.component
+package config
+
+import java.net.URI
 
 /**
- * Obtain the WoDT Digital Twin Uri from the path parameters inside the request url.
+ * This interface models the Configuration Loader for the WoDT Platform.
  */
-fun obtainDigitalTwinUriFromPathParameters(pathParameters: List<String>): String {
-    var path = pathParameters[0] + "//" + pathParameters[1]
-    if (pathParameters.size > 2) {
-        path += pathParameters.subList(2, pathParameters.size).joinToString(
-            prefix = "/", separator = "/",
-        )
-    }
-    return path
+interface ConfigurationLoader {
+    /** Represents the port exposed by the WoDT Platform for the services. */
+    val exposedPort: Int
+
+    /** Represents the actual URL exposed publicly by the WoDT Platform once deployed. */
+    val platformExposedUrl: URI
 }

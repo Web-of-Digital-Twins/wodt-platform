@@ -17,7 +17,7 @@
 package infrastructure.component
 
 import application.component.EcosystemManagementInterface
-import application.presenter.dtd.DigitalTwinDescriptorDeserialization.toDTD
+import application.presenter.dtd.DigitalTwinDescriptionDeserialization.toDTD
 import entity.digitaltwin.DigitalTwinURI
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.Application

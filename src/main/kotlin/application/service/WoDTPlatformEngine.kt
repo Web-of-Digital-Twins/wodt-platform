@@ -26,7 +26,7 @@ import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 
 /**
- * The Engine that runs the WoDT Digital Twins Platform connecting all the events from components.
+ * The Engine that runs the WoDT Platform connecting all the events from components.
  */
 class WoDTPlatformEngine(
     private val ecosystemManagementInterface: EcosystemManagementInterface,
@@ -42,7 +42,7 @@ class WoDTPlatformEngine(
             ecosystemManagementInterface.ecosystemEvents.collect {
                 if (it is NewDigitalTwinRegistered) {
                     launch { woDTDigitalTwinsObserver.observeDigitalTwin(it.dtd) }
-                    platformKnowledgeGraphEngine.mergeDigitalTwinDescriptor(it.dtd)
+                    platformKnowledgeGraphEngine.mergeDigitalTwinDescription(it.dtd)
                 } else if (it is DigitalTwinDeleted) {
                     woDTDigitalTwinsObserver.stopObservationOfDigitalTwin(it.dtURI)
                     platformKnowledgeGraphEngine.deleteDigitalTwin(it.dtURI)

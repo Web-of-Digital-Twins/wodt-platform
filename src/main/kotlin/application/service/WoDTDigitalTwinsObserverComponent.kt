@@ -19,7 +19,7 @@ package application.service
 import application.component.EcosystemRegistryDeletionSignaler
 import application.component.WoDTDigitalTwinsObserver
 import application.component.WoDTDigitalTwinsObserverWsClient
-import entity.digitaltwin.DigitalTwinDescriptor
+import entity.digitaltwin.DigitalTwinDescription
 import entity.digitaltwin.DigitalTwinURI
 import entity.digitaltwin.FormProtocol
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -37,7 +37,7 @@ class WoDTDigitalTwinsObserverComponent(
 
     override val dtkgRawEvents = this._dtkgRawEvents.asSharedFlow()
 
-    override suspend fun observeDigitalTwin(dtd: DigitalTwinDescriptor) {
+    override suspend fun observeDigitalTwin(dtd: DigitalTwinDescription) {
         if (dtd.obtainObservationForm().protocol == FormProtocol.WEBSOCKET) {
             this.wsClient.observeDigitalTwin(
                 dtd.obtainObservationForm().href,

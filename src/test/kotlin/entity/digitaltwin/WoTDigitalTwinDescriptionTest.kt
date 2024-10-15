@@ -24,23 +24,23 @@ import io.kotest.matchers.shouldNotBe
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonObject
 
-class WoTDigitalTwinDescriptorTest : StringSpec({
+class WoTDigitalTwinDescriptionTest : StringSpec({
     fun testIncompleteWoTDTD(keyToRemove: String) = readResourceFile("wotDtd.json")?.let {
         val jsonDtd = JsonObject(Json.decodeFromString<JsonObject>(it).toMutableMap().apply { remove(keyToRemove) })
-        val dtd = WoTDigitalTwinDescriptor.fromJson(jsonDtd)
+        val dtd = WoTDigitalTwinDescription.fromJson(jsonDtd)
         dtd shouldBe null
     }
 
     fun testIncompleteWoTDTDFromFile(file: String) = readResourceFile(file)?.let {
         val jsonDtd = Json.decodeFromString<JsonObject>(it)
-        val dtd = WoTDigitalTwinDescriptor.fromJson(jsonDtd)
+        val dtd = WoTDigitalTwinDescription.fromJson(jsonDtd)
         dtd shouldBe null
     }
 
     "it should be possible to obtain the necessary information from a correct wot dtd implementation" {
         readResourceFile("wotDtd.json")?.let {
             val jsonDtd = Json.decodeFromString<JsonObject>(it)
-            val dtd = WoTDigitalTwinDescriptor.fromJson(jsonDtd)
+            val dtd = WoTDigitalTwinDescription.fromJson(jsonDtd)
             dtd shouldNotBe null
             dtd?.physicalAssetId shouldBe "lampPA"
             dtd?.digitalTwinUri shouldBe DigitalTwinURI("https://example.com/dt")
@@ -57,18 +57,18 @@ class WoTDigitalTwinDescriptorTest : StringSpec({
         testIncompleteWoTDTD("id")
     }
 
-    "if the snapshot property is not present then it can't be built" {
-        testIncompleteWoTDTDFromFile("wotDtdWithoutSnapshot.json")
+    "if the Thing-level forms are not present then it can't be built" {
+        testIncompleteWoTDTD("forms")
     }
 
-    "if the observation affordance for the snapshot property is not present then it can't be built" {
+    "if the observeallproperties Thing-level form is not present then it can't be built" {
         testIncompleteWoTDTDFromFile("wotDtdWithoutObservation.json")
     }
 
-    "if the observation subprotocol for the snapshot property is not supported then it can't be built" {
+    "if the observation subprotocol is not supported then it can't be built" {
         readResourceFile("wotDtdWithoutSupportedObservation.json")?.let {
             val jsonDtd = Json.decodeFromString<JsonObject>(it)
-            val dtd = WoTDigitalTwinDescriptor.fromJson(jsonDtd)
+            val dtd = WoTDigitalTwinDescription.fromJson(jsonDtd)
             dtd shouldBe null
         }
     }

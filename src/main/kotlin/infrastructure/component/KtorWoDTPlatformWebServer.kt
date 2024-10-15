@@ -31,16 +31,8 @@ import io.ktor.server.websocket.WebSockets
 class KtorWoDTPlatformWebServer(
     private val ecosystemManagementInterface: EcosystemManagementInterface,
     private val platformKnowledgeGraphEngineReader: PlatformKnowledgeGraphEngineReader,
-    exposedPort: Int? = null,
+    private val exposedPort: Int,
 ) : WoDTPlatformWebServer {
-    private val exposedPort: Int
-
-    init {
-        if (exposedPort == null) {
-            checkNotNull(System.getenv(EXPOSED_PORT_VARIABLE)) { "Please provide the exposed port" }
-        }
-        this.exposedPort = exposedPort ?: System.getenv(EXPOSED_PORT_VARIABLE).toInt()
-    }
 
     override fun start() {
         embeddedServer(Netty, port = this.exposedPort) {
@@ -54,9 +46,5 @@ class KtorWoDTPlatformWebServer(
             ecosystemManagementAPI(ecosystemManagementInterface)
             wodtDigitalTwinsPlatformInterfaceAPI(platformKnowledgeGraphEngineReader)
         }
-    }
-
-    companion object {
-        private const val EXPOSED_PORT_VARIABLE = "EXPOSED_PORT"
     }
 }

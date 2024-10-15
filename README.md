@@ -1,14 +1,15 @@
-# WoDT Digital Twins Platform
+# WoDT Platform
 
 ![Release](https://github.com/Web-of-Digital-Twins/wodt-platform/actions/workflows/build-and-deploy.yml/badge.svg?style=plastic)
 [![License: Apache License](https://img.shields.io/badge/License-Apache_License_2.0-yellow.svg)](https://www.apache.org/licenses/LICENSE-2.0)
 ![Version](https://img.shields.io/github/v/release/Web-of-Digital-Twins/wodt-platform?style=plastic)
 
-This is an implementation of the WoDT Digital Twins Platform.
+This is an implementation of the WoDT Platform.
 
 ## Usage
 You need to specify the following environment variable:
-- `EXPOSED_PORT`: the port where the WoDT Digital Twins Platform expose its services
+- `EXPOSED_PORT`: the port where the WoDT Platform expose its services
+- `PLATFORM_EXPOSED_URL`: the url where the Platform will be publicly available (including the exposed port if different from the default)
 
 If you want to run it via docker container:
 1. Provide a `.env` file with all the environment variable described above

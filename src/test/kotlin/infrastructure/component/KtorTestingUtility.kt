@@ -25,11 +25,12 @@ import io.ktor.client.engine.mock.respondOk
 import io.ktor.server.testing.ApplicationTestBuilder
 import io.ktor.server.testing.testApplication
 import io.ktor.server.websocket.WebSockets
+import java.net.URI
 
 object KtorTestingUtility {
-    private const val TEST_PORT = 4000
+    private val platformExposedUrl = URI.create("http://localhost:4000")
     private val mockEngine = MockEngine { _ -> respondOk() }
-    private val httpClient = KtorWoDTPlatformHttpClient(engine = mockEngine, TEST_PORT)
+    private val httpClient = KtorWoDTPlatformHttpClient(platformExposedUrl, engine = mockEngine)
 
     fun apiTestApplication(
         tests: suspend ApplicationTestBuilder.(
@@ -39,10 +40,10 @@ object KtorTestingUtility {
         ) -> Unit,
     ) {
         val ecosystemManagementInterface = BaseEcosystemManagementInterface(
-            EcosystemRegistryService(TEST_PORT),
+            EcosystemRegistryService(platformExposedUrl),
             httpClient,
         )
-        val ecosystemRegistry = EcosystemRegistryService(TEST_PORT)
+        val ecosystemRegistry = EcosystemRegistryService(platformExposedUrl)
         val platformKnowledgeGraphEngine = JenaPlatformKnowledgeGraphEngine(ecosystemRegistry)
         testApplication {
             install(WebSockets)

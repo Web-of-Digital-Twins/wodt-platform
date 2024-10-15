@@ -16,18 +16,18 @@
 
 package application.presenter.dtd
 
-import entity.digitaltwin.DigitalTwinDescriptor
-import entity.digitaltwin.WoTDigitalTwinDescriptor
+import entity.digitaltwin.DigitalTwinDescription
+import entity.digitaltwin.WoTDigitalTwinDescription
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonObject
 
 /**
- * Module that wraps the deserialization utilities for the Digital Twin Descriptor.
+ * Module that wraps the deserialization utilities for the Digital Twin Description.
  */
-object DigitalTwinDescriptorDeserialization {
-    /** Obtain the [DigitalTwinDescriptor] from a String expressed in a [contentType]. */
+object DigitalTwinDescriptionDeserialization {
+    /** Obtain the [DigitalTwinDescription] from a String expressed in a [contentType]. */
     fun String.toDTD(contentType: String) = when (contentType) {
-        "application/td+json" -> WoTDigitalTwinDescriptor.fromJson(Json.decodeFromString<JsonObject>(this))
+        "application/td+json" -> WoTDigitalTwinDescription.fromJson(Json.decodeFromString<JsonObject>(this))
         else -> null
     }
 }

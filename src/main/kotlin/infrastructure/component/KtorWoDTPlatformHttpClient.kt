@@ -39,13 +39,14 @@ import io.ktor.websocket.Frame
 import io.ktor.websocket.close
 import io.ktor.websocket.readText
 import kotlinx.coroutines.channels.ClosedReceiveChannelException
+import java.net.URI
 
 /**
  * Implementation of the Http and Ws client for the Platform.
  */
 class KtorWoDTPlatformHttpClient(
+    private val platformExposedUrl: URI,
     engine: HttpClientEngine = CIO.create(),
-    exposedPort: Int? = null,
 ) : EcosystemManagementHttpClient, WoDTDigitalTwinsObserverWsClient {
     private val webSockets: MutableMap<String, DefaultClientWebSocketSession> = mutableMapOf()
     private val httpClient = HttpClient(engine) {
@@ -60,18 +61,10 @@ class KtorWoDTPlatformHttpClient(
             json()
         }
     }
-    private val exposedPort: Int
-
-    init {
-        if (exposedPort == null) {
-            checkNotNull(System.getenv(EXPOSED_PORT_VARIABLE)) { "Please provide the exposed port" }
-        }
-        this.exposedPort = exposedPort ?: System.getenv(EXPOSED_PORT_VARIABLE).toInt()
-    }
 
     override suspend fun sendRegistrationNotification(dtUri: String) = this.httpClient.post(dtUri) {
         contentType(ContentType.Application.Json)
-        setBody(PlatformRegistration("http://localhost:${System.getenv(EXPOSED_PORT_VARIABLE)}"))
+        setBody(PlatformRegistration(platformExposedUrl.toString()))
         url { appendPathSegments("platform") }
     }.status == HttpStatusCode.OK
 
@@ -106,7 +99,6 @@ class KtorWoDTPlatformHttpClient(
     }
 
     companion object {
-        private const val EXPOSED_PORT_VARIABLE = "EXPOSED_PORT"
         private const val WEBSOCKET_PING_INTERVAL = 1_000L
         private val logger = KotlinLogging.logger {}
     }

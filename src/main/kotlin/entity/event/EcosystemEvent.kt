@@ -16,14 +16,14 @@
 
 package entity.event
 
-import entity.digitaltwin.DigitalTwinDescriptor
+import entity.digitaltwin.DigitalTwinDescription
 import entity.digitaltwin.DigitalTwinURI
 
-/** Interface that models the ecosystem events within the WoDT Digital Twins Platform.  */
+/** Interface that models the ecosystem events within the WoDT Platform.  */
 sealed interface EcosystemEvent
 
 /** This class models the event of a new WoDT Digital Twin registered to the Platform via its [dtd]. */
-data class NewDigitalTwinRegistered(val dtd: DigitalTwinDescriptor) : EcosystemEvent
+data class NewDigitalTwinRegistered(val dtd: DigitalTwinDescription) : EcosystemEvent
 
 /** This class models the event of deletion of a registered WoDT Digital Twin, identified by its [dtURI]. */
 data class DigitalTwinDeleted(val dtURI: DigitalTwinURI) : EcosystemEvent

@@ -18,8 +18,8 @@ package infrastructure.component
 
 import application.component.EcosystemRegistryMapper
 import application.component.PlatformKnowledgeGraphEngine
-import entity.digitaltwin.DigitalTwinDescriptor
-import entity.digitaltwin.DigitalTwinDescriptorImplementationType
+import entity.digitaltwin.DigitalTwinDescription
+import entity.digitaltwin.DigitalTwinDescriptionImplementationType
 import entity.digitaltwin.DigitalTwinURI
 import entity.ontology.WoDTVocabulary
 import kotlinx.coroutines.CoroutineDispatcher
@@ -132,8 +132,8 @@ class JenaPlatformKnowledgeGraphEngine(
         }.orEmpty()
     }
 
-    override fun mergeDigitalTwinDescriptor(dtd: DigitalTwinDescriptor) {
-        if (dtd.implementationType == DigitalTwinDescriptorImplementationType.THING_DESCRIPTION) {
+    override fun mergeDigitalTwinDescription(dtd: DigitalTwinDescription) {
+        if (dtd.implementationType == DigitalTwinDescriptionImplementationType.THING_DESCRIPTION) {
             var newDT = true
             this.dtdsModel.enterCriticalSection(Lock.WRITE)
             val dtdModel = RDFParser.fromString(dtd.obtainRepresentation(), Lang.JSONLD11)

@@ -20,7 +20,7 @@ import kotlinx.serialization.Serializable
 
 /**
  * Presenter class to be able to deserialize platform registration data from the API.
- * It contains the [self] field where the WoDT Digital Twins Platform send its URL.
+ * It contains the [self] field where the WoDT Platform send its URL.
  */
 @Serializable
 data class PlatformRegistration(val self: String)

@@ -1,50 +1,68 @@
 {
+  "@context": "https://www.w3.org/2022/wot/td/v1.1",
   "id": "https://example.com/dt",
+  "@type": [
+    "https://saref.etsi.org/core/Actuator",
+    "https://w3id.org/rec/Lamp"
+  ],
+  "version": {
+    "instance": "1.2.3",
+    "model": "1.0.0"
+  },
+  "https://purl.org/wodt/physicalAssetId": "lampPA",
+  "securityDefinitions": {
+    "nosec_sc": {
+      "scheme": "nosec"
+    }
+  },
+  "security": "nosec_sc",
   "properties": {
-    "is-on-property-key": {
-      "type": "string",
-      "observable": true,
-      "readOnly": true,
-      "@type": "https://www.w3.org/2001/XMLSchema#boolean",
-      "https://purl.org/wodt/domainPredicate": "https://lampontology.com/ontology#isOn",
-      "https://purl.org/wodt/augmentedInteraction": false
+    "availableActions": {
+      "@type": "https://purl.org/wodt/AvailableActions",
+      "readOnly": true
     },
-    "located-inside": {
-      "type": "string",
-      "observable": true,
-      "readOnly": true,
-      "@type": "https://homeontology/ontology#Room",
-      "https://purl.org/wodt/domainPredicate": "https://lampontology/ontology#isLocatedInside"
+    "luminosity": {
+      "https://purl.org/wodt/domainTag": "https://purl.org/onto/LuminosityFlux",
+      "https://purl.org/wodt/augmentedInteraction": false,
+      "readOnly": true
     },
-    "snapshot": {
-      "forms": [
-        {
-          "href": "ws://localhost:3000/dtkg",
-          "op": [
-            "observeproperty"
-          ],
-          "subprotocol": "websocket"
-        }
-      ],
-      "type": "string",
-      "observable": true,
+    "illuminance": {
+      "https://purl.org/wodt/domainTag": "https://purl.org/onto/Illuminance",
+      "https://purl.org/wodt/augmentedInteraction": false,
+      "readOnly": true
+    },
+    "isInRoom": {
+      "https://purl.org/wodt/domainTag": "https://brickschema.org/schema/Brick#hasLocation",
       "readOnly": true
     }
   },
   "actions": {
-    "switch-action-key": {
+    "switch": {
+      "https://purl.org/wodt/domainTag": "https://purl.org/onto/SwitchCommand",
+      "https://purl.org/wodt/augmentedInteraction": false,
       "forms": [
         {
-          "href": "http://localhost:3000/action/switch-action-key",
-          "op": [
-            "invokeaction"
-          ]
+          "href": "http://localhost:3000/action/switch"
         }
       ]
     }
   },
-  "@context": "https://www.w3.org/2019/wot/td/v1",
-  "https://purl.org/wodt/version": "1.0.0",
-  "links": [],
-  "https://purl.org/wodt/physicalAssetId": "lampPA"
+  "forms": [
+    {
+      "href": "ws://localhost:3000/dtkg",
+      "subprotocol": "websocket",
+      "op": "observeallproperties"
+    }
+  ],
+  "links": [
+    {
+      "href": "https://raw.githubusercontent.com/Web-of-Digital-Twins/dtd-conceptual-model/refs/heads/main/implementations/wot/dtd-thing-model.tm.jsonld",
+      "rel": "type",
+      "type": "application/tm+json"
+    },
+    {
+      "href": "http://localhost:3000/dtkg",
+      "rel": "https://purl.org/wodt/dtkg"
+    }
+  ]
 }

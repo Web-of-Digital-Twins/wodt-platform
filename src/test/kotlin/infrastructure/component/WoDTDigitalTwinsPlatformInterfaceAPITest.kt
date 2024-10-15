@@ -19,7 +19,7 @@ package infrastructure.component
 import TestingUtils.readResourceFile
 import application.component.EcosystemRegistry
 import application.component.PlatformKnowledgeGraphEngine
-import application.presenter.dtd.DigitalTwinDescriptorDeserialization.toDTD
+import application.presenter.dtd.DigitalTwinDescriptionDeserialization.toDTD
 import entity.digitaltwin.DigitalTwinURI
 import infrastructure.component.KtorTestingUtility.apiTestApplication
 import io.kotest.assertions.ktor.client.shouldHaveStatus
@@ -60,7 +60,7 @@ class WoDTDigitalTwinsPlatformInterfaceAPITest : StringSpec({
     ) {
         readResourceFile("wotDtd.json")?.toDTD("application/td+json")?.run {
             ecosystemRegistry.signalRegistration(dtUri)
-            platformKnowledgeGraphEngine.mergeDigitalTwinDescriptor(this)
+            platformKnowledgeGraphEngine.mergeDigitalTwinDescription(this)
         }
     }
 

@@ -1,30 +1,45 @@
 {
+  "@context": "https://www.w3.org/2022/wot/td/v1.1",
   "id": "https://example.com/intersection",
+  "@type": [
+    "https://ontology.it/Intersection"
+  ],
+  "version": {
+    "instance": "1.0.0",
+    "model": "1.0.0"
+  },
+  "https://purl.org/wodt/physicalAssetId": "intersection",
+  "securityDefinitions": {
+    "nosec_sc": {
+      "scheme": "nosec"
+    }
+  },
+  "security": "nosec_sc",
   "properties": {
     "isOccupied": {
-      "observable": true,
-      "readOnly": true,
-      "@type": "https://www.w3.org/2001/XMLSchema#boolean",
-      "https://purl.org/wodt/domainPredicate": "https://smartcityontology.com/ontology#isOccupied",
-      "https://purl.org/wodt/augmentedInteraction": false
-    },
-    "snapshot": {
-      "forms": [
-        {
-          "href": "ws://localhost:3001/dtkg",
-          "op": [
-            "observeproperty"
-          ],
-          "subprotocol": "websocket"
-        }
-      ],
-      "type": "string",
-      "observable": true,
+      "https://purl.org/wodt/domainTag": "https://purl.org/onto/isOccupied",
+      "https://purl.org/wodt/augmentedInteraction": false,
       "readOnly": true
     }
   },
-  "@context": "https://www.w3.org/2019/wot/td/v1",
-  "https://purl.org/wodt/version": "1.0.0",
-  "links": [],
-  "https://purl.org/wodt/physicalAssetId": "intersection"
+  "actions": {
+  },
+  "forms": [
+    {
+      "href": "ws://localhost:3000/dtkg",
+      "subprotocol": "websocket",
+      "op": "observeallproperties"
+    }
+  ],
+  "links": [
+    {
+      "href": "https://raw.githubusercontent.com/Web-of-Digital-Twins/dtd-conceptual-model/refs/heads/main/implementations/wot/dtd-thing-model.tm.jsonld",
+      "rel": "type",
+      "type": "application/tm+json"
+    },
+    {
+      "href": "http://localhost:3000/dtkg",
+      "rel": "https://purl.org/wodt/dtkg"
+    }
+  ]
 }
