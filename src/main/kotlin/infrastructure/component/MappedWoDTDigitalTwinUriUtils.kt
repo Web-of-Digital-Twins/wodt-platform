@@ -19,7 +19,12 @@ package infrastructure.component
 /**
  * Obtain the WoDT Digital Twin Uri from the path parameters inside the request url.
  */
-fun obtainDigitalTwinUriFromPathParameters(pathParameters: List<String>) =
-    pathParameters[0] + "//" + pathParameters[1] + pathParameters.subList(2, pathParameters.size).joinToString(
-        prefix = "/", separator = "/",
-    )
+fun obtainDigitalTwinUriFromPathParameters(pathParameters: List<String>): String {
+    var path = pathParameters[0] + "//" + pathParameters[1]
+    if (pathParameters.size > 2) {
+        path += pathParameters.subList(2, pathParameters.size).joinToString(
+            prefix = "/", separator = "/",
+        )
+    }
+    return path
+}
