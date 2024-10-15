@@ -1,3 +1,40 @@
+## [2.0.0](https://github.com/Web-of-Digital-Twins/wodt-platform/compare/1.1.20...2.0.0) (2024-10-15)
+
+### ⚠ BREAKING CHANGES
+
+* move support to dtd 1.0.0 and make exposed platform url configurable
+* make the exposed platform url configurable
+* support wodt dtd 1.0.0
+
+### Features
+
+* make the exposed platform url configurable ([6d17364](https://github.com/Web-of-Digital-Twins/wodt-platform/commit/6d17364e54c317c3c9a6bd1ea178caaeb647b521))
+* move support to dtd 1.0.0 and make exposed platform url configurable ([8bce2ec](https://github.com/Web-of-Digital-Twins/wodt-platform/commit/8bce2eca51e12d894e8436b468a55a305aafb2f3)), closes [#33](https://github.com/Web-of-Digital-Twins/wodt-platform/issues/33)
+* support wodt dtd 1.0.0 ([d9b9c7d](https://github.com/Web-of-Digital-Twins/wodt-platform/commit/d9b9c7d5d89ce709383837c67f5edbf15ccfd161))
+
+### Bug Fixes
+
+* handle different types of dt uris ([fcd3905](https://github.com/Web-of-Digital-Twins/wodt-platform/commit/fcd39054d6210f2ccb27beb1d73a4d54aa89d33f))
+
+### Documentation
+
+* **rest-api:** align to dtd 1.0.0 nomenclature ([67051b2](https://github.com/Web-of-Digital-Twins/wodt-platform/commit/67051b287e6605071f1e7a59071a67ade30a260b))
+
+### Tests
+
+* align test resources ([0024cfe](https://github.com/Web-of-Digital-Twins/wodt-platform/commit/0024cfe82e392f0bbd2d0e3d3ccd8fc00e5fab38))
+
+### General maintenance
+
+* create configuration loader ([3b553f6](https://github.com/Web-of-Digital-Twins/wodt-platform/commit/3b553f6234a054de5da682945a78e1eecb8fc1b4))
+* update README ([1983b5e](https://github.com/Web-of-Digital-Twins/wodt-platform/commit/1983b5e75ede7d2ed794901f44fe7c1c8f5d4138))
+* use the environment configuration loader and inject configuration ([38e3143](https://github.com/Web-of-Digital-Twins/wodt-platform/commit/38e3143cf2c51a95d24c2b2189387a8a3b2682c5))
+
+### Refactoring
+
+* align to new nomenclature ([7d82852](https://github.com/Web-of-Digital-Twins/wodt-platform/commit/7d82852b825a9916e28bf254fc510c2833c1c2ca))
+* inject the exposed port ([45538c1](https://github.com/Web-of-Digital-Twins/wodt-platform/commit/45538c1036c7504815a2304f768acb0049f549d8))
+
 ## [1.1.20](https://github.com/Web-of-Digital-Twins/wodt-platform/compare/1.1.19...1.1.20) (2024-10-10)
 
 ### Dependency updates
