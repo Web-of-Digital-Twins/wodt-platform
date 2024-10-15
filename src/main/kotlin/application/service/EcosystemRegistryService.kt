@@ -18,21 +18,14 @@ package application.service
 
 import application.component.EcosystemRegistry
 import entity.digitaltwin.DigitalTwinURI
+import java.net.URI
 import java.util.Collections
 
 /**
  * This class models the Ecosystem Registry component of the Abstract Architecture.
  */
-class EcosystemRegistryService(exposedPort: Int? = null) : EcosystemRegistry {
+class EcosystemRegistryService(private val platformExposedUrl: URI) : EcosystemRegistry {
     private var registeredDigitalTwins: Set<DigitalTwinURI> = Collections.synchronizedSet(setOf())
-    private val exposedPort: Int
-
-    init {
-        if (exposedPort == null) {
-            checkNotNull(System.getenv(EXPOSED_PORT_VARIABLE)) { "Please provide the exposed port" }
-        }
-        this.exposedPort = exposedPort ?: System.getenv(EXPOSED_PORT_VARIABLE).toInt()
-    }
 
     override fun signalRegistration(digitalTwinUri: DigitalTwinURI) {
         registeredDigitalTwins = Collections.synchronizedSet(registeredDigitalTwins + digitalTwinUri)
@@ -46,21 +39,21 @@ class EcosystemRegistryService(exposedPort: Int? = null) : EcosystemRegistry {
 
     override fun getLocalUrl(digitalTwinUri: DigitalTwinURI): String? =
         if (registeredDigitalTwins.contains(digitalTwinUri)) {
-            "http://localhost:${this.exposedPort}/wodt/${digitalTwinUri.uri}"
+            this.platformExposedUrl.resolve("/wodt/${digitalTwinUri.uri}").toString()
         } else {
             null
         }
 
     override fun getDigitalTwinUri(localDigitalTwinUrl: String): DigitalTwinURI? =
-        with(DigitalTwinURI(localDigitalTwinUrl.removePrefix("http://localhost:${this.exposedPort}/wodt/"))) {
+        with(
+            DigitalTwinURI(
+                localDigitalTwinUrl.removePrefix(this.platformExposedUrl.resolve("/wodt/").toString()),
+            ),
+        ) {
             if (registeredDigitalTwins.contains(this)) {
                 this
             } else {
                 null
             }
         }
-
-    companion object {
-        private const val EXPOSED_PORT_VARIABLE = "EXPOSED_PORT"
-    }
 }

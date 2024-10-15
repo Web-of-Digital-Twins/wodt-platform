@@ -28,17 +28,18 @@ import io.ktor.client.engine.mock.MockEngine
 import io.ktor.client.engine.mock.respondOk
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonObject
+import java.net.URI
 
 class BaseEcosystemManagementInterfaceTest : StringSpec({
     val mockEngine = MockEngine { _ ->
         respondOk()
     }
-    val testPort = 3000
-    val httpClient = KtorWoDTPlatformHttpClient(engine = mockEngine, testPort)
+    val platformExposedUrl = URI.create("http://localhost:4000")
+    val httpClient = KtorWoDTPlatformHttpClient(platformExposedUrl, engine = mockEngine)
 
     "it should be possible to register a not-registered digital twin" {
         val ecosystemManagementInterface = BaseEcosystemManagementInterface(
-            EcosystemRegistryService(testPort),
+            EcosystemRegistryService(platformExposedUrl),
             httpClient,
         )
         val dtd = readResourceFile("wotDtd.json").orEmpty()
@@ -53,7 +54,7 @@ class BaseEcosystemManagementInterfaceTest : StringSpec({
 
     "it should not be possible to register an already registered digital twin" {
         val ecosystemManagementInterface = BaseEcosystemManagementInterface(
-            EcosystemRegistryService(testPort),
+            EcosystemRegistryService(platformExposedUrl),
             httpClient,
         )
         val dtd = readResourceFile("wotDtd.json").orEmpty()
@@ -73,7 +74,7 @@ class BaseEcosystemManagementInterfaceTest : StringSpec({
 
     "it should be possible to delete a registered digital twin from the ecosystem" {
         val ecosystemManagementInterface = BaseEcosystemManagementInterface(
-            EcosystemRegistryService(testPort),
+            EcosystemRegistryService(platformExposedUrl),
             httpClient,
         )
         val dtd = readResourceFile("wotDtd.json").orEmpty()
@@ -93,7 +94,7 @@ class BaseEcosystemManagementInterfaceTest : StringSpec({
 
     "it should not be possible to delete a not-registered digital twin from the ecosystem" {
         val ecosystemManagementInterface = BaseEcosystemManagementInterface(
-            EcosystemRegistryService(testPort),
+            EcosystemRegistryService(platformExposedUrl),
             httpClient,
         )
         runBlocking {
