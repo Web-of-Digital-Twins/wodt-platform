@@ -18,6 +18,7 @@ import application.service.BaseEcosystemManagementInterface
 import application.service.EcosystemRegistryService
 import application.service.WoDTDigitalTwinsObserverComponent
 import application.service.WoDTPlatformEngine
+import config.EnvironmentConfigurationLoader
 import infrastructure.component.JenaPlatformKnowledgeGraphEngine
 import infrastructure.component.KtorWoDTPlatformHttpClient
 import infrastructure.component.KtorWoDTPlatformWebServer
@@ -27,12 +28,17 @@ import kotlinx.coroutines.runBlocking
  * Function to start the WoDT Platform.
  */
 fun main(): Unit = runBlocking {
-    val platformHttpClient = KtorWoDTPlatformHttpClient()
-    val ecosystemRegistry = EcosystemRegistryService()
+    val configurationLoader = EnvironmentConfigurationLoader()
+    val platformHttpClient = KtorWoDTPlatformHttpClient(configurationLoader.platformExposedUrl)
+    val ecosystemRegistry = EcosystemRegistryService(configurationLoader.platformExposedUrl)
     val ecosystemManagementInterface = BaseEcosystemManagementInterface(ecosystemRegistry, platformHttpClient)
     val woDTDigitalTwinsObserver = WoDTDigitalTwinsObserverComponent(ecosystemRegistry, platformHttpClient)
     val platformKnowledgeGraphEngine = JenaPlatformKnowledgeGraphEngine(ecosystemRegistry)
-    val platformWebServer = KtorWoDTPlatformWebServer(ecosystemManagementInterface, platformKnowledgeGraphEngine)
+    val platformWebServer = KtorWoDTPlatformWebServer(
+        ecosystemManagementInterface,
+        platformKnowledgeGraphEngine,
+        configurationLoader.exposedPort,
+    )
 
     WoDTPlatformEngine(
         ecosystemManagementInterface,
