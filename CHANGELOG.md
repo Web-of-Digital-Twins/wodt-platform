@@ -1,3 +1,28 @@
+## [2.0.1](https://github.com/Web-of-Digital-Twins/wodt-platform/compare/2.0.0...2.0.1) (2024-11-28)
+
+### Dependency updates
+
+* **core-deps:** update dependency org.jetbrains.kotlin:kotlin-stdlib to v2.1.0 ([51bb037](https://github.com/Web-of-Digital-Twins/wodt-platform/commit/51bb037f0755d6b54ec00f7f860d5cc1db248559))
+* **deps:** update dependency org.apache.jena:apache-jena-libs to v5.2.0 ([42567fe](https://github.com/Web-of-Digital-Twins/wodt-platform/commit/42567fe5795964abe84471a984862e2dfaf946bb))
+* **deps:** update dependency semantic-release-preconfigured-conventional-commits to v1.1.112 ([3bf5cbc](https://github.com/Web-of-Digital-Twins/wodt-platform/commit/3bf5cbc66d51188067656fedc555d9e306e73129))
+* **deps:** update dependency semantic-release-preconfigured-conventional-commits to v1.1.113 ([48a7990](https://github.com/Web-of-Digital-Twins/wodt-platform/commit/48a79909da016516b3efbd31a3a2bb2390c1e398))
+* **deps:** update dependency semantic-release-preconfigured-conventional-commits to v1.1.114 ([e8f9002](https://github.com/Web-of-Digital-Twins/wodt-platform/commit/e8f900224ff2d6671557983854437edd31eca61f))
+* **deps:** update dependency semantic-release-preconfigured-conventional-commits to v1.1.115 ([9faeacb](https://github.com/Web-of-Digital-Twins/wodt-platform/commit/9faeacbd728ebc996a9f6dcc4649a8729a5f73bf))
+* **deps:** update ktor monorepo to v2.3.13 ([3c1b802](https://github.com/Web-of-Digital-Twins/wodt-platform/commit/3c1b802528faf68b78172cb69da0d85ff81a7ed2))
+* **deps:** update node.js to v22 ([d1d4697](https://github.com/Web-of-Digital-Twins/wodt-platform/commit/d1d4697149cd3b6766569670f7107fe3db9e5a0d))
+* **deps:** update plugin com.gradle.develocity to v3.18.2 ([d4d89b4](https://github.com/Web-of-Digital-Twins/wodt-platform/commit/d4d89b4b797d918b5cf19e8f32668f5ab2e46b8d))
+* **deps:** update plugin org.danilopianini.gradle-pre-commit-git-hooks to v2.0.14 ([28bc39d](https://github.com/Web-of-Digital-Twins/wodt-platform/commit/28bc39df39a1c8e6de09a23e8e315ffd32e49799))
+* **deps:** update plugin org.danilopianini.gradle-pre-commit-git-hooks to v2.0.15 ([05d9e0b](https://github.com/Web-of-Digital-Twins/wodt-platform/commit/05d9e0bf40e795820fd7c5f6b85ac7c60a242ff2))
+
+### Build and continuous integration
+
+* **deps:** update actions/setup-node action to v4.1.0 ([bc0bb19](https://github.com/Web-of-Digital-Twins/wodt-platform/commit/bc0bb19b85397c2fe565eb2b34c46a3d99122b0b))
+* **deps:** update codecov/codecov-action action to v5 ([9528d85](https://github.com/Web-of-Digital-Twins/wodt-platform/commit/9528d85f915e1a7ee005d6062ef3b40f6745bb4b))
+* **deps:** update codecov/codecov-action action to v5.0.2 ([66781ef](https://github.com/Web-of-Digital-Twins/wodt-platform/commit/66781ef491980aa26ff8a065a512e82b22bbb8f1))
+* **deps:** update codecov/codecov-action action to v5.0.3 ([65e687d](https://github.com/Web-of-Digital-Twins/wodt-platform/commit/65e687d2503d33e8b4fef062d05aebec37b54353))
+* **deps:** update codecov/codecov-action action to v5.0.6 ([25007f5](https://github.com/Web-of-Digital-Twins/wodt-platform/commit/25007f58c0dd1d66bf9b53049faa45346a831983))
+* **deps:** update codecov/codecov-action action to v5.0.7 ([15445a2](https://github.com/Web-of-Digital-Twins/wodt-platform/commit/15445a223960a3cc0d5dc11eb144923bc0beee1c))
+
 ## [2.0.0](https://github.com/Web-of-Digital-Twins/wodt-platform/compare/1.1.20...2.0.0) (2024-10-15)
 
 ### ⚠ BREAKING CHANGES
