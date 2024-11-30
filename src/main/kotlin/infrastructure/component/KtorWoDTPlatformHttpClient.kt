@@ -64,7 +64,7 @@ class KtorWoDTPlatformHttpClient(
 
     override suspend fun sendRegistrationNotification(dtUri: String) = this.httpClient.post(dtUri) {
         contentType(ContentType.Application.Json)
-        setBody(PlatformRegistration(platformExposedUrl.toString()))
+        setBody(PlatformRegistration(platformExposedUrl.toString(), dtUri))
         url { appendPathSegments("platform") }
     }.status == HttpStatusCode.OK
 
