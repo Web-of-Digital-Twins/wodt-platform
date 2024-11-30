@@ -1,3 +1,9 @@
+## [2.1.0](https://github.com/Web-of-Digital-Twins/wodt-platform/compare/2.0.1...2.1.0) (2024-11-30)
+
+### Features
+
+* pass dt uri in platform registration notification sent to added dts ([5eda9da](https://github.com/Web-of-Digital-Twins/wodt-platform/commit/5eda9da4105e7c0fb9654dc091545a7fef1fe0db))
+
 ## [2.0.1](https://github.com/Web-of-Digital-Twins/wodt-platform/compare/2.0.0...2.0.1) (2024-11-28)
 
 ### Dependency updates
