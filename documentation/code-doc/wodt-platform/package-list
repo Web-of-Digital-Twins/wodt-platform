@@ -39,7 +39,8 @@ $dokka.location:application.component/WoDTPlatformWebServer///PointingToDeclarat
 $dokka.location:application.component/WoDTPlatformWebServer/start/#/PointingToDeclaration/wodt-platform/application.component/-wo-d-t-platform-web-server/start.html
 $dokka.location:application.presenter.api////PointingToDeclaration/wodt-platform/application.presenter.api/index.html
 $dokka.location:application.presenter.api/PlatformRegistration///PointingToDeclaration/wodt-platform/application.presenter.api/-platform-registration/index.html
-$dokka.location:application.presenter.api/PlatformRegistration/PlatformRegistration/#kotlin.String/PointingToDeclaration/wodt-platform/application.presenter.api/-platform-registration/-platform-registration.html
+$dokka.location:application.presenter.api/PlatformRegistration/PlatformRegistration/#kotlin.String#kotlin.String/PointingToDeclaration/wodt-platform/application.presenter.api/-platform-registration/-platform-registration.html
+$dokka.location:application.presenter.api/PlatformRegistration/dtUri/#/PointingToDeclaration/wodt-platform/application.presenter.api/-platform-registration/dt-uri.html
 $dokka.location:application.presenter.api/PlatformRegistration/self/#/PointingToDeclaration/wodt-platform/application.presenter.api/-platform-registration/self.html
 $dokka.location:application.presenter.dtd////PointingToDeclaration/wodt-platform/application.presenter.dtd/index.html
 $dokka.location:application.presenter.dtd/DigitalTwinDescriptionDeserialization///PointingToDeclaration/wodt-platform/application.presenter.dtd/-digital-twin-description-deserialization/index.html
