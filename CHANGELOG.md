@@ -1,3 +1,29 @@
+## [2.1.1](https://github.com/Web-of-Digital-Twins/wodt-platform/compare/2.1.0...2.1.1) (2024-12-10)
+
+### Dependency updates
+
+* **deps:** update alpine docker tag to v3.21 ([bb07ad0](https://github.com/Web-of-Digital-Twins/wodt-platform/commit/bb07ad0702d4c44f29471ac85e591f1ae6fe03cd))
+* **deps:** update dependency io.github.oshai:kotlin-logging-jvm to v7.0.3 ([c8d42a3](https://github.com/Web-of-Digital-Twins/wodt-platform/commit/c8d42a3627c86dcf2f005de1e7a9b881e0d12960))
+* **deps:** update dependency semantic-release-preconfigured-conventional-commits to v1.1.116 ([a79ab5f](https://github.com/Web-of-Digital-Twins/wodt-platform/commit/a79ab5ffe8c3e2c830395c43708619440b88da7a))
+* **deps:** update node.js to 22.12 ([d654407](https://github.com/Web-of-Digital-Twins/wodt-platform/commit/d654407375daf921c6973de7aa7ed3e57ef68c3d))
+
+### Bug Fixes
+
+* correct resolution of uris based on the provided platform exposed uri ([d8cbba4](https://github.com/Web-of-Digital-Twins/wodt-platform/commit/d8cbba40b52e7983184bc1130bb1103385be151e))
+* correct the resolution of mapped uris ([ace358f](https://github.com/Web-of-Digital-Twins/wodt-platform/commit/ace358fc9c8d793e63c53d9203bec01010ef4875))
+
+### Tests
+
+* add tests for relative resolve for uris ([441b973](https://github.com/Web-of-Digital-Twins/wodt-platform/commit/441b973ac984fefa0f7dd19b3f613675c4064fd9))
+
+### Build and continuous integration
+
+* **deps:** update codecov/codecov-action action to v5.1.1 ([ff6b29f](https://github.com/Web-of-Digital-Twins/wodt-platform/commit/ff6b29f5f997ecdefde1ece2afb88bda3abd9f20))
+
+### General maintenance
+
+* add relative resolve for uris ([44fa465](https://github.com/Web-of-Digital-Twins/wodt-platform/commit/44fa46575e44b4d575a754f882e8081b99a214a7))
+
 ## [2.1.0](https://github.com/Web-of-Digital-Twins/wodt-platform/compare/2.0.1...2.1.0) (2024-11-30)
 
 ### Features
