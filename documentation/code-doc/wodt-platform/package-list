@@ -148,6 +148,9 @@ $dokka.location:infrastructure.component/KtorWoDTPlatformHttpClient/stopObservat
 $dokka.location:infrastructure.component/KtorWoDTPlatformWebServer///PointingToDeclaration/wodt-platform/infrastructure.component/-ktor-wo-d-t-platform-web-server/index.html
 $dokka.location:infrastructure.component/KtorWoDTPlatformWebServer/KtorWoDTPlatformWebServer/#application.component.EcosystemManagementInterface#application.component.PlatformKnowledgeGraphEngineReader#kotlin.Int/PointingToDeclaration/wodt-platform/infrastructure.component/-ktor-wo-d-t-platform-web-server/-ktor-wo-d-t-platform-web-server.html
 $dokka.location:infrastructure.component/KtorWoDTPlatformWebServer/start/#/PointingToDeclaration/wodt-platform/infrastructure.component/-ktor-wo-d-t-platform-web-server/start.html
+$dokka.location:utils////PointingToDeclaration/wodt-platform/utils/index.html
+$dokka.location:utils/UriUtil///PointingToDeclaration/wodt-platform/utils/-uri-util/index.html
+$dokka.location:utils/UriUtil/relativeResolve/java.net.URI#kotlin.String/PointingToDeclaration/wodt-platform/utils/-uri-util/relative-resolve.html
 application.component
 application.presenter.api
 application.presenter.dtd
@@ -157,4 +160,5 @@ entity.digitaltwin
 entity.event
 entity.ontology
 infrastructure.component
+utils
 
