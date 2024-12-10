@@ -40,7 +40,7 @@ class EcosystemRegistryService(private val platformExposedUrl: URI) : EcosystemR
 
     override fun getLocalUrl(digitalTwinUri: DigitalTwinURI): String? =
         if (registeredDigitalTwins.contains(digitalTwinUri)) {
-            this.platformExposedUrl.relativeResolve("/wodt/${digitalTwinUri.uri}").toString()
+            this.platformExposedUrl.relativeResolve("/wodt/").toString() + digitalTwinUri.uri.toString()
         } else {
             null
         }
