@@ -18,6 +18,7 @@ package application.service
 
 import application.component.EcosystemRegistry
 import entity.digitaltwin.DigitalTwinURI
+import utils.UriUtil.relativeResolve
 import java.net.URI
 import java.util.Collections
 
@@ -39,7 +40,7 @@ class EcosystemRegistryService(private val platformExposedUrl: URI) : EcosystemR
 
     override fun getLocalUrl(digitalTwinUri: DigitalTwinURI): String? =
         if (registeredDigitalTwins.contains(digitalTwinUri)) {
-            this.platformExposedUrl.resolve("/wodt/${digitalTwinUri.uri}").toString()
+            this.platformExposedUrl.relativeResolve("/wodt/${digitalTwinUri.uri}").toString()
         } else {
             null
         }
@@ -47,7 +48,7 @@ class EcosystemRegistryService(private val platformExposedUrl: URI) : EcosystemR
     override fun getDigitalTwinUri(localDigitalTwinUrl: String): DigitalTwinURI? =
         with(
             DigitalTwinURI(
-                localDigitalTwinUrl.removePrefix(this.platformExposedUrl.resolve("/wodt/").toString()),
+                localDigitalTwinUrl.removePrefix(this.platformExposedUrl.relativeResolve("/wodt/").toString()),
             ),
         ) {
             if (registeredDigitalTwins.contains(this)) {
