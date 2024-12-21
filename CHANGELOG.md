@@ -1,3 +1,19 @@
+## [2.1.2](https://github.com/Web-of-Digital-Twins/wodt-platform/compare/2.1.1...2.1.2) (2024-12-21)
+
+### Dependency updates
+
+* **core-deps:** update dependency org.jetbrains.kotlinx:kotlinx-coroutines-core to v1.10.0 ([c293687](https://github.com/Web-of-Digital-Twins/wodt-platform/commit/c2936878afe7f0f7bad5759f4d01f41716b7a9a8))
+* **core-deps:** update dependency org.jetbrains.kotlinx:kotlinx-coroutines-core to v1.10.1 ([914ba01](https://github.com/Web-of-Digital-Twins/wodt-platform/commit/914ba01aa1cbe58e32a70f730785700eb12435df))
+* **deps:** update dependency semantic-release-preconfigured-conventional-commits to v1.1.117 ([112f56a](https://github.com/Web-of-Digital-Twins/wodt-platform/commit/112f56a20c93f11bc32c9afd1771be8bd251f000))
+* **deps:** update plugin com.gradle.develocity to v3.19 ([0bac853](https://github.com/Web-of-Digital-Twins/wodt-platform/commit/0bac8537f622435a08b1410dd96798c9fcfc4fc8))
+* **deps:** update plugin dokka to v2 ([6c90790](https://github.com/Web-of-Digital-Twins/wodt-platform/commit/6c907903e78f078875795dc94eff0b265857610f))
+* **deps:** update plugin org.danilopianini.gradle-pre-commit-git-hooks to v2.0.16 ([8d0718f](https://github.com/Web-of-Digital-Twins/wodt-platform/commit/8d0718f667eb6dbbbaafe8af6373436a240a6cfc))
+* **deps:** update plugin org.danilopianini.gradle-pre-commit-git-hooks to v2.0.17 ([11a0c02](https://github.com/Web-of-Digital-Twins/wodt-platform/commit/11a0c02652a4883e902d6341c499fc2c39486cf1))
+
+### Build and continuous integration
+
+* **deps:** update codecov/codecov-action action to v5.1.2 ([935a9d6](https://github.com/Web-of-Digital-Twins/wodt-platform/commit/935a9d692c2fe319862c577778dd592a17aceb1f))
+
 ## [2.1.1](https://github.com/Web-of-Digital-Twins/wodt-platform/compare/2.1.0...2.1.1) (2024-12-10)
 
 ### Dependency updates
