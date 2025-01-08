@@ -1,3 +1,11 @@
+## [2.1.3](https://github.com/Web-of-Digital-Twins/wodt-platform/compare/2.1.2...2.1.3) (2025-01-08)
+
+### Dependency updates
+
+* **core-deps:** update dependency org.jetbrains.kotlinx:kotlinx-serialization-json to v1.8.0 ([4777548](https://github.com/Web-of-Digital-Twins/wodt-platform/commit/47775489fd5872a51bcce80690d2f171619617a8))
+* **deps:** update dependency semantic-release-preconfigured-conventional-commits to v1.1.118 ([8b26014](https://github.com/Web-of-Digital-Twins/wodt-platform/commit/8b2601448f8257b4df955a45021fb2420f5af0be))
+* **deps:** update plugin org.danilopianini.gradle-pre-commit-git-hooks to v2.0.18 ([fea6755](https://github.com/Web-of-Digital-Twins/wodt-platform/commit/fea67550490ade89abe6ef7eee3864dd63efa3db))
+
 ## [2.1.2](https://github.com/Web-of-Digital-Twins/wodt-platform/compare/2.1.1...2.1.2) (2024-12-21)
 
 ### Dependency updates
