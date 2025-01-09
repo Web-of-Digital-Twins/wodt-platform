@@ -120,7 +120,7 @@ paths:
                       "rel": "https://purl.org/wodt/dtkg"
                     }
                   ]
-              }
+                }
         description: the Digital Twin Description implemented with a Thing Description following the abstract conceptual model mappings
 
   /wodt/{digitalTwinUri}:
