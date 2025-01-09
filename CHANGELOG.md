@@ -1,3 +1,26 @@
+## [2.2.0](https://github.com/Web-of-Digital-Twins/wodt-platform/compare/2.1.3...2.2.0) (2025-01-09)
+
+### Features
+
+* add digital twins catalog api to obtain all registered dts ([9f1f117](https://github.com/Web-of-Digital-Twins/wodt-platform/commit/9f1f117a29b1c20b2798715cc0ef4e86f69ae222))
+
+### Dependency updates
+
+* **deps:** update node.js to 22.13 ([ce435d5](https://github.com/Web-of-Digital-Twins/wodt-platform/commit/ce435d53fca1ecca52c8fe3ae69f15e2fd3de135))
+
+### Documentation
+
+* **fix:** fix indentation ([f1735c3](https://github.com/Web-of-Digital-Twins/wodt-platform/commit/f1735c3a3834c5a4183c1b710306637d537d8162))
+* **rest-api:** add docs of the api to get the registered digital twins ([fe88472](https://github.com/Web-of-Digital-Twins/wodt-platform/commit/fe88472243e3122ab8245fce9b792527f0785327))
+
+### Tests
+
+* add tests for dts catalog api ([34578fb](https://github.com/Web-of-Digital-Twins/wodt-platform/commit/34578fbe6149286918f2073aff266ce806a86b8f))
+
+### Refactoring
+
+* **isp:** create different interface for ecosystem registry catalog ([9091174](https://github.com/Web-of-Digital-Twins/wodt-platform/commit/909117447cea4ff3005ae160038f81aca67abd23))
+
 ## [2.1.3](https://github.com/Web-of-Digital-Twins/wodt-platform/compare/2.1.2...2.1.3) (2025-01-08)
 
 ### Dependency updates
