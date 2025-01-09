@@ -49,7 +49,7 @@ object KtorTestingUtility {
             install(WebSockets)
             application {
                 ecosystemManagementAPI(ecosystemManagementInterface)
-                wodtDigitalTwinsPlatformInterfaceAPI(platformKnowledgeGraphEngine)
+                wodtDigitalTwinsPlatformInterfaceAPI(platformKnowledgeGraphEngine, ecosystemRegistry)
             }
             tests(ecosystemManagementInterface, ecosystemRegistry, platformKnowledgeGraphEngine)
         }

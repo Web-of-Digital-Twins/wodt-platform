@@ -183,4 +183,28 @@ class WoDTDigitalTwinsPlatformInterfaceAPITest : StringSpec({
             Json.decodeFromString<JsonArray>(response.bodyAsText()).contains(JsonPrimitive(dtUri.uri)) shouldBe true
         }
     }
+
+    """
+       An HTTP GET request to obtain all the registered Digital Twins should return the HTTP Status No Content if
+       no Digital Twin is registered
+    """ {
+        apiTestApplication { _, ecosystemRegistry, platformKnowledgeGraphEngine ->
+            val response = client.get("/wodt/dts")
+            response shouldHaveStatus HttpStatusCode.NoContent
+            Json.decodeFromString<JsonArray>(response.bodyAsText()).isEmpty() shouldBe true
+        }
+    }
+
+    """
+       An HTTP GET request to obtain all the registered Digital Twins should return the registered Digital Twins when
+       present
+    """ {
+        apiTestApplication { _, ecosystemRegistry, platformKnowledgeGraphEngine ->
+            val dts = setOf(DigitalTwinURI("http://dt1.com"), DigitalTwinURI("http://dt2.com"))
+            dts.forEach { ecosystemRegistry.signalRegistration(it) }
+            val response = client.get("/wodt/dts")
+            response shouldHaveStatus HttpStatusCode.OK
+            Json.decodeFromString<Set<String>>(response.bodyAsText()) shouldBe dts.map { it.uri }
+        }
+    }
 })
