@@ -37,6 +37,7 @@ fun main(): Unit = runBlocking {
     val platformWebServer = KtorWoDTPlatformWebServer(
         ecosystemManagementInterface,
         platformKnowledgeGraphEngine,
+        ecosystemRegistry,
         configurationLoader.exposedPort,
     )
 

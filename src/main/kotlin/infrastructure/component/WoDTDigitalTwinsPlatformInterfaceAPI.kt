@@ -16,12 +16,14 @@
 
 package infrastructure.component
 
+import application.component.EcosystemRegistryCatalog
 import application.component.PlatformKnowledgeGraphEngineReader
 import entity.digitaltwin.DigitalTwinURI
 import io.ktor.http.ContentType
 import io.ktor.http.HttpHeaders
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.Application
+import io.ktor.server.application.ApplicationCall
 import io.ktor.server.application.call
 import io.ktor.server.request.contentType
 import io.ktor.server.request.header
@@ -39,7 +41,10 @@ import kotlinx.serialization.json.Json
 /**
  * The WoDT Platform Interface API available to handle requests of Consumers.
  */
-fun Application.wodtDigitalTwinsPlatformInterfaceAPI(platformKnowledgeGraphEngine: PlatformKnowledgeGraphEngineReader) {
+fun Application.wodtDigitalTwinsPlatformInterfaceAPI(
+    platformKnowledgeGraphEngine: PlatformKnowledgeGraphEngineReader,
+    ecosystemRegistryCatalog: EcosystemRegistryCatalog,
+) {
     routing {
         getPlatform()
         getCompletePlatformKnowledgeGraph(platformKnowledgeGraphEngine)
@@ -47,6 +52,7 @@ fun Application.wodtDigitalTwinsPlatformInterfaceAPI(platformKnowledgeGraphEngin
         queryOnPlatformKnowledgeGraph(platformKnowledgeGraphEngine)
         observePlatformKnowledgeGraph(platformKnowledgeGraphEngine)
         getDigitalTwinsFromPhysicalAssetId(platformKnowledgeGraphEngine)
+        getDigitalTwins(ecosystemRegistryCatalog)
     }
 }
 
@@ -127,12 +133,19 @@ private fun Route.getDigitalTwinsFromPhysicalAssetId(platformKnowledgeGraphEngin
     get("/wodt/directory") {
         val paId = call.request.queryParameters["pa"]
         if (paId != null) {
-            platformKnowledgeGraphEngine.getDigitalTwinsFromPhysicalAsset(paId).apply {
-                call.response.status(if (this.isEmpty()) { HttpStatusCode.NoContent } else { HttpStatusCode.OK })
-                call.response.headers.append(HttpHeaders.ContentType, ContentType.Application.Json.toString())
-                call.respond(Json.encodeToString(this.map { it.uri }))
-            }
+            call.respondWithJsonArray(platformKnowledgeGraphEngine.getDigitalTwinsFromPhysicalAsset(paId))
         } else {
             call.respond(HttpStatusCode.BadRequest)
         }
     }
+
+private fun Route.getDigitalTwins(ecosystemRegistryCatalog: EcosystemRegistryCatalog) =
+    get("/wodt/dts") {
+        call.respondWithJsonArray(ecosystemRegistryCatalog.getRegisteredDigitalTwins())
+    }
+
+private suspend fun ApplicationCall.respondWithJsonArray(dtUris: Set<DigitalTwinURI>) {
+    this.response.status(if (dtUris.isEmpty()) { HttpStatusCode.NoContent } else { HttpStatusCode.OK })
+    this.response.headers.append(HttpHeaders.ContentType, ContentType.Application.Json.toString())
+    this.respond(Json.encodeToString(dtUris.map { it.uri }))
+}
