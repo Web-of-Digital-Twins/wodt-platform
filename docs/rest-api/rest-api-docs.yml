@@ -229,3 +229,20 @@ paths:
           description: no registered WoDT Digital Twin is associated with that Physical Asset identifier
         '400':
           description: the request is malformed, missed Physical Asset identifier
+
+  /wodt/dts:
+    get:
+      tags:
+        - WoDT Platform Interface API
+      summary: get the list of Digital Twins registered to the WoDT Platform
+      operationId: dtsCatalog
+      description: get the list of Digital Twins registered to the WoDT Platform
+      responses:
+        '200':
+          description: the list of Digital Twins URI
+          content:
+            application/json:
+              schema:
+                example: [ "https://example.it/dt", "http://second-example.it/dt" ]
+        '204':
+          description: the WoDT Platform does not have any registered WoDT Digital Twin
