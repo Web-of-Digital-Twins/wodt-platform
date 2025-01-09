@@ -39,12 +39,18 @@ interface EcosystemRegistryMapper {
 }
 
 /**
- * This interface models the Ecosystem Registry component of the Abstract Architecture.
+ * This interface models the catalog part of the ecosystem registry that maintains the catalog of the registered
+ * Digital Twins.
  */
-interface EcosystemRegistry : EcosystemRegistryDeletionSignaler, EcosystemRegistryMapper {
-    /** Signal the registration of a new Digital Twin to the Platform. */
-    fun signalRegistration(digitalTwinUri: DigitalTwinURI)
-
+interface EcosystemRegistryCatalog {
     /** Get all the registered Digital Twins. */
     fun getRegisteredDigitalTwins(): Set<DigitalTwinURI>
+}
+
+/**
+ * This interface models the Ecosystem Registry component of the Abstract Architecture.
+ */
+interface EcosystemRegistry : EcosystemRegistryDeletionSignaler, EcosystemRegistryMapper, EcosystemRegistryCatalog {
+    /** Signal the registration of a new Digital Twin to the Platform. */
+    fun signalRegistration(digitalTwinUri: DigitalTwinURI)
 }
