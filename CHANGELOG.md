@@ -1,3 +1,9 @@
+## [2.2.2](https://github.com/Web-of-Digital-Twins/wodt-platform/compare/2.2.1...2.2.2) (2025-01-16)
+
+### Documentation
+
+* **rest-api:** update tag description ([015efb8](https://github.com/Web-of-Digital-Twins/wodt-platform/commit/015efb8cb2825bb4d669ee04bdeeb0cad3a18f3b))
+
 ## [2.2.1](https://github.com/Web-of-Digital-Twins/wodt-platform/compare/2.2.0...2.2.1) (2025-01-16)
 
 ### Dependency updates
