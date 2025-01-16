@@ -16,7 +16,7 @@ tags:
   - name: Ecosystem Management Interface API
     description: This is the API exposed by the Ecosystem Management Interface.
   - name: WoDT Platform Interface API
-    description: This is the API exposed by the WoDT Digital Twins Platform Interface for Consumers.
+    description: This is the API exposed by the WoDT Platform Interface for Consumers.
 
 paths:
   /wodt:
