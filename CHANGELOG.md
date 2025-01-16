@@ -1,3 +1,13 @@
+## [2.2.1](https://github.com/Web-of-Digital-Twins/wodt-platform/compare/2.2.0...2.2.1) (2025-01-16)
+
+### Dependency updates
+
+* **deps:** update dependency semantic-release-preconfigured-conventional-commits to v1.1.119 ([93a6789](https://github.com/Web-of-Digital-Twins/wodt-platform/commit/93a6789d38478683de4d175d76a3f56abc55044d))
+
+### Documentation
+
+* fix api tags ([51e24aa](https://github.com/Web-of-Digital-Twins/wodt-platform/commit/51e24aaed9e28a02b53acabc4d713a27311ca72a))
+
 ## [2.2.0](https://github.com/Web-of-Digital-Twins/wodt-platform/compare/2.1.3...2.2.0) (2025-01-09)
 
 ### Features
