@@ -1,3 +1,16 @@
+## [2.2.3](https://github.com/Web-of-Digital-Twins/wodt-platform/compare/2.2.2...2.2.3) (2025-01-27)
+
+### Dependency updates
+
+* **core-deps:** update dependency org.jetbrains.kotlin:kotlin-stdlib to v2.1.10 ([a0d4163](https://github.com/Web-of-Digital-Twins/wodt-platform/commit/a0d416361acd2f658f7884bc99b92597eddc9aeb))
+* **deps:** update dependency org.apache.jena:apache-jena-libs to v5.3.0 ([383b363](https://github.com/Web-of-Digital-Twins/wodt-platform/commit/383b3631bba8881cfc01c1806b53b088a2580f3f))
+
+### Build and continuous integration
+
+* **deps:** update codecov/codecov-action action to v5.2.0 ([ca5185b](https://github.com/Web-of-Digital-Twins/wodt-platform/commit/ca5185bc6de219341fdf4ff9ff4f05bd3ef0be07))
+* **deps:** update codecov/codecov-action action to v5.3.0 ([6e8d177](https://github.com/Web-of-Digital-Twins/wodt-platform/commit/6e8d1777561a37a109364bd0115b7ddd9d3eb672))
+* **deps:** update codecov/codecov-action action to v5.3.1 ([82ff023](https://github.com/Web-of-Digital-Twins/wodt-platform/commit/82ff0235d61cb30be38306f78803866aaf671982))
+
 ## [2.2.2](https://github.com/Web-of-Digital-Twins/wodt-platform/compare/2.2.1...2.2.2) (2025-01-16)
 
 ### Documentation
