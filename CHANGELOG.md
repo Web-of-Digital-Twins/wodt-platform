@@ -1,3 +1,15 @@
+## [2.2.5](https://github.com/Web-of-Digital-Twins/wodt-platform/compare/2.2.4...2.2.5) (2025-04-01)
+
+### Dependency updates
+
+* **core-deps:** update dependency org.jetbrains.kotlinx:kotlinx-serialization-json to v1.8.1 ([88de909](https://github.com/Web-of-Digital-Twins/wodt-platform/commit/88de909f6d5455d3bd6d14d4782bc8978240f4fb))
+* **deps:** update dependency io.github.oshai:kotlin-logging-jvm to v7.0.6 ([fe6104c](https://github.com/Web-of-Digital-Twins/wodt-platform/commit/fe6104c21f858f3c23f977125c8d31094370ce70))
+* **deps:** update plugin org.danilopianini.gradle-pre-commit-git-hooks to v2.0.22 ([c3c5ab7](https://github.com/Web-of-Digital-Twins/wodt-platform/commit/c3c5ab746432f32ca4c358633608790e3382ec87))
+
+### Build and continuous integration
+
+* **deps:** update actions/setup-node action to v4.3.0 ([9c08076](https://github.com/Web-of-Digital-Twins/wodt-platform/commit/9c080760dceb10b2d00fcb93ecde6719b2dd8dad))
+
 ## [2.2.4](https://github.com/Web-of-Digital-Twins/wodt-platform/compare/2.2.3...2.2.4) (2025-03-20)
 
 ### Dependency updates
