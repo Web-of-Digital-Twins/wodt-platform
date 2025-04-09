@@ -1,3 +1,9 @@
+## [2.2.6](https://github.com/Web-of-Digital-Twins/wodt-platform/compare/2.2.5...2.2.6) (2025-04-09)
+
+### Dependency updates
+
+* **core-deps:** update dependency org.jetbrains.kotlinx:kotlinx-coroutines-core to v1.10.2 ([3d07c30](https://github.com/Web-of-Digital-Twins/wodt-platform/commit/3d07c30522a37e71ad826ac9cf55a0a3b8cf4ff5))
+
 ## [2.2.5](https://github.com/Web-of-Digital-Twins/wodt-platform/compare/2.2.4...2.2.5) (2025-04-01)
 
 ### Dependency updates
