@@ -77,7 +77,7 @@ class KtorWoDTPlatformHttpClient(
             this.httpClient.webSocket(dtUri) {
                 webSockets[dtUri] = this
                 while (true) {
-                    //TODO Log Incoming event
+                    // TODO Log Incoming event
                     val incomingData = incoming.receive()
                     if (incomingData is Frame.Text) {
                         onData(incomingData.readText())

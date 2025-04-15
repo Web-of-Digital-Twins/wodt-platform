@@ -127,7 +127,7 @@ private fun Route.observePlatformKnowledgeGraph(platformKnowledgeGraphEngine: Pl
     webSocket("/wodt") {
         platformKnowledgeGraphEngine.platformKnowledgeGraphs.collect {
             send(it)
-            //TODO Log Outgoing PlatformKG update event
+            // TODO Log Outgoing PlatformKG update event
         }
     }
 
@@ -138,10 +138,9 @@ private fun Route.observeDigitalTwinKnowledgeGraph(platformKnowledgeGraphEngine:
                 val dtUri = obtainDigitalTwinUriFromPathParameters(pathParameters)
                 platformKnowledgeGraphEngine.dtkgUpdatesMap[dtUri]?.collect {
                     send(it)
-                    //TODO Log Outgoing DTKG update event
+                    // TODO Log Outgoing DTKG update event
                 }
             }
-
         }
     }
 

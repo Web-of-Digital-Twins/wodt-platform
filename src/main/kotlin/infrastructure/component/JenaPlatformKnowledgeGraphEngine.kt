@@ -72,7 +72,6 @@ class JenaPlatformKnowledgeGraphEngine(
     override val dtkgUpdatesMap: Map<DigitalTwinURI, Flow<String>>
         get() = _dtkgUpdatesMap
 
-
     override fun currentPlatformKnowledgeGraph(): String? = this.platformKnowledgeGraphModel.toTurtle()
 
     override fun currentCachedDigitalTwinKnowledgeGraph(dtUri: DigitalTwinURI): String? =
@@ -161,7 +160,7 @@ class JenaPlatformKnowledgeGraphEngine(
 
     override fun updateDigitalTwinKnowledgeGraph(digitalTwinUri: DigitalTwinURI, dtkg: String) {
         val dtkgModel = stringToLocalModel(dtkg)
-        this.emitDTKGEvent(digitalTwinUri, dtkgModel);
+        this.emitDTKGEvent(digitalTwinUri, dtkgModel)
         this.mergeDigitalTwinKnowledgeGraphUpdate(digitalTwinUri, dtkgModel)
     }
 
@@ -209,7 +208,7 @@ class JenaPlatformKnowledgeGraphEngine(
     private fun emitDTKGEvent(digitalTwinUri: DigitalTwinURI, dtkgModel: Model) {
         CoroutineScope(dispatcher).launch {
             _dtkgUpdatesMap[digitalTwinUri]?.emit(dtkgModel.toTurtle())
-        };
+        }
     }
 
     private fun handleNewDT(digitalTwinUri: DigitalTwinURI) {

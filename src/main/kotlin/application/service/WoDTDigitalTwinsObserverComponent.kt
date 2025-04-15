@@ -22,7 +22,8 @@ import application.component.WoDTDigitalTwinsObserverWsClient
 import entity.digitaltwin.DigitalTwinDescription
 import entity.digitaltwin.DigitalTwinURI
 import entity.digitaltwin.FormProtocol
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableSharedFlow
 
 /**
  * The implementation of the [WoDTDigitalTwinsObserver] component.
@@ -33,7 +34,7 @@ class WoDTDigitalTwinsObserverComponent(
     private val wsClient: WoDTDigitalTwinsObserverWsClient,
 ) : WoDTDigitalTwinsObserver {
 
-    private var _dtkgFlowMap : Map<DigitalTwinURI, MutableSharedFlow<String>> = mapOf();
+    private var _dtkgFlowMap: Map<DigitalTwinURI, MutableSharedFlow<String>> = mapOf()
 
     override val dtkgRawEventsMap: Map<DigitalTwinURI, Flow<String>> = this._dtkgFlowMap
 
@@ -56,6 +57,6 @@ class WoDTDigitalTwinsObserverComponent(
 
     override suspend fun stopObservationOfDigitalTwin(dtUri: DigitalTwinURI) {
         this.wsClient.stopObservationOfDigitalTwin(dtUri.uri)
-        this._dtkgFlowMap -= dtUri //TODO check
+        this._dtkgFlowMap -= dtUri // TODO check
     }
 }

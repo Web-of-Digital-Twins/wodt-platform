@@ -19,4 +19,6 @@ package entity.digitaltwin
 /**
  * This class wraps the [uri] of a WoDT Digital Twin.
  */
-data class DigitalTwinURI(val uri: String)
+data class DigitalTwinURI(val uri: String) {
+    override fun toString(): String = uri
+}

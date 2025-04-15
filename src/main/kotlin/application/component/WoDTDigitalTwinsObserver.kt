@@ -33,5 +33,4 @@ interface WoDTDigitalTwinsObserver {
 
     /** Stop the observation of a deleted Digital Twin. */
     suspend fun stopObservationOfDigitalTwin(dtUri: DigitalTwinURI)
-
 }

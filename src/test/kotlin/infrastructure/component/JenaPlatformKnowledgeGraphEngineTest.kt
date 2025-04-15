@@ -74,7 +74,7 @@ class JenaPlatformKnowledgeGraphEngineTest : StringSpec({
         digitalTwinURI: DigitalTwinURI = dtUri,
         fileName: String = "dtkgWithRelationship.ttl",
     ): String = readResourceFile(fileName)?.also {
-        platformKnowledgeGraphEngine.mergeDigitalTwinKnowledgeGraphUpdate(digitalTwinURI, it)
+        platformKnowledgeGraphEngine.updateDigitalTwinKnowledgeGraph(digitalTwinURI, it)
     }.orEmpty()
 
     "it should be possible to merge a Digital Twin Description" {

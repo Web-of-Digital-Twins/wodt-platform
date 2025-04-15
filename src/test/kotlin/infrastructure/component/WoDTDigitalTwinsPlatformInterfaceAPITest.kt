@@ -70,7 +70,7 @@ class WoDTDigitalTwinsPlatformInterfaceAPITest : StringSpec({
     ): String =
         readResourceFile("dtkgWithRelationship.ttl")?.also {
             ecosystemRegistry.signalRegistration(dtUri)
-            platformKnowledgeGraphEngine.mergeDigitalTwinKnowledgeGraphUpdate(dtUri, it)
+            platformKnowledgeGraphEngine.updateDigitalTwinKnowledgeGraph(dtUri, it)
         }.orEmpty()
 
     """

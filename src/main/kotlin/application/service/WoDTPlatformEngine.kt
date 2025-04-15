@@ -46,7 +46,7 @@ class WoDTPlatformEngine(
                     launch { woDTDigitalTwinsObserver.observeDigitalTwin(dtdEvent.dtd) }
 
                     launch {
-                        woDTDigitalTwinsObserver.dtkgRawEventsMap[dtdEvent.dtURI]?.collect{ dtkg ->
+                        woDTDigitalTwinsObserver.dtkgRawEventsMap[dtdEvent.dtURI]?.collect { dtkg ->
                             platformKnowledgeGraphEngine.updateDigitalTwinKnowledgeGraph(
                                 dtdEvent.dtURI,
                                 dtkg,

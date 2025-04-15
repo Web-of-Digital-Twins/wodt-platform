@@ -42,5 +42,5 @@ interface EcosystemManagementInterface {
      */
     fun deleteDigitalTwin(dtUri: DigitalTwinURI): Boolean
 
-    //TODO missing the update of a DTD?
+    // TODO missing the update of a DTD?
 }
