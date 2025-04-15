@@ -24,12 +24,14 @@ import kotlinx.coroutines.flow.Flow
  * This interface models the WoDT Digital Twins Observer component of the Abstract Architecture.
  */
 interface WoDTDigitalTwinsObserver {
-    /** Obtain the flow of the received raw Digital Twins Knowledge Graphs. */
-    val dtkgRawEvents: Flow<Pair<DigitalTwinURI, String>>
+
+    /** DTKG raw updates received from each DT. */
+    val dtkgRawEventsMap: Map<DigitalTwinURI, Flow<String>>
 
     /** Start the observation of a newly registered WoDT Digital Twin. */
     suspend fun observeDigitalTwin(dtd: DigitalTwinDescription)
 
     /** Stop the observation of a deleted Digital Twin. */
     suspend fun stopObservationOfDigitalTwin(dtUri: DigitalTwinURI)
+
 }

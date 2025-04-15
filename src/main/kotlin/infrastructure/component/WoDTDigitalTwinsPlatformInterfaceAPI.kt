@@ -51,6 +51,7 @@ fun Application.wodtDigitalTwinsPlatformInterfaceAPI(
         getLocalDigitalTwinKnowledgeGraph(platformKnowledgeGraphEngine)
         queryOnPlatformKnowledgeGraph(platformKnowledgeGraphEngine)
         observePlatformKnowledgeGraph(platformKnowledgeGraphEngine)
+        observeDigitalTwinKnowledgeGraph(platformKnowledgeGraphEngine)
         getDigitalTwinsFromPhysicalAssetId(platformKnowledgeGraphEngine)
         getDigitalTwins(ecosystemRegistryCatalog)
     }
@@ -83,7 +84,7 @@ private fun Route.getLocalDigitalTwinKnowledgeGraph(platformKnowledgeGraphEngine
         call.parameters.getAll("dtUri")?.also { pathParameters ->
             if (pathParameters.size >= 2) {
                 val dtUri = obtainDigitalTwinUriFromPathParameters(pathParameters)
-                platformKnowledgeGraphEngine.currentCachedDigitalTwinKnowledgeGraph(DigitalTwinURI(dtUri)).apply {
+                platformKnowledgeGraphEngine.currentCachedDigitalTwinKnowledgeGraph(dtUri).apply {
                     when (this) {
                         null -> call.respond(HttpStatusCode.NotFound)
                         else -> {
@@ -126,6 +127,21 @@ private fun Route.observePlatformKnowledgeGraph(platformKnowledgeGraphEngine: Pl
     webSocket("/wodt") {
         platformKnowledgeGraphEngine.platformKnowledgeGraphs.collect {
             send(it)
+            //TODO Log Outgoing PlatformKG update event
+        }
+    }
+
+private fun Route.observeDigitalTwinKnowledgeGraph(platformKnowledgeGraphEngine: PlatformKnowledgeGraphEngineReader) =
+    webSocket("/wod/{dtUri...}") {
+        call.parameters.getAll("dtUri")?.also { pathParameters ->
+            if (pathParameters.size >= 2) {
+                val dtUri = obtainDigitalTwinUriFromPathParameters(pathParameters)
+                platformKnowledgeGraphEngine.dtkgUpdatesMap[dtUri]?.collect {
+                    send(it)
+                    //TODO Log Outgoing DTKG update event
+                }
+            }
+
         }
     }
 

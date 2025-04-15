@@ -39,19 +39,24 @@ class WoDTPlatformEngine(
      */
     suspend fun start() = coroutineScope {
         launch {
-            ecosystemManagementInterface.ecosystemEvents.collect {
-                if (it is NewDigitalTwinRegistered) {
-                    launch { woDTDigitalTwinsObserver.observeDigitalTwin(it.dtd) }
-                    platformKnowledgeGraphEngine.mergeDigitalTwinDescription(it.dtd)
-                } else if (it is DigitalTwinDeleted) {
-                    woDTDigitalTwinsObserver.stopObservationOfDigitalTwin(it.dtURI)
-                    platformKnowledgeGraphEngine.deleteDigitalTwin(it.dtURI)
+            ecosystemManagementInterface.ecosystemEvents.collect { dtdEvent ->
+                if (dtdEvent is NewDigitalTwinRegistered) {
+                    platformKnowledgeGraphEngine.mergeDigitalTwinDescription(dtdEvent.dtd)
+
+                    launch { woDTDigitalTwinsObserver.observeDigitalTwin(dtdEvent.dtd) }
+
+                    launch {
+                        woDTDigitalTwinsObserver.dtkgRawEventsMap[dtdEvent.dtURI]?.collect{ dtkg ->
+                            platformKnowledgeGraphEngine.updateDigitalTwinKnowledgeGraph(
+                                dtdEvent.dtURI,
+                                dtkg,
+                            )
+                        }
+                    }
+                } else if (dtdEvent is DigitalTwinDeleted) {
+                    woDTDigitalTwinsObserver.stopObservationOfDigitalTwin(dtdEvent.dtURI)
+                    platformKnowledgeGraphEngine.deleteDigitalTwin(dtdEvent.dtURI)
                 }
-            }
-        }
-        launch {
-            woDTDigitalTwinsObserver.dtkgRawEvents.collect {
-                platformKnowledgeGraphEngine.mergeDigitalTwinKnowledgeGraphUpdate(it.first, it.second)
             }
         }
         platformWebServer.start()

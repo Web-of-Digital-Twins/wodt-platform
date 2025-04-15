@@ -67,7 +67,7 @@ private fun Route.deleteDigitalTwin(ecosystemManagementInterface: EcosystemManag
             if (pathParameters.size >= 2) {
                 val dtUri = obtainDigitalTwinUriFromPathParameters(pathParameters)
                 call.respond(
-                    if (ecosystemManagementInterface.deleteDigitalTwin(DigitalTwinURI(dtUri))) {
+                    if (ecosystemManagementInterface.deleteDigitalTwin(dtUri)) {
                         HttpStatusCode.Accepted
                     } else {
                         HttpStatusCode.NotFound

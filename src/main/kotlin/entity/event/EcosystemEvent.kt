@@ -23,7 +23,7 @@ import entity.digitaltwin.DigitalTwinURI
 sealed interface EcosystemEvent
 
 /** This class models the event of a new WoDT Digital Twin registered to the Platform via its [dtd]. */
-data class NewDigitalTwinRegistered(val dtd: DigitalTwinDescription) : EcosystemEvent
+data class NewDigitalTwinRegistered(val dtd: DigitalTwinDescription, val dtURI: DigitalTwinURI = dtd.digitalTwinUri) : EcosystemEvent
 
 /** This class models the event of deletion of a registered WoDT Digital Twin, identified by its [dtURI]. */
 data class DigitalTwinDeleted(val dtURI: DigitalTwinURI) : EcosystemEvent

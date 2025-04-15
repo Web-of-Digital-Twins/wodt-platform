@@ -28,6 +28,9 @@ interface PlatformKnowledgeGraphEngineReader {
     /** Obtain the flow of Platform Knowledge Graphs emitted by the component. */
     val platformKnowledgeGraphs: Flow<String>
 
+    /** A map with the flows of WoDT Digital Twin Knowledge Graphs updates. */
+    val dtkgUpdatesMap: Map<DigitalTwinURI, Flow<String>>
+
     /** Obtain the current status of the Platform Knowledge Graph. */
     fun currentPlatformKnowledgeGraph(): String?
 
@@ -56,10 +59,10 @@ interface PlatformKnowledgeGraphEngineWriter {
     fun mergeDigitalTwinDescription(dtd: DigitalTwinDescription)
 
     /**
-     * Merge the updated [dtkg] of the registered WoDT Digital Twin identified via its [dtUri].
-     * The [digitalTwinUri] is the original one, and not the mapped one.
+     * Update the Platform Knowledge Graph with the new DTKG of the WoDT Digital Twin
+     * identified by its [digitalTwinUri].
      */
-    fun mergeDigitalTwinKnowledgeGraphUpdate(digitalTwinUri: DigitalTwinURI, dtkg: String)
+    fun updateDigitalTwinKnowledgeGraph(digitalTwinUri: DigitalTwinURI, dtkg: String)
 
     /**
      * Delete the Digital Twin identified by its [digitalTwinUri].

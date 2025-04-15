@@ -27,7 +27,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonObject
@@ -66,7 +65,13 @@ class JenaPlatformKnowledgeGraphEngine(
     private val platformKnowledgeGraphModel: Model
         get() = dtkgsModel.union(dtdsModel)
 
-    override val platformKnowledgeGraphs: Flow<String> = this._platformKnowledgeGraphs.asSharedFlow()
+    private var _dtkgUpdatesMap: Map<DigitalTwinURI, MutableSharedFlow<String>> = mapOf()
+
+    override val platformKnowledgeGraphs: Flow<String> = this._platformKnowledgeGraphs
+
+    override val dtkgUpdatesMap: Map<DigitalTwinURI, Flow<String>>
+        get() = _dtkgUpdatesMap
+
 
     override fun currentPlatformKnowledgeGraph(): String? = this.platformKnowledgeGraphModel.toTurtle()
 
@@ -147,22 +152,17 @@ class JenaPlatformKnowledgeGraphEngine(
             this.dtdsModelMap += (dtd.digitalTwinUri to dtdModel)
             this.dtdsModel.add(dtdModel)
             this.dtdsModel.leaveCriticalSection()
-            if (newDT) { this.updateLocalURIsInPlatformKG() }
-            this.emitEvent()
+            if (newDT) {
+                this.handleNewDT(dtd.digitalTwinUri)
+            }
+            this.emitPlatformKGEvent()
         }
     }
 
-    override fun mergeDigitalTwinKnowledgeGraphUpdate(digitalTwinUri: DigitalTwinURI, dtkg: String) {
-        this.dtkgsModel.enterCriticalSection(Lock.WRITE)
-        val dtkgModel = RDFParser.fromString(dtkg, Lang.TTL)
-            .build()
-            .toModel()
-            .mapLocalDigitalTwinModel()
-        this.dtkgsModelMap[digitalTwinUri]?.also { this.dtkgsModel.remove(it) }
-        this.dtkgsModelMap += (digitalTwinUri to dtkgModel)
-        this.dtkgsModel.add(dtkgModel)
-        this.emitEvent()
-        this.dtkgsModel.leaveCriticalSection()
+    override fun updateDigitalTwinKnowledgeGraph(digitalTwinUri: DigitalTwinURI, dtkg: String) {
+        val dtkgModel = stringToLocalModel(dtkg)
+        this.emitDTKGEvent(digitalTwinUri, dtkgModel);
+        this.mergeDigitalTwinKnowledgeGraphUpdate(digitalTwinUri, dtkgModel)
     }
 
     override fun deleteDigitalTwin(digitalTwinUri: DigitalTwinURI): Boolean =
@@ -177,16 +177,46 @@ class JenaPlatformKnowledgeGraphEngine(
             this.dtdsModelMap -= digitalTwinUri
             this.dtdsModel.leaveCriticalSection()
 
-            this.emitEvent()
+            this.emitPlatformKGEvent()
             true
         } else {
             false
         }
 
+    private fun mergeDigitalTwinKnowledgeGraphUpdate(digitalTwinUri: DigitalTwinURI, dtkgModel: Model) {
+        this.dtkgsModel.enterCriticalSection(Lock.WRITE)
+        this.dtkgsModelMap[digitalTwinUri]?.also { this.dtkgsModel.remove(it) }
+        this.dtkgsModelMap += (digitalTwinUri to dtkgModel)
+        this.dtkgsModel.add(dtkgModel)
+        this.emitPlatformKGEvent()
+        this.dtkgsModel.leaveCriticalSection()
+    }
+
+    private fun stringToLocalModel(dtkg: String): Model {
+        val dtkgModel = RDFParser.fromString(dtkg, Lang.TTL)
+            .build()
+            .toModel()
+            .mapLocalDigitalTwinModel()
+        return dtkgModel
+    }
+
     private fun Model.toTurtle() = RDFWriter.create().lang(Lang.TTL).source(this).asString()
-    private fun emitEvent() {
+
+    private fun emitPlatformKGEvent() {
         CoroutineScope(dispatcher).launch { _platformKnowledgeGraphs.emit(platformKnowledgeGraphModel.toTurtle()) }
     }
+
+    private fun emitDTKGEvent(digitalTwinUri: DigitalTwinURI, dtkgModel: Model) {
+        CoroutineScope(dispatcher).launch {
+            _dtkgUpdatesMap[digitalTwinUri]?.emit(dtkgModel.toTurtle())
+        };
+    }
+
+    private fun handleNewDT(digitalTwinUri: DigitalTwinURI) {
+        this.updateLocalURIsInPlatformKG()
+        this._dtkgUpdatesMap += (digitalTwinUri to MutableSharedFlow())
+    }
+
     private fun Model.mapLocalDigitalTwinModel(): Model {
         val mappedModel = ModelFactory.createDefaultModel()
         this.listStatements().forEach { statement ->

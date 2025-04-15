@@ -22,8 +22,7 @@ import application.component.WoDTDigitalTwinsObserverWsClient
 import entity.digitaltwin.DigitalTwinDescription
 import entity.digitaltwin.DigitalTwinURI
 import entity.digitaltwin.FormProtocol
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.*
 
 /**
  * The implementation of the [WoDTDigitalTwinsObserver] component.
@@ -33,21 +32,30 @@ class WoDTDigitalTwinsObserverComponent(
     private val ecosystemRegistry: EcosystemRegistryDeletionSignaler,
     private val wsClient: WoDTDigitalTwinsObserverWsClient,
 ) : WoDTDigitalTwinsObserver {
-    private val _dtkgRawEvents = MutableSharedFlow<Pair<DigitalTwinURI, String>>()
 
-    override val dtkgRawEvents = this._dtkgRawEvents.asSharedFlow()
+    private var _dtkgFlowMap : Map<DigitalTwinURI, MutableSharedFlow<String>> = mapOf();
+
+    override val dtkgRawEventsMap: Map<DigitalTwinURI, Flow<String>> = this._dtkgFlowMap
 
     override suspend fun observeDigitalTwin(dtd: DigitalTwinDescription) {
         if (dtd.obtainObservationForm().protocol == FormProtocol.WEBSOCKET) {
+            this._dtkgFlowMap += (dtd.digitalTwinUri to MutableSharedFlow())
             this.wsClient.observeDigitalTwin(
                 dtd.obtainObservationForm().href,
-                { _dtkgRawEvents.emit(dtd.digitalTwinUri to it) },
+                { _dtkgFlowMap[dtd.digitalTwinUri]?.emit(it) },
+                /* TODO why remove the DT if the socket is closed?
+                    Couldn't this be a network issue e.g. DT is down?
+                    The DT should still be part of the ecosystem until reconnection
+                    In that case I expect the DT to send a DTD update when it is back up...
+                 */
                 { ecosystemRegistry.signalDeletion(dtd.digitalTwinUri) },
+
             )
         }
     }
 
     override suspend fun stopObservationOfDigitalTwin(dtUri: DigitalTwinURI) {
         this.wsClient.stopObservationOfDigitalTwin(dtUri.uri)
+        this._dtkgFlowMap -= dtUri //TODO check
     }
 }

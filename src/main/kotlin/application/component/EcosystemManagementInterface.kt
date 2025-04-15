@@ -41,4 +41,6 @@ interface EcosystemManagementInterface {
      * @return true if correctly deleted, false if it isn't registered to the platform
      */
     fun deleteDigitalTwin(dtUri: DigitalTwinURI): Boolean
+
+    //TODO missing the update of a DTD?
 }
