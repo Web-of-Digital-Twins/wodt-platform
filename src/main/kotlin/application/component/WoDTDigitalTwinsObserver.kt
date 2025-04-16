@@ -25,8 +25,11 @@ import kotlinx.coroutines.flow.Flow
  */
 interface WoDTDigitalTwinsObserver {
 
-    /** DTKG raw updates received from each DT. */
-    val dtkgRawEventsMap: Map<DigitalTwinURI, Flow<String>>
+    /**
+     * Flow to listen to new observed Digital Twins.
+     * It emits the flow of the associated digital twin dtkgs.
+     */
+    val observedDigitalTwins: Flow<Pair<DigitalTwinURI, Flow<String>>>
 
     /** Start the observation of a newly registered WoDT Digital Twin. */
     suspend fun observeDigitalTwin(dtd: DigitalTwinDescription)

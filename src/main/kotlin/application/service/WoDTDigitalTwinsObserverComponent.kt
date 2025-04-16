@@ -24,6 +24,7 @@ import entity.digitaltwin.DigitalTwinURI
 import entity.digitaltwin.FormProtocol
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
 
 /**
  * The implementation of the [WoDTDigitalTwinsObserver] component.
@@ -34,13 +35,16 @@ class WoDTDigitalTwinsObserverComponent(
     private val wsClient: WoDTDigitalTwinsObserverWsClient,
 ) : WoDTDigitalTwinsObserver {
 
+    private val _observedDigitalTwins = MutableSharedFlow<Pair<DigitalTwinURI, Flow<String>>>()
     private var _dtkgFlowMap: Map<DigitalTwinURI, MutableSharedFlow<String>> = mapOf()
 
-    override val dtkgRawEventsMap: Map<DigitalTwinURI, Flow<String>> = this._dtkgFlowMap
+    override val observedDigitalTwins = this._observedDigitalTwins.asSharedFlow()
 
     override suspend fun observeDigitalTwin(dtd: DigitalTwinDescription) {
         if (dtd.obtainObservationForm().protocol == FormProtocol.WEBSOCKET) {
-            this._dtkgFlowMap += (dtd.digitalTwinUri to MutableSharedFlow())
+            val newDtkgFlow = (dtd.digitalTwinUri to MutableSharedFlow<String>())
+            this._dtkgFlowMap += newDtkgFlow
+            this._observedDigitalTwins.emit(newDtkgFlow)
             this.wsClient.observeDigitalTwin(
                 dtd.obtainObservationForm().href,
                 { _dtkgFlowMap[dtd.digitalTwinUri]?.emit(it) },
@@ -49,7 +53,10 @@ class WoDTDigitalTwinsObserverComponent(
                     The DT should still be part of the ecosystem until reconnection
                     In that case I expect the DT to send a DTD update when it is back up...
                  */
-                { ecosystemRegistry.signalDeletion(dtd.digitalTwinUri) },
+                {
+                    ecosystemRegistry.signalDeletion(dtd.digitalTwinUri)
+                    this._dtkgFlowMap -= dtd.digitalTwinUri
+                },
 
             )
         }
@@ -57,6 +64,6 @@ class WoDTDigitalTwinsObserverComponent(
 
     override suspend fun stopObservationOfDigitalTwin(dtUri: DigitalTwinURI) {
         this.wsClient.stopObservationOfDigitalTwin(dtUri.uri)
-        this._dtkgFlowMap -= dtUri // TODO check
+        this._dtkgFlowMap -= dtUri
     }
 }

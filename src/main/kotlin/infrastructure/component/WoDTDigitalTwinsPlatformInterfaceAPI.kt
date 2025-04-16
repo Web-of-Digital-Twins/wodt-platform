@@ -35,7 +35,6 @@ import io.ktor.server.routing.post
 import io.ktor.server.routing.routing
 import io.ktor.server.websocket.webSocket
 import io.ktor.websocket.send
-import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 
 /**
@@ -132,11 +131,12 @@ private fun Route.observePlatformKnowledgeGraph(platformKnowledgeGraphEngine: Pl
     }
 
 private fun Route.observeDigitalTwinKnowledgeGraph(platformKnowledgeGraphEngine: PlatformKnowledgeGraphEngineReader) =
-    webSocket("/wod/{dtUri...}") {
+    webSocket("/wodt/{dtUri...}") {
         call.parameters.getAll("dtUri")?.also { pathParameters ->
             if (pathParameters.size >= 2) {
                 val dtUri = obtainDigitalTwinUriFromPathParameters(pathParameters)
-                platformKnowledgeGraphEngine.dtkgUpdatesMap[dtUri]?.collect {
+                send(platformKnowledgeGraphEngine.currentCachedDigitalTwinKnowledgeGraph(dtUri).orEmpty())
+                platformKnowledgeGraphEngine.currentCachedDigitalTwinKnowledgeGraphUpdates(dtUri)?.collect {
                     send(it)
                     // TODO Log Outgoing DTKG update event
                 }

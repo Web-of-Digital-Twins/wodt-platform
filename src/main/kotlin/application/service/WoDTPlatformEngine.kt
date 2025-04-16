@@ -22,6 +22,8 @@ import application.component.WoDTDigitalTwinsObserver
 import application.component.WoDTPlatformWebServer
 import entity.event.DigitalTwinDeleted
 import entity.event.NewDigitalTwinRegistered
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 
@@ -33,29 +35,32 @@ class WoDTPlatformEngine(
     private val woDTDigitalTwinsObserver: WoDTDigitalTwinsObserver,
     private val platformKnowledgeGraphEngine: PlatformKnowledgeGraphEngine,
     private val platformWebServer: WoDTPlatformWebServer,
+    private val dispatcher: CoroutineDispatcher = Dispatchers.Default,
 ) {
     /**
      * Method to start the [WoDTPlatformEngine].
      */
     suspend fun start() = coroutineScope {
+        launch(dispatcher) { platformKnowledgeGraphEngine.start() }
+
         launch {
             ecosystemManagementInterface.ecosystemEvents.collect { dtdEvent ->
                 if (dtdEvent is NewDigitalTwinRegistered) {
                     platformKnowledgeGraphEngine.mergeDigitalTwinDescription(dtdEvent.dtd)
-
                     launch { woDTDigitalTwinsObserver.observeDigitalTwin(dtdEvent.dtd) }
-
-                    launch {
-                        woDTDigitalTwinsObserver.dtkgRawEventsMap[dtdEvent.dtURI]?.collect { dtkg ->
-                            platformKnowledgeGraphEngine.updateDigitalTwinKnowledgeGraph(
-                                dtdEvent.dtURI,
-                                dtkg,
-                            )
-                        }
-                    }
                 } else if (dtdEvent is DigitalTwinDeleted) {
                     woDTDigitalTwinsObserver.stopObservationOfDigitalTwin(dtdEvent.dtURI)
                     platformKnowledgeGraphEngine.deleteDigitalTwin(dtdEvent.dtURI)
+                }
+            }
+        }
+
+        launch {
+            woDTDigitalTwinsObserver.observedDigitalTwins.collect { (dtUri, dtkgFlow) ->
+                launch {
+                    dtkgFlow.collect {
+                        platformKnowledgeGraphEngine.updateDigitalTwinKnowledgeGraph(dtUri, it)
+                    }
                 }
             }
         }

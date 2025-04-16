@@ -28,14 +28,14 @@ interface PlatformKnowledgeGraphEngineReader {
     /** Obtain the flow of Platform Knowledge Graphs emitted by the component. */
     val platformKnowledgeGraphs: Flow<String>
 
-    /** A map with the flows of WoDT Digital Twin Knowledge Graphs updates. */
-    val dtkgUpdatesMap: Map<DigitalTwinURI, Flow<String>>
-
     /** Obtain the current status of the Platform Knowledge Graph. */
     fun currentPlatformKnowledgeGraph(): String?
 
     /** Obtain the cached current status of a registered WoDT Digital Twin identified by its [dtUri]. */
     fun currentCachedDigitalTwinKnowledgeGraph(dtUri: DigitalTwinURI): String?
+
+    /** Get the flow of WoDT Digital Twin Knowledge Graphs updates. */
+    fun currentCachedDigitalTwinKnowledgeGraphUpdates(dtUri: DigitalTwinURI): Flow<String>?
 
     /**
      * Query the Platform Knowledge Graph. The query will be returned in the [responseContentType]
@@ -59,7 +59,7 @@ interface PlatformKnowledgeGraphEngineWriter {
     fun mergeDigitalTwinDescription(dtd: DigitalTwinDescription)
 
     /**
-     * Update the Platform Knowledge Graph with the new DTKG of the WoDT Digital Twin
+     * Update the Platform Knowledge Graph with the new [dtkg] of the WoDT Digital Twin
      * identified by its [digitalTwinUri].
      */
     fun updateDigitalTwinKnowledgeGraph(digitalTwinUri: DigitalTwinURI, dtkg: String)
@@ -75,4 +75,7 @@ interface PlatformKnowledgeGraphEngineWriter {
  * This interface models the general WoDT Digital Twins Platform Knowledge Graph Engine component of the Abstract
  * Architecture.
  */
-interface PlatformKnowledgeGraphEngine : PlatformKnowledgeGraphEngineReader, PlatformKnowledgeGraphEngineWriter
+interface PlatformKnowledgeGraphEngine : PlatformKnowledgeGraphEngineReader, PlatformKnowledgeGraphEngineWriter {
+    /** Method to start the engine. */
+    suspend fun start()
+}

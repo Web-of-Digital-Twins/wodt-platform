@@ -25,6 +25,10 @@ import io.ktor.client.engine.mock.respondOk
 import io.ktor.server.testing.ApplicationTestBuilder
 import io.ktor.server.testing.testApplication
 import io.ktor.server.websocket.WebSockets
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.test.runTest
 import java.net.URI
 
 object KtorTestingUtility {
@@ -33,6 +37,7 @@ object KtorTestingUtility {
     private val httpClient = KtorWoDTPlatformHttpClient(platformExposedUrl, engine = mockEngine)
 
     fun apiTestApplication(
+        dispatcher: CoroutineDispatcher = Dispatchers.Default,
         tests: suspend ApplicationTestBuilder.(
             ecosystemManagementInterface: BaseEcosystemManagementInterface,
             ecosystemRegistry: EcosystemRegistry,
@@ -51,7 +56,11 @@ object KtorTestingUtility {
                 ecosystemManagementAPI(ecosystemManagementInterface)
                 wodtDigitalTwinsPlatformInterfaceAPI(platformKnowledgeGraphEngine, ecosystemRegistry)
             }
-            tests(ecosystemManagementInterface, ecosystemRegistry, platformKnowledgeGraphEngine)
+            runTest {
+                val job = launch(dispatcher) { platformKnowledgeGraphEngine.start() }
+                tests(ecosystemManagementInterface, ecosystemRegistry, platformKnowledgeGraphEngine)
+                job.cancel()
+            }
         }
     }
 }
