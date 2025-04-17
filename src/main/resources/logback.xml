@@ -24,4 +24,7 @@
         <appender-ref ref="STDOUT"/>
     </root>
     <logger name="io.netty" level="INFO"/>
+    <logger name="com.tngtech.archunit" level="INFO"/>
+    <logger name="org.apache.jena" level="INFO"/>
+    <logger name="io.ktor" level="INFO"/>
 </configuration>
