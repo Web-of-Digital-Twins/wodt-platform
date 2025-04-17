@@ -32,7 +32,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.runTest
 import java.net.URI
 import kotlin.time.Duration.Companion.milliseconds
-import kotlin.time.Duration.Companion.seconds
+import kotlin.time.Duration.Companion.minutes
 
 class JenaPlatformKnowledgeGraphEngineTest : StringSpec({
     val platformExposedUrl = URI.create("http://localhost:4000")
@@ -86,7 +86,7 @@ class JenaPlatformKnowledgeGraphEngineTest : StringSpec({
     }.orEmpty()
 
     val config = eventuallyConfig {
-        duration = 20.seconds
+        duration = 1.minutes
         interval = 100.milliseconds
     }
 

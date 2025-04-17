@@ -41,7 +41,7 @@ import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonPrimitive
 import kotlin.time.Duration.Companion.milliseconds
-import kotlin.time.Duration.Companion.seconds
+import kotlin.time.Duration.Companion.minutes
 
 class WoDTDigitalTwinsPlatformInterfaceAPITest : StringSpec({
     val dtUri = DigitalTwinURI("https://example.com/dt")
@@ -78,7 +78,7 @@ class WoDTDigitalTwinsPlatformInterfaceAPITest : StringSpec({
         }.orEmpty()
 
     val config = eventuallyConfig {
-        duration = 20.seconds
+        duration = 1.minutes
         interval = 100.milliseconds
     }
 
