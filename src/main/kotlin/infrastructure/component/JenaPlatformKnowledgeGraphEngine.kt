@@ -49,6 +49,7 @@ import org.apache.jena.riot.RDFParser
 import org.apache.jena.riot.RDFWriter
 import org.apache.jena.shared.Lock
 import java.io.ByteArrayOutputStream
+import java.util.Collections
 import java.util.concurrent.Executors
 
 private sealed interface PlatformKnowledgeGraphEvent
@@ -68,14 +69,21 @@ class JenaPlatformKnowledgeGraphEngine(
     private val engineFlow = MutableSharedFlow<PlatformKnowledgeGraphEvent>()
     private val engineDispatcher = Executors.newSingleThreadExecutor().asCoroutineDispatcher()
 
-    private var dtkgsModelMap: Map<DigitalTwinURI, Model> = mapOf()
-    private var dtdsModelMap: Map<DigitalTwinURI, Model> = mapOf()
+    private val dtkgsModelMap: MutableMap<DigitalTwinURI, Model> = Collections.synchronizedMap(mutableMapOf())
+    private val dtdsModelMap: MutableMap<DigitalTwinURI, Model> = Collections.synchronizedMap(mutableMapOf())
 
     private val dtkgsModel = ModelFactory.createDefaultModel()
     private val dtdsModel = ModelFactory.createDefaultModel()
 
     private val platformKnowledgeGraphModel: Model
-        get() = dtkgsModel.union(dtdsModel)
+        get() {
+            dtkgsModel.enterCriticalSection(Lock.READ)
+            dtdsModel.enterCriticalSection(Lock.READ)
+            val platformKGModel = dtkgsModel.union(dtdsModel)
+            dtdsModel.leaveCriticalSection()
+            dtkgsModel.leaveCriticalSection()
+            return platformKGModel
+        }
 
     private var _dtkgUpdatesMap: Map<DigitalTwinURI, MutableSharedFlow<String>> = mapOf()
 
