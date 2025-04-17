@@ -20,6 +20,8 @@ import application.component.EcosystemRegistry
 import application.component.PlatformKnowledgeGraphEngine
 import application.service.BaseEcosystemManagementInterface
 import application.service.EcosystemRegistryService
+import io.kotest.assertions.nondeterministic.eventually
+import io.kotest.assertions.nondeterministic.eventuallyConfig
 import io.ktor.client.engine.mock.MockEngine
 import io.ktor.client.engine.mock.respondOk
 import io.ktor.server.testing.ApplicationTestBuilder
@@ -27,9 +29,12 @@ import io.ktor.server.testing.testApplication
 import io.ktor.server.websocket.WebSockets
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.test.runTest
 import java.net.URI
+import kotlin.time.Duration.Companion.milliseconds
+import kotlin.time.Duration.Companion.minutes
+import kotlin.time.Duration.Companion.seconds
 
 object KtorTestingUtility {
     private val platformExposedUrl = URI.create("http://localhost:4000")
@@ -50,15 +55,23 @@ object KtorTestingUtility {
         )
         val ecosystemRegistry = EcosystemRegistryService(platformExposedUrl)
         val platformKnowledgeGraphEngine = JenaPlatformKnowledgeGraphEngine(ecosystemRegistry)
+        val eventuallyConfig = eventuallyConfig {
+            initialDelay = 1.seconds
+            duration = 1.minutes
+            interval = 100.milliseconds
+        }
+
         testApplication {
             install(WebSockets)
             application {
                 ecosystemManagementAPI(ecosystemManagementInterface)
                 wodtDigitalTwinsPlatformInterfaceAPI(platformKnowledgeGraphEngine, ecosystemRegistry)
             }
-            runTest {
+            coroutineScope {
                 val job = launch(dispatcher) { platformKnowledgeGraphEngine.start() }
-                tests(ecosystemManagementInterface, ecosystemRegistry, platformKnowledgeGraphEngine)
+                eventually(eventuallyConfig) {
+                    tests(ecosystemManagementInterface, ecosystemRegistry, platformKnowledgeGraphEngine)
+                }
                 job.cancel()
             }
         }

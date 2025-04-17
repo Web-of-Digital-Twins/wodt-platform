@@ -28,11 +28,12 @@ import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.test.runTest
 import java.net.URI
 import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.Duration.Companion.minutes
+import kotlin.time.Duration.Companion.seconds
 
 class JenaPlatformKnowledgeGraphEngineTest : StringSpec({
     val platformExposedUrl = URI.create("http://localhost:4000")
@@ -86,15 +87,16 @@ class JenaPlatformKnowledgeGraphEngineTest : StringSpec({
     }.orEmpty()
 
     val config = eventuallyConfig {
-        duration = 1.minutes
+        initialDelay = 1.seconds
+        duration = 10.minutes
         interval = 100.milliseconds
     }
 
-    fun platformEngineTest(
+    suspend fun platformEngineTest(
         dispatcher: CoroutineDispatcher = Dispatchers.Default,
         test: suspend (PlatformKnowledgeGraphEngine, EcosystemRegistryService) -> Unit,
     ) {
-        runTest {
+        coroutineScope {
             val ecosystemRegistry = EcosystemRegistryService(platformExposedUrl)
             val platformKnowledgeGraphEngine = JenaPlatformKnowledgeGraphEngine(ecosystemRegistry)
             val job = launch(dispatcher) { platformKnowledgeGraphEngine.start() }

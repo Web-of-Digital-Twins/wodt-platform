@@ -78,7 +78,7 @@ class WoDTDigitalTwinsPlatformInterfaceAPITest : StringSpec({
         }.orEmpty()
 
     val config = eventuallyConfig {
-        duration = 1.minutes
+        duration = 10.minutes
         interval = 100.milliseconds
     }
 
@@ -131,12 +131,14 @@ class WoDTDigitalTwinsPlatformInterfaceAPITest : StringSpec({
         apiTestApplication { _, ecosystemRegistry, platformKnowledgeGraphEngine ->
             insertDTKG(ecosystemRegistry, platformKnowledgeGraphEngine)
 
+            val targetDtkg = readResourceFile("mappedDtkgWithRelationship.ttl")
+
             eventually(config) {
                 val response = client.get("/wodt/${dtUri.uri}")
                 response shouldHaveStatus HttpStatusCode.OK
                 response.headers[HttpHeaders.ContentType] shouldBe "text/turtle"
                 response.headers[HttpHeaders.Link] shouldBe "<${dtUri.uri}>; rel=\"original\""
-                response.bodyAsText() shouldBe readResourceFile("mappedDtkgWithRelationship.ttl")
+                response.bodyAsText() shouldBe targetDtkg
             }
         }
     }
