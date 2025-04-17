@@ -56,7 +56,7 @@ object KtorTestingUtility {
         val ecosystemRegistry = EcosystemRegistryService(platformExposedUrl)
         val platformKnowledgeGraphEngine = JenaPlatformKnowledgeGraphEngine(ecosystemRegistry)
         val eventuallyConfig = eventuallyConfig {
-            initialDelay = 1.seconds
+            initialDelay = 2.seconds
             duration = 1.minutes
             interval = 100.milliseconds
         }

@@ -87,7 +87,7 @@ class JenaPlatformKnowledgeGraphEngineTest : StringSpec({
     }.orEmpty()
 
     val config = eventuallyConfig {
-        initialDelay = 1.seconds
+        initialDelay = 2.seconds
         duration = 10.minutes
         interval = 100.milliseconds
     }
