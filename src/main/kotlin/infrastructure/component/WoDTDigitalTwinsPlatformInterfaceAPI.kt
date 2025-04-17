@@ -19,6 +19,7 @@ package infrastructure.component
 import application.component.EcosystemRegistryCatalog
 import application.component.PlatformKnowledgeGraphEngineReader
 import entity.digitaltwin.DigitalTwinURI
+import io.github.oshai.kotlinlogging.KotlinLogging
 import io.ktor.http.ContentType
 import io.ktor.http.HttpHeaders
 import io.ktor.http.HttpStatusCode
@@ -126,7 +127,7 @@ private fun Route.observePlatformKnowledgeGraph(platformKnowledgeGraphEngine: Pl
     webSocket("/wodt") {
         platformKnowledgeGraphEngine.platformKnowledgeGraphs.collect {
             send(it)
-            // TODO Log Outgoing PlatformKG update event
+            KotlinLogging.logger {}.info { "[HWoDT logging] OUTGOING PLATFORM KG" }
         }
     }
 
@@ -138,7 +139,7 @@ private fun Route.observeDigitalTwinKnowledgeGraph(platformKnowledgeGraphEngine:
                 send(platformKnowledgeGraphEngine.currentCachedDigitalTwinKnowledgeGraph(dtUri).orEmpty())
                 platformKnowledgeGraphEngine.currentCachedDigitalTwinKnowledgeGraphUpdates(dtUri)?.collect {
                     send(it)
-                    // TODO Log Outgoing DTKG update event
+                    KotlinLogging.logger {}.info { "[HWoDT logging] OUTGOING DTKG of: $dtUri" }
                 }
             }
         }
