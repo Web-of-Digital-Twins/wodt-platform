@@ -5,7 +5,9 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    network_mode: host
+    ports:
+      - "${EXPOSED_PORT:-4567}:${EXPOSED_PORT:-4567}"
     environment:
-      - EXPOSED_PORT=4567
-      - PLATFORM_EXPOSED_URL=http://localhost:4567
+      - EXPOSED_PORT=${EXPOSED_PORT:-4567}
+      - PLATFORM_EXPOSED_URL=${PLATFORM_EXPOSED_URL:-http://localhost:4567}
+    network_mode: host  # Assumes Linux host for access to WebSocket on host
