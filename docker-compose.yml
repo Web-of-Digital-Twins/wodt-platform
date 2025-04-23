@@ -1,0 +1,11 @@
+services:
+  app:
+    container_name: wodt-platform
+    image: wodt-platform
+    build:
+      context: .
+      dockerfile: Dockerfile
+    network_mode: host
+    environment:
+      - EXPOSED_PORT=4567
+      - PLATFORM_EXPOSED_URL=http://localhost:4567
