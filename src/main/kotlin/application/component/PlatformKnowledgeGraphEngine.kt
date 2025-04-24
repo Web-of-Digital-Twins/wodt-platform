@@ -16,6 +16,8 @@
 
 package application.component
 
+import application.event.DTEcosystemKGEvent
+import application.event.DtkgEvent
 import entity.digitaltwin.DigitalTwinDescription
 import entity.digitaltwin.DigitalTwinURI
 import kotlinx.coroutines.flow.Flow
@@ -26,7 +28,7 @@ import kotlinx.coroutines.flow.Flow
  */
 interface PlatformKnowledgeGraphEngineReader {
     /** Obtain the flow of Platform Knowledge Graphs emitted by the component. */
-    val platformKnowledgeGraphs: Flow<String>
+    val platformKnowledgeGraphs: Flow<DTEcosystemKGEvent>
 
     /** Obtain the current status of the Platform Knowledge Graph. */
     fun currentPlatformKnowledgeGraph(): String?
@@ -35,7 +37,7 @@ interface PlatformKnowledgeGraphEngineReader {
     fun currentCachedDigitalTwinKnowledgeGraph(dtUri: DigitalTwinURI): String?
 
     /** Get the flow of WoDT Digital Twin Knowledge Graphs updates. */
-    fun currentCachedDigitalTwinKnowledgeGraphUpdates(dtUri: DigitalTwinURI): Flow<String>?
+    fun currentCachedDigitalTwinKnowledgeGraphUpdates(dtUri: DigitalTwinURI): Flow<DtkgEvent>?
 
     /**
      * Query the Platform Knowledge Graph. The query will be returned in the [responseContentType]
@@ -59,10 +61,9 @@ interface PlatformKnowledgeGraphEngineWriter {
     fun mergeDigitalTwinDescription(dtd: DigitalTwinDescription)
 
     /**
-     * Update the Platform Knowledge Graph with the new [dtkg] of the WoDT Digital Twin
-     * identified by its [digitalTwinUri].
+     * Update the Platform Knowledge Graph with the new [dtkgEvent] of the WoDT Digital Twin.
      */
-    fun updateDigitalTwinKnowledgeGraph(digitalTwinUri: DigitalTwinURI, dtkg: String)
+    fun updateDigitalTwinKnowledgeGraph(dtkgEvent: DtkgEvent)
 
     /**
      * Delete the Digital Twin identified by its [digitalTwinUri].

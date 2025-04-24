@@ -18,7 +18,9 @@ package infrastructure.component
 
 import application.component.EcosystemManagementHttpClient
 import application.component.WoDTDigitalTwinsObserverWsClient
+import application.event.DtkgEvent
 import application.presenter.api.PlatformRegistration
+import entity.digitaltwin.DigitalTwinURI
 import io.github.oshai.kotlinlogging.KotlinLogging
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.HttpClientEngine
@@ -70,17 +72,19 @@ class KtorWoDTPlatformHttpClient(
 
     override suspend fun observeDigitalTwin(
         dtUri: String,
-        onData: suspend (String) -> Unit,
+        onData: suspend (DtkgEvent) -> Unit,
         onClose: suspend () -> Unit,
     ) {
         try {
             this.httpClient.webSocket(dtUri) {
                 webSockets[dtUri] = this
+                var messageCounter = 0
                 while (true) {
-                    logger.info { "[HWoDT logging] INCOMING DATA from: $dtUri" }
+                    messageCounter++
+                    logger.info { "[HWoDT logging] - $messageCounter|$dtUri - INCOMING DATA" }
                     val incomingData = incoming.receive()
                     if (incomingData is Frame.Text) {
-                        onData(incomingData.readText())
+                        onData(DtkgEvent(messageCounter, DigitalTwinURI(dtUri), incomingData.readText()))
                     } else if (incomingData is Frame.Close) {
                         onClose()
                     }

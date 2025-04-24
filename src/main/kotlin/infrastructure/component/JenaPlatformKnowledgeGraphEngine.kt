@@ -18,6 +18,8 @@ package infrastructure.component
 
 import application.component.EcosystemRegistryMapper
 import application.component.PlatformKnowledgeGraphEngine
+import application.event.DTEcosystemKGEvent
+import application.event.DtkgEvent
 import entity.digitaltwin.DigitalTwinDescription
 import entity.digitaltwin.DigitalTwinDescriptionImplementationType
 import entity.digitaltwin.DigitalTwinURI
@@ -52,10 +54,14 @@ import java.io.ByteArrayOutputStream
 import java.util.Collections
 import java.util.concurrent.Executors
 
-private sealed interface PlatformKnowledgeGraphEvent
+private sealed interface PlatformKGModelEvent
 
-private data class NewDtkg(val dtUri: DigitalTwinURI, val dtkg: Model) : PlatformKnowledgeGraphEvent
-private data class NewDtd(val dtUri: DigitalTwinURI, val dtd: Model) : PlatformKnowledgeGraphEvent
+private data class NewDtkgModel(
+    val dtMessageCounter: Int,
+    val dtUri: DigitalTwinURI,
+    val dtkg: Model,
+) : PlatformKGModelEvent
+private data class NewDtdModel(val dtUri: DigitalTwinURI, val dtd: Model) : PlatformKGModelEvent
 
 /**
  * This class provides an implementation of the [PlatformKnowledgeGraphEngine] component.
@@ -64,9 +70,9 @@ class JenaPlatformKnowledgeGraphEngine(
     private val ecosystemRegistryMapper: EcosystemRegistryMapper,
     private val dispatcher: CoroutineDispatcher = Dispatchers.Default,
 ) : PlatformKnowledgeGraphEngine {
-    private val _platformKnowledgeGraphs = MutableSharedFlow<String>()
+    private val _platformKnowledgeGraphs = MutableSharedFlow<DTEcosystemKGEvent>()
 
-    private val engineFlow = MutableSharedFlow<PlatformKnowledgeGraphEvent>()
+    private val engineFlow = MutableSharedFlow<PlatformKGModelEvent>()
     private val engineDispatcher = Executors.newSingleThreadExecutor().asCoroutineDispatcher()
 
     private val dtkgsModelMap: MutableMap<DigitalTwinURI, Model> = Collections.synchronizedMap(mutableMapOf())
@@ -85,16 +91,16 @@ class JenaPlatformKnowledgeGraphEngine(
             return platformKGModel
         }
 
-    private var _dtkgUpdatesMap: Map<DigitalTwinURI, MutableSharedFlow<String>> = mapOf()
+    private var _dtkgUpdatesMap: Map<DigitalTwinURI, MutableSharedFlow<DtkgEvent>> = mapOf()
 
-    override val platformKnowledgeGraphs: Flow<String> = this._platformKnowledgeGraphs.asSharedFlow()
+    override val platformKnowledgeGraphs: Flow<DTEcosystemKGEvent> = this._platformKnowledgeGraphs.asSharedFlow()
 
     override fun currentPlatformKnowledgeGraph(): String? = this.platformKnowledgeGraphModel.toTurtle()
 
     override fun currentCachedDigitalTwinKnowledgeGraph(dtUri: DigitalTwinURI): String? =
         this.dtkgsModelMap[dtUri]?.toTurtle()
 
-    override fun currentCachedDigitalTwinKnowledgeGraphUpdates(dtUri: DigitalTwinURI): Flow<String>? =
+    override fun currentCachedDigitalTwinKnowledgeGraphUpdates(dtUri: DigitalTwinURI): Flow<DtkgEvent>? =
         this._dtkgUpdatesMap[dtUri]?.asSharedFlow()
 
     override fun query(query: String, responseContentType: String?): String? {
@@ -162,25 +168,27 @@ class JenaPlatformKnowledgeGraphEngine(
                 .build()
                 .toModel()
                 .mapLocalDigitalTwinModel()
-            CoroutineScope(engineDispatcher).launch { engineFlow.emit(NewDtd(dtd.digitalTwinUri, dtdModel)) }
+            CoroutineScope(engineDispatcher).launch { engineFlow.emit(NewDtdModel(dtd.digitalTwinUri, dtdModel)) }
         }
     }
 
-    override fun updateDigitalTwinKnowledgeGraph(digitalTwinUri: DigitalTwinURI, dtkg: String) {
-        val dtkgModel = RDFParser.fromString(dtkg, Lang.TTL)
+    override fun updateDigitalTwinKnowledgeGraph(dtkgEvent: DtkgEvent) {
+        val dtkgModel = RDFParser.fromString(dtkgEvent.dtkgPayload, Lang.TTL)
             .build()
             .toModel()
             .mapLocalDigitalTwinModel()
-        emitDTKGEvent(digitalTwinUri, dtkgModel)
-        CoroutineScope(engineDispatcher).launch { engineFlow.emit(NewDtkg(digitalTwinUri, dtkgModel)) }
+        emitDTKGEvent(dtkgEvent, dtkgModel)
+        CoroutineScope(engineDispatcher).launch {
+            engineFlow.emit(NewDtkgModel(dtkgEvent.dtMessageCounter, dtkgEvent.dtUri, dtkgModel))
+        }
     }
 
     override suspend fun start() {
         withContext(engineDispatcher) {
             engineFlow.collect { event ->
                 when (event) {
-                    is NewDtkg -> applyDigitalTwinKnowledgeGraphUpdate(event.dtUri, event.dtkg)
-                    is NewDtd -> addDigitalTwinDescription(event.dtUri, event.dtd)
+                    is NewDtkgModel -> applyDigitalTwinKnowledgeGraphUpdate(event)
+                    is NewDtdModel -> addDigitalTwinDescription(event)
                 }
             }
         }
@@ -198,44 +206,57 @@ class JenaPlatformKnowledgeGraphEngine(
             this.dtdsModelMap -= digitalTwinUri
             this.dtdsModel.leaveCriticalSection()
 
-            this.emitPlatformKGEvent()
+            this.emitPlatformKGEvent(digitalTwinUri)
             true
         } else {
             false
         }
 
-    private fun applyDigitalTwinKnowledgeGraphUpdate(digitalTwinUri: DigitalTwinURI, dtkgModel: Model) {
+    private fun applyDigitalTwinKnowledgeGraphUpdate(dtkgModelUpdate: NewDtkgModel) {
         this.dtkgsModel.enterCriticalSection(Lock.WRITE)
-        this.dtkgsModelMap[digitalTwinUri]?.also { this.dtkgsModel.remove(it) }
-        this.dtkgsModelMap += (digitalTwinUri to dtkgModel)
-        this.dtkgsModel.add(dtkgModel)
-        this.emitPlatformKGEvent()
+        this.dtkgsModelMap[dtkgModelUpdate.dtUri]?.also { this.dtkgsModel.remove(it) }
+        this.dtkgsModelMap += (dtkgModelUpdate.dtUri to dtkgModelUpdate.dtkg)
+        this.dtkgsModel.add(dtkgModelUpdate.dtkg)
+        this.emitPlatformKGEvent(dtkgModelUpdate.dtUri, dtkgModelUpdate.dtMessageCounter)
         this.dtkgsModel.leaveCriticalSection()
     }
 
-    private fun addDigitalTwinDescription(dtUri: DigitalTwinURI, dtdModel: Model) {
+    private fun addDigitalTwinDescription(dtdModelUpdate: NewDtdModel) {
         var newDT = true
         this.dtdsModel.enterCriticalSection(Lock.WRITE)
-        this.dtdsModelMap[dtUri]?.also {
+        this.dtdsModelMap[dtdModelUpdate.dtUri]?.also {
             this.dtdsModel.remove(it)
             newDT = false
         }
-        this.dtdsModelMap += (dtUri to dtdModel)
-        this.dtdsModel.add(dtdModel)
+        this.dtdsModelMap += (dtdModelUpdate.dtUri to dtdModelUpdate.dtd)
+        this.dtdsModel.add(dtdModelUpdate.dtd)
         this.dtdsModel.leaveCriticalSection()
-        if (newDT) { this.handleNewDT(dtUri) }
-        this.emitPlatformKGEvent()
+        if (newDT) { this.handleNewDT(dtdModelUpdate.dtUri) }
+        this.emitPlatformKGEvent(dtdModelUpdate.dtUri)
     }
 
     private fun Model.toTurtle() = RDFWriter.create().lang(Lang.TTL).source(this).asString()
 
-    private fun emitPlatformKGEvent() {
-        CoroutineScope(dispatcher).launch { _platformKnowledgeGraphs.emit(platformKnowledgeGraphModel.toTurtle()) }
+    private fun emitPlatformKGEvent(
+        originDtUri: DigitalTwinURI,
+        originDTMessageCounter: Int? = null,
+    ) {
+        CoroutineScope(dispatcher).launch {
+            _platformKnowledgeGraphs.emit(
+                DTEcosystemKGEvent(
+                    originDTMessageCounter,
+                    originDtUri,
+                    platformKnowledgeGraphModel.toTurtle(),
+                ),
+            )
+        }
     }
 
-    private fun emitDTKGEvent(digitalTwinUri: DigitalTwinURI, dtkgModel: Model) {
+    private fun emitDTKGEvent(originEvent: DtkgEvent, dtkgModel: Model) {
         CoroutineScope(dispatcher).launch {
-            _dtkgUpdatesMap[digitalTwinUri]?.emit(dtkgModel.toTurtle())
+            _dtkgUpdatesMap[originEvent.dtUri]?.emit(
+                DtkgEvent(originEvent.dtMessageCounter, originEvent.dtUri, dtkgModel.toTurtle()),
+            )
         }
     }
 

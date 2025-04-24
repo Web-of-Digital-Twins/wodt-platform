@@ -19,6 +19,7 @@ package infrastructure.component
 import TestingUtils.readResourceFile
 import application.component.EcosystemRegistry
 import application.component.PlatformKnowledgeGraphEngine
+import application.event.DtkgEvent
 import application.presenter.dtd.DigitalTwinDescriptionDeserialization.toDTD
 import entity.digitaltwin.DigitalTwinURI
 import infrastructure.component.KtorTestingUtility.apiTestApplication
@@ -74,7 +75,7 @@ class WoDTDigitalTwinsPlatformInterfaceAPITest : StringSpec({
     ): String =
         readResourceFile("dtkgWithRelationship.ttl")?.also {
             ecosystemRegistry.signalRegistration(dtUri)
-            platformKnowledgeGraphEngine.updateDigitalTwinKnowledgeGraph(dtUri, it)
+            platformKnowledgeGraphEngine.updateDigitalTwinKnowledgeGraph(DtkgEvent(0, dtUri, it))
         }.orEmpty()
 
     val config = eventuallyConfig {

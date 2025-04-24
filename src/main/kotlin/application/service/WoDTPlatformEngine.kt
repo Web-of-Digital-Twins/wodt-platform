@@ -56,10 +56,10 @@ class WoDTPlatformEngine(
         }
 
         launch {
-            woDTDigitalTwinsObserver.observedDigitalTwins.collect { (dtUri, dtkgFlow) ->
+            woDTDigitalTwinsObserver.observedDigitalTwins.collect { dtkgFlow ->
                 launch {
                     dtkgFlow.collect {
-                        platformKnowledgeGraphEngine.updateDigitalTwinKnowledgeGraph(dtUri, it)
+                        platformKnowledgeGraphEngine.updateDigitalTwinKnowledgeGraph(it)
                     }
                 }
             }

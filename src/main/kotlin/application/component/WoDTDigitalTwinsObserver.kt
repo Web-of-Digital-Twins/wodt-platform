@@ -16,6 +16,7 @@
 
 package application.component
 
+import application.event.DtkgEvent
 import entity.digitaltwin.DigitalTwinDescription
 import entity.digitaltwin.DigitalTwinURI
 import kotlinx.coroutines.flow.Flow
@@ -29,7 +30,7 @@ interface WoDTDigitalTwinsObserver {
      * Flow to listen to new observed Digital Twins.
      * It emits the flow of the associated digital twin dtkgs.
      */
-    val observedDigitalTwins: Flow<Pair<DigitalTwinURI, Flow<String>>>
+    val observedDigitalTwins: Flow<Flow<DtkgEvent>>
 
     /** Start the observation of a newly registered WoDT Digital Twin. */
     suspend fun observeDigitalTwin(dtd: DigitalTwinDescription)

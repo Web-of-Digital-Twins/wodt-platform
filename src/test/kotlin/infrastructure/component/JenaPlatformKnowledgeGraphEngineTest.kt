@@ -18,6 +18,7 @@ package infrastructure.component
 
 import TestingUtils.readResourceFile
 import application.component.PlatformKnowledgeGraphEngine
+import application.event.DtkgEvent
 import application.presenter.dtd.DigitalTwinDescriptionDeserialization.toDTD
 import application.service.EcosystemRegistryService
 import entity.digitaltwin.DigitalTwinURI
@@ -83,7 +84,7 @@ class JenaPlatformKnowledgeGraphEngineTest : StringSpec({
         digitalTwinURI: DigitalTwinURI = dtUri,
         fileName: String = "dtkgWithRelationship.ttl",
     ): String = readResourceFile(fileName)?.also {
-        platformKnowledgeGraphEngine.updateDigitalTwinKnowledgeGraph(digitalTwinURI, it)
+        platformKnowledgeGraphEngine.updateDigitalTwinKnowledgeGraph(DtkgEvent(0, digitalTwinURI, it))
     }.orEmpty()
 
     val config = eventuallyConfig {

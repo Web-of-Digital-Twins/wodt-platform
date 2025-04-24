@@ -19,6 +19,7 @@ package application.service
 import application.component.EcosystemRegistryDeletionSignaler
 import application.component.WoDTDigitalTwinsObserver
 import application.component.WoDTDigitalTwinsObserverWsClient
+import application.event.DtkgEvent
 import entity.digitaltwin.DigitalTwinDescription
 import entity.digitaltwin.DigitalTwinURI
 import entity.digitaltwin.FormProtocol
@@ -35,15 +36,15 @@ class WoDTDigitalTwinsObserverComponent(
     private val wsClient: WoDTDigitalTwinsObserverWsClient,
 ) : WoDTDigitalTwinsObserver {
 
-    private val _observedDigitalTwins = MutableSharedFlow<Pair<DigitalTwinURI, Flow<String>>>()
-    private var _dtkgFlowMap: Map<DigitalTwinURI, MutableSharedFlow<String>> = mapOf()
+    private val _observedDigitalTwins = MutableSharedFlow<Flow<DtkgEvent>>()
+    private var _dtkgFlowMap: Map<DigitalTwinURI, MutableSharedFlow<DtkgEvent>> = mapOf()
 
     override val observedDigitalTwins = this._observedDigitalTwins.asSharedFlow()
 
     override suspend fun observeDigitalTwin(dtd: DigitalTwinDescription) {
         if (dtd.obtainObservationForm().protocol == FormProtocol.WEBSOCKET) {
-            val newDtkgFlow = (dtd.digitalTwinUri to MutableSharedFlow<String>())
-            this._dtkgFlowMap += newDtkgFlow
+            val newDtkgFlow = MutableSharedFlow<DtkgEvent>()
+            this._dtkgFlowMap += (dtd.digitalTwinUri to newDtkgFlow)
             this._observedDigitalTwins.emit(newDtkgFlow)
             this.wsClient.observeDigitalTwin(
                 dtd.obtainObservationForm().href,

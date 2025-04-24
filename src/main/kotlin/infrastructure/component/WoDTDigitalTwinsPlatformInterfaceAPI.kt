@@ -126,8 +126,10 @@ private fun Route.queryOnPlatformKnowledgeGraph(platformKnowledgeGraphEngine: Pl
 private fun Route.observePlatformKnowledgeGraph(platformKnowledgeGraphEngine: PlatformKnowledgeGraphEngineReader) =
     webSocket("/wodt") {
         platformKnowledgeGraphEngine.platformKnowledgeGraphs.collect {
-            send(it)
-            KotlinLogging.logger {}.info { "[HWoDT logging] OUTGOING PLATFORM KG" }
+            send(it.dtEcosystemKGPayload)
+            KotlinLogging.logger {}.info {
+                "[HWoDT logging] - ${it.dtMessageCounter}|${it.dtUri.uri} - OUTGOING PLATFORM KG"
+            }
         }
     }
 
@@ -138,8 +140,10 @@ private fun Route.observeDigitalTwinKnowledgeGraph(platformKnowledgeGraphEngine:
                 val dtUri = obtainDigitalTwinUriFromPathParameters(pathParameters)
                 send(platformKnowledgeGraphEngine.currentCachedDigitalTwinKnowledgeGraph(dtUri).orEmpty())
                 platformKnowledgeGraphEngine.currentCachedDigitalTwinKnowledgeGraphUpdates(dtUri)?.collect {
-                    send(it)
-                    KotlinLogging.logger {}.info { "[HWoDT logging] OUTGOING DTKG of: $dtUri" }
+                    send(it.dtkgPayload)
+                    KotlinLogging.logger {}.info {
+                        "[HWoDT logging] - ${it.dtMessageCounter}|${it.dtUri.uri} - OUTGOING DTKG"
+                    }
                 }
             }
         }
