@@ -28,12 +28,15 @@ import java.util.Collections
 class EcosystemRegistryService(private val platformExposedUrl: URI) : EcosystemRegistry {
     private val registeredDigitalTwins: MutableSet<DigitalTwinURI> = Collections.synchronizedSet(mutableSetOf())
 
+    @Synchronized
     override fun signalRegistration(digitalTwinUri: DigitalTwinURI) {
         registeredDigitalTwins.add(digitalTwinUri)
     }
 
+    @Synchronized
     override fun getRegisteredDigitalTwins(): Set<DigitalTwinURI> = registeredDigitalTwins.toSet()
 
+    @Synchronized
     override fun signalDeletion(digitalTwinURI: DigitalTwinURI) {
         registeredDigitalTwins.remove(digitalTwinURI)
     }
