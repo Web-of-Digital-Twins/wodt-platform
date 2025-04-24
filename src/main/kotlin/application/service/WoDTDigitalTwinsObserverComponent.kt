@@ -23,6 +23,7 @@ import application.event.DtkgEvent
 import entity.digitaltwin.DigitalTwinDescription
 import entity.digitaltwin.DigitalTwinURI
 import entity.digitaltwin.FormProtocol
+import io.github.oshai.kotlinlogging.KotlinLogging
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
@@ -48,7 +49,11 @@ class WoDTDigitalTwinsObserverComponent(
             this._observedDigitalTwins.emit(newDtkgFlow)
             this.wsClient.observeDigitalTwin(
                 dtd.obtainObservationForm().href,
-                { _dtkgFlowMap[dtd.digitalTwinUri]?.emit(it) },
+                {
+                    logger.info { "[HWoDT logging] - ${it.dtMessageCounter}|${dtd.digitalTwinUri} - INCOMING DATA" }
+                    _dtkgFlowMap[dtd.digitalTwinUri]
+                        ?.emit(DtkgEvent(it.dtMessageCounter, dtd.digitalTwinUri, it.dtkgPayload))
+                },
                 /* TODO why remove the DT if the socket is closed?
                     Couldn't this be a network issue e.g. DT is down?
                     The DT should still be part of the ecosystem until reconnection
@@ -66,5 +71,9 @@ class WoDTDigitalTwinsObserverComponent(
     override suspend fun stopObservationOfDigitalTwin(dtUri: DigitalTwinURI) {
         this.wsClient.stopObservationOfDigitalTwin(dtUri.uri)
         this._dtkgFlowMap -= dtUri
+    }
+
+    companion object {
+        private val logger = KotlinLogging.logger {}
     }
 }

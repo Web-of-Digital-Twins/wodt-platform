@@ -71,20 +71,19 @@ class KtorWoDTPlatformHttpClient(
     }.status == HttpStatusCode.OK
 
     override suspend fun observeDigitalTwin(
-        dtUri: String,
+        wsDtUri: String,
         onData: suspend (DtkgEvent) -> Unit,
         onClose: suspend () -> Unit,
     ) {
         try {
-            this.httpClient.webSocket(dtUri) {
-                webSockets[dtUri] = this
+            this.httpClient.webSocket(wsDtUri) {
+                webSockets[wsDtUri] = this
                 var messageCounter = 0
                 while (true) {
                     messageCounter++
-                    logger.info { "[HWoDT logging] - $messageCounter|$dtUri - INCOMING DATA" }
                     val incomingData = incoming.receive()
                     if (incomingData is Frame.Text) {
-                        onData(DtkgEvent(messageCounter, DigitalTwinURI(dtUri), incomingData.readText()))
+                        onData(DtkgEvent(messageCounter, DigitalTwinURI(wsDtUri), incomingData.readText()))
                     } else if (incomingData is Frame.Close) {
                         onClose()
                     }
@@ -93,7 +92,7 @@ class KtorWoDTPlatformHttpClient(
         } catch (e: ClosedReceiveChannelException) {
             // websocket close unexpectedly
             logger.info { e.message }
-            webSockets.remove(dtUri)
+            webSockets.remove(wsDtUri)
             onClose()
         }
     }
