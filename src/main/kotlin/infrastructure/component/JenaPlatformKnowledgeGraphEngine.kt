@@ -20,6 +20,9 @@ import application.component.EcosystemRegistryMapper
 import application.component.PlatformKnowledgeGraphEngine
 import application.event.DTEcosystemKGEvent
 import application.event.DtkgEvent
+import com.apicatalog.jsonld.JsonLdOptions
+import com.apicatalog.jsonld.loader.HttpLoader
+import com.apicatalog.jsonld.loader.LRUDocumentCache
 import entity.digitaltwin.DigitalTwinDescription
 import entity.digitaltwin.DigitalTwinDescriptionImplementationType
 import entity.digitaltwin.DigitalTwinURI
@@ -49,7 +52,9 @@ import org.apache.jena.reasoner.ReasonerRegistry
 import org.apache.jena.riot.Lang
 import org.apache.jena.riot.RDFParser
 import org.apache.jena.riot.RDFWriter
+import org.apache.jena.riot.lang.LangJSONLD11.JSONLD_OPTIONS
 import org.apache.jena.shared.Lock
+import org.apache.jena.sparql.util.Context
 import java.io.ByteArrayOutputStream
 import java.util.Collections
 import java.util.concurrent.Executors
@@ -90,6 +95,8 @@ class JenaPlatformKnowledgeGraphEngine(
             dtkgsModel.leaveCriticalSection()
             return platformKGModel
         }
+
+    private val cacheLoader = LRUDocumentCache(HttpLoader.defaultInstance(), CACHE_SIZE)
 
     private var _dtkgUpdatesMap: Map<DigitalTwinURI, MutableSharedFlow<DtkgEvent>> = mapOf()
 
@@ -163,8 +170,11 @@ class JenaPlatformKnowledgeGraphEngine(
     }
 
     override fun mergeDigitalTwinDescription(dtd: DigitalTwinDescription) {
+        val options = JsonLdOptions()
+        options.documentLoader = cacheLoader
         if (dtd.implementationType == DigitalTwinDescriptionImplementationType.THING_DESCRIPTION) {
             val dtdModel = RDFParser.fromString(dtd.obtainRepresentation(), Lang.JSONLD11)
+                .context(Context.create().set(JSONLD_OPTIONS, options))
                 .build()
                 .toModel()
                 .mapLocalDigitalTwinModel()
@@ -309,5 +319,6 @@ class JenaPlatformKnowledgeGraphEngine(
         private const val CONTENT_TYPE_TSV = "text/tab-separated-values"
         private const val CONTENT_TYPE_SPARQL_XML = "application/sparql-results+xml"
         private const val CONTENT_TYPE_SPARQL_JSON = "application/sparql-results+json"
+        private const val CACHE_SIZE = 100
     }
 }
