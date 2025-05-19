@@ -19,9 +19,12 @@ package application.service
 import application.component.EcosystemRegistryDeletionSignaler
 import application.component.WoDTDigitalTwinsObserver
 import application.component.WoDTDigitalTwinsObserverWsClient
+import application.event.DtkgEvent
 import entity.digitaltwin.DigitalTwinDescription
 import entity.digitaltwin.DigitalTwinURI
 import entity.digitaltwin.FormProtocol
+import io.github.oshai.kotlinlogging.KotlinLogging
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 
@@ -33,21 +36,44 @@ class WoDTDigitalTwinsObserverComponent(
     private val ecosystemRegistry: EcosystemRegistryDeletionSignaler,
     private val wsClient: WoDTDigitalTwinsObserverWsClient,
 ) : WoDTDigitalTwinsObserver {
-    private val _dtkgRawEvents = MutableSharedFlow<Pair<DigitalTwinURI, String>>()
 
-    override val dtkgRawEvents = this._dtkgRawEvents.asSharedFlow()
+    private val _observedDigitalTwins = MutableSharedFlow<Flow<DtkgEvent>>()
+    private var _dtkgFlowMap: Map<DigitalTwinURI, MutableSharedFlow<DtkgEvent>> = mapOf()
+
+    override val observedDigitalTwins = this._observedDigitalTwins.asSharedFlow()
 
     override suspend fun observeDigitalTwin(dtd: DigitalTwinDescription) {
         if (dtd.obtainObservationForm().protocol == FormProtocol.WEBSOCKET) {
+            val newDtkgFlow = MutableSharedFlow<DtkgEvent>()
+            this._dtkgFlowMap += (dtd.digitalTwinUri to newDtkgFlow)
+            this._observedDigitalTwins.emit(newDtkgFlow)
             this.wsClient.observeDigitalTwin(
                 dtd.obtainObservationForm().href,
-                { _dtkgRawEvents.emit(dtd.digitalTwinUri to it) },
-                { ecosystemRegistry.signalDeletion(dtd.digitalTwinUri) },
+                {
+                    logger.info { "[HWoDT logging] - ${it.dtMessageCounter}|${dtd.digitalTwinUri} - INCOMING DATA" }
+                    _dtkgFlowMap[dtd.digitalTwinUri]
+                        ?.emit(DtkgEvent(it.dtMessageCounter, dtd.digitalTwinUri, it.dtkgPayload))
+                },
+                /* TODO why remove the DT if the socket is closed?
+                    Couldn't this be a network issue e.g. DT is down?
+                    The DT should still be part of the ecosystem until reconnection
+                    In that case I expect the DT to send a DTD update when it is back up...
+                 */
+                {
+                    ecosystemRegistry.signalDeletion(dtd.digitalTwinUri)
+                    this._dtkgFlowMap -= dtd.digitalTwinUri
+                },
+
             )
         }
     }
 
     override suspend fun stopObservationOfDigitalTwin(dtUri: DigitalTwinURI) {
         this.wsClient.stopObservationOfDigitalTwin(dtUri.uri)
+        this._dtkgFlowMap -= dtUri
+    }
+
+    companion object {
+        private val logger = KotlinLogging.logger {}
     }
 }

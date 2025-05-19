@@ -16,6 +16,8 @@
 
 package application.component
 
+import application.event.DTEcosystemKGEvent
+import application.event.DtkgEvent
 import entity.digitaltwin.DigitalTwinDescription
 import entity.digitaltwin.DigitalTwinURI
 import kotlinx.coroutines.flow.Flow
@@ -26,13 +28,16 @@ import kotlinx.coroutines.flow.Flow
  */
 interface PlatformKnowledgeGraphEngineReader {
     /** Obtain the flow of Platform Knowledge Graphs emitted by the component. */
-    val platformKnowledgeGraphs: Flow<String>
+    val platformKnowledgeGraphs: Flow<DTEcosystemKGEvent>
 
     /** Obtain the current status of the Platform Knowledge Graph. */
     fun currentPlatformKnowledgeGraph(): String?
 
     /** Obtain the cached current status of a registered WoDT Digital Twin identified by its [dtUri]. */
     fun currentCachedDigitalTwinKnowledgeGraph(dtUri: DigitalTwinURI): String?
+
+    /** Get the flow of WoDT Digital Twin Knowledge Graphs updates. */
+    fun currentCachedDigitalTwinKnowledgeGraphUpdates(dtUri: DigitalTwinURI): Flow<DtkgEvent>?
 
     /**
      * Query the Platform Knowledge Graph. The query will be returned in the [responseContentType]
@@ -56,10 +61,9 @@ interface PlatformKnowledgeGraphEngineWriter {
     fun mergeDigitalTwinDescription(dtd: DigitalTwinDescription)
 
     /**
-     * Merge the updated [dtkg] of the registered WoDT Digital Twin identified via its [dtUri].
-     * The [digitalTwinUri] is the original one, and not the mapped one.
+     * Update the Platform Knowledge Graph with the new [dtkgEvent] of the WoDT Digital Twin.
      */
-    fun mergeDigitalTwinKnowledgeGraphUpdate(digitalTwinUri: DigitalTwinURI, dtkg: String)
+    fun updateDigitalTwinKnowledgeGraph(dtkgEvent: DtkgEvent)
 
     /**
      * Delete the Digital Twin identified by its [digitalTwinUri].
@@ -72,4 +76,7 @@ interface PlatformKnowledgeGraphEngineWriter {
  * This interface models the general WoDT Digital Twins Platform Knowledge Graph Engine component of the Abstract
  * Architecture.
  */
-interface PlatformKnowledgeGraphEngine : PlatformKnowledgeGraphEngineReader, PlatformKnowledgeGraphEngineWriter
+interface PlatformKnowledgeGraphEngine : PlatformKnowledgeGraphEngineReader, PlatformKnowledgeGraphEngineWriter {
+    /** Method to start the engine. */
+    suspend fun start()
+}

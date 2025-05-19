@@ -26,18 +26,22 @@ import java.util.Collections
  * This class models the Ecosystem Registry component of the Abstract Architecture.
  */
 class EcosystemRegistryService(private val platformExposedUrl: URI) : EcosystemRegistry {
-    private var registeredDigitalTwins: Set<DigitalTwinURI> = Collections.synchronizedSet(setOf())
+    private val registeredDigitalTwins: MutableSet<DigitalTwinURI> = Collections.synchronizedSet(mutableSetOf())
 
+    @Synchronized
     override fun signalRegistration(digitalTwinUri: DigitalTwinURI) {
-        registeredDigitalTwins = Collections.synchronizedSet(registeredDigitalTwins + digitalTwinUri)
+        registeredDigitalTwins.add(digitalTwinUri)
     }
 
-    override fun getRegisteredDigitalTwins(): Set<DigitalTwinURI> = registeredDigitalTwins
+    @Synchronized
+    override fun getRegisteredDigitalTwins(): Set<DigitalTwinURI> = registeredDigitalTwins.toSet()
 
+    @Synchronized
     override fun signalDeletion(digitalTwinURI: DigitalTwinURI) {
-        registeredDigitalTwins = Collections.synchronizedSet(registeredDigitalTwins - digitalTwinURI)
+        registeredDigitalTwins.remove(digitalTwinURI)
     }
 
+    @Synchronized
     override fun getLocalUrl(digitalTwinUri: DigitalTwinURI): String? =
         if (registeredDigitalTwins.contains(digitalTwinUri)) {
             this.platformExposedUrl.relativeResolve("/wodt/").toString() + digitalTwinUri.uri.toString()
@@ -45,6 +49,7 @@ class EcosystemRegistryService(private val platformExposedUrl: URI) : EcosystemR
             null
         }
 
+    @Synchronized
     override fun getDigitalTwinUri(localDigitalTwinUrl: String): DigitalTwinURI? =
         with(
             DigitalTwinURI(

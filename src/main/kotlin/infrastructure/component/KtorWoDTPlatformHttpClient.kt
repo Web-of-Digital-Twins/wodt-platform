@@ -18,7 +18,9 @@ package infrastructure.component
 
 import application.component.EcosystemManagementHttpClient
 import application.component.WoDTDigitalTwinsObserverWsClient
+import application.event.DtkgEvent
 import application.presenter.api.PlatformRegistration
+import entity.digitaltwin.DigitalTwinURI
 import io.github.oshai.kotlinlogging.KotlinLogging
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.HttpClientEngine
@@ -69,17 +71,19 @@ class KtorWoDTPlatformHttpClient(
     }.status == HttpStatusCode.OK
 
     override suspend fun observeDigitalTwin(
-        dtUri: String,
-        onData: suspend (String) -> Unit,
+        wsDtUri: String,
+        onData: suspend (DtkgEvent) -> Unit,
         onClose: suspend () -> Unit,
     ) {
         try {
-            this.httpClient.webSocket(dtUri) {
-                webSockets[dtUri] = this
+            this.httpClient.webSocket(wsDtUri) {
+                webSockets[wsDtUri] = this
+                var messageCounter = 0
                 while (true) {
+                    messageCounter++
                     val incomingData = incoming.receive()
                     if (incomingData is Frame.Text) {
-                        onData(incomingData.readText())
+                        onData(DtkgEvent(messageCounter, DigitalTwinURI(wsDtUri), incomingData.readText()))
                     } else if (incomingData is Frame.Close) {
                         onClose()
                     }
@@ -88,7 +92,7 @@ class KtorWoDTPlatformHttpClient(
         } catch (e: ClosedReceiveChannelException) {
             // websocket close unexpectedly
             logger.info { e.message }
-            webSockets.remove(dtUri)
+            webSockets.remove(wsDtUri)
             onClose()
         }
     }
@@ -99,7 +103,7 @@ class KtorWoDTPlatformHttpClient(
     }
 
     companion object {
-        private const val WEBSOCKET_PING_INTERVAL = 1_000L
+        private const val WEBSOCKET_PING_INTERVAL = 5_000L
         private val logger = KotlinLogging.logger {}
     }
 }

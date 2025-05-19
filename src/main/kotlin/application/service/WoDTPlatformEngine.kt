@@ -22,6 +22,8 @@ import application.component.WoDTDigitalTwinsObserver
 import application.component.WoDTPlatformWebServer
 import entity.event.DigitalTwinDeleted
 import entity.event.NewDigitalTwinRegistered
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 
@@ -33,25 +35,33 @@ class WoDTPlatformEngine(
     private val woDTDigitalTwinsObserver: WoDTDigitalTwinsObserver,
     private val platformKnowledgeGraphEngine: PlatformKnowledgeGraphEngine,
     private val platformWebServer: WoDTPlatformWebServer,
+    private val dispatcher: CoroutineDispatcher = Dispatchers.Default,
 ) {
     /**
      * Method to start the [WoDTPlatformEngine].
      */
     suspend fun start() = coroutineScope {
+        launch(dispatcher) { platformKnowledgeGraphEngine.start() }
+
         launch {
-            ecosystemManagementInterface.ecosystemEvents.collect {
-                if (it is NewDigitalTwinRegistered) {
-                    launch { woDTDigitalTwinsObserver.observeDigitalTwin(it.dtd) }
-                    platformKnowledgeGraphEngine.mergeDigitalTwinDescription(it.dtd)
-                } else if (it is DigitalTwinDeleted) {
-                    woDTDigitalTwinsObserver.stopObservationOfDigitalTwin(it.dtURI)
-                    platformKnowledgeGraphEngine.deleteDigitalTwin(it.dtURI)
+            ecosystemManagementInterface.ecosystemEvents.collect { dtdEvent ->
+                if (dtdEvent is NewDigitalTwinRegistered) {
+                    platformKnowledgeGraphEngine.mergeDigitalTwinDescription(dtdEvent.dtd)
+                    launch { woDTDigitalTwinsObserver.observeDigitalTwin(dtdEvent.dtd) }
+                } else if (dtdEvent is DigitalTwinDeleted) {
+                    woDTDigitalTwinsObserver.stopObservationOfDigitalTwin(dtdEvent.dtURI)
+                    platformKnowledgeGraphEngine.deleteDigitalTwin(dtdEvent.dtURI)
                 }
             }
         }
+
         launch {
-            woDTDigitalTwinsObserver.dtkgRawEvents.collect {
-                platformKnowledgeGraphEngine.mergeDigitalTwinKnowledgeGraphUpdate(it.first, it.second)
+            woDTDigitalTwinsObserver.observedDigitalTwins.collect { dtkgFlow ->
+                launch {
+                    dtkgFlow.collect {
+                        platformKnowledgeGraphEngine.updateDigitalTwinKnowledgeGraph(it)
+                    }
+                }
             }
         }
         platformWebServer.start()

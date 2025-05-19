@@ -18,7 +18,6 @@ package infrastructure.component
 
 import application.component.EcosystemManagementInterface
 import application.presenter.dtd.DigitalTwinDescriptionDeserialization.toDTD
-import entity.digitaltwin.DigitalTwinURI
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.Application
 import io.ktor.server.application.call
@@ -67,7 +66,7 @@ private fun Route.deleteDigitalTwin(ecosystemManagementInterface: EcosystemManag
             if (pathParameters.size >= 2) {
                 val dtUri = obtainDigitalTwinUriFromPathParameters(pathParameters)
                 call.respond(
-                    if (ecosystemManagementInterface.deleteDigitalTwin(DigitalTwinURI(dtUri))) {
+                    if (ecosystemManagementInterface.deleteDigitalTwin(dtUri)) {
                         HttpStatusCode.Accepted
                     } else {
                         HttpStatusCode.NotFound

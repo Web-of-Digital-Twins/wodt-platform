@@ -19,10 +19,13 @@ package infrastructure.component
 import TestingUtils.readResourceFile
 import application.component.EcosystemRegistry
 import application.component.PlatformKnowledgeGraphEngine
+import application.event.DtkgEvent
 import application.presenter.dtd.DigitalTwinDescriptionDeserialization.toDTD
 import entity.digitaltwin.DigitalTwinURI
 import infrastructure.component.KtorTestingUtility.apiTestApplication
 import io.kotest.assertions.ktor.client.shouldHaveStatus
+import io.kotest.assertions.nondeterministic.eventually
+import io.kotest.assertions.nondeterministic.eventuallyConfig
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
 import io.ktor.client.request.accept
@@ -38,6 +41,8 @@ import io.ktor.http.contentType
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonPrimitive
+import kotlin.time.Duration.Companion.milliseconds
+import kotlin.time.Duration.Companion.minutes
 
 class WoDTDigitalTwinsPlatformInterfaceAPITest : StringSpec({
     val dtUri = DigitalTwinURI("https://example.com/dt")
@@ -70,8 +75,13 @@ class WoDTDigitalTwinsPlatformInterfaceAPITest : StringSpec({
     ): String =
         readResourceFile("dtkgWithRelationship.ttl")?.also {
             ecosystemRegistry.signalRegistration(dtUri)
-            platformKnowledgeGraphEngine.mergeDigitalTwinKnowledgeGraphUpdate(dtUri, it)
+            platformKnowledgeGraphEngine.updateDigitalTwinKnowledgeGraph(DtkgEvent(0, dtUri, it))
         }.orEmpty()
+
+    val config = eventuallyConfig {
+        duration = 10.minutes
+        interval = 100.milliseconds
+    }
 
     """
         An HTTP GET request on the Platform URL should return 303 See Other status code with the Location HTTP
@@ -98,10 +108,13 @@ class WoDTDigitalTwinsPlatformInterfaceAPITest : StringSpec({
     "An HTTP GET request on the Platform Knowledge Graph URL should return the current Platform Knowledge Graph" {
         apiTestApplication { _, ecosystemRegistry, platformKnowledgeGraphEngine ->
             insertDTKG(ecosystemRegistry, platformKnowledgeGraphEngine)
-            val response = client.get("/wodt")
-            response shouldHaveStatus HttpStatusCode.OK
-            response.headers[HttpHeaders.ContentType] shouldBe "text/turtle"
-            response.bodyAsText() shouldBe platformKnowledgeGraphEngine.currentPlatformKnowledgeGraph()
+
+            eventually(config) {
+                val response = client.get("/wodt")
+                response shouldHaveStatus HttpStatusCode.OK
+                response.headers[HttpHeaders.ContentType] shouldBe "text/turtle"
+                response.bodyAsText() shouldBe platformKnowledgeGraphEngine.currentPlatformKnowledgeGraph()
+            }
         }
     }
 
@@ -118,11 +131,16 @@ class WoDTDigitalTwinsPlatformInterfaceAPITest : StringSpec({
     "An HTTP GET request for the local Digital Twin Knowledge Graph should return the resource if exist" {
         apiTestApplication { _, ecosystemRegistry, platformKnowledgeGraphEngine ->
             insertDTKG(ecosystemRegistry, platformKnowledgeGraphEngine)
-            val response = client.get("/wodt/${dtUri.uri}")
-            response shouldHaveStatus HttpStatusCode.OK
-            response.headers[HttpHeaders.ContentType] shouldBe "text/turtle"
-            response.headers[HttpHeaders.Link] shouldBe "<${dtUri.uri}>; rel=\"original\""
-            response.bodyAsText() shouldBe readResourceFile("mappedDtkgWithRelationship.ttl")
+
+            val targetDtkg = readResourceFile("mappedDtkgWithRelationship.ttl")
+
+            eventually(config) {
+                val response = client.get("/wodt/${dtUri.uri}")
+                response shouldHaveStatus HttpStatusCode.OK
+                response.headers[HttpHeaders.ContentType] shouldBe "text/turtle"
+                response.headers[HttpHeaders.Link] shouldBe "<${dtUri.uri}>; rel=\"original\""
+                response.bodyAsText() shouldBe targetDtkg
+            }
         }
     }
 
@@ -145,14 +163,17 @@ class WoDTDigitalTwinsPlatformInterfaceAPITest : StringSpec({
         "An HTTP POST request for the query (with accept $contentType content type) should be respond correctly" {
             apiTestApplication { _, ecosystemRegistry, platformKnowledgeGraphEngine ->
                 insertDTKG(ecosystemRegistry, platformKnowledgeGraphEngine)
-                val response = client.post("/wodt/sparql") {
-                    contentType(ContentType.parse("application/sparql-query"))
-                    accept(ContentType.parse(contentType))
-                    setBody(selectQuery)
+
+                eventually(config) {
+                    val response = client.post("/wodt/sparql") {
+                        contentType(ContentType.parse("application/sparql-query"))
+                        accept(ContentType.parse(contentType))
+                        setBody(selectQuery)
+                    }
+                    response shouldHaveStatus HttpStatusCode.OK
+                    response.headers[HttpHeaders.ContentType] shouldBe ContentType.parse(contentType).toString()
+                    response.bodyAsText().isEmpty() shouldBe false
                 }
-                response shouldHaveStatus HttpStatusCode.OK
-                response.headers[HttpHeaders.ContentType] shouldBe ContentType.parse(contentType).toString()
-                response.bodyAsText().isEmpty() shouldBe false
             }
         }
     }

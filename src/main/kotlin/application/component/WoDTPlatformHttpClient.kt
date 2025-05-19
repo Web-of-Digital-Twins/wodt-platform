@@ -16,6 +16,8 @@
 
 package application.component
 
+import application.event.DtkgEvent
+
 /**
  * This interface models the Http client that send request for the [EcosystemManagementInterface] component
  * of the Abstract Architecture.
@@ -33,10 +35,10 @@ interface EcosystemManagementHttpClient {
  */
 interface WoDTDigitalTwinsObserverWsClient {
     /**
-     * Observe a Digital Twin using a websocket at a [dtUri] and handling new data with [onData] and
+     * Observe a Digital Twin using a websocket at a [wsDtUri] and handling new data with [onData] and
      * the close of the websocket with [onClose] lambdas.
      */
-    suspend fun observeDigitalTwin(dtUri: String, onData: suspend (String) -> Unit, onClose: suspend () -> Unit)
+    suspend fun observeDigitalTwin(wsDtUri: String, onData: suspend (DtkgEvent) -> Unit, onClose: suspend () -> Unit)
 
     /** Stop observation of the Digital Twin at its [dtUri]. */
     suspend fun stopObservationOfDigitalTwin(dtUri: String)

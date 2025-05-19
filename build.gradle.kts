@@ -41,6 +41,7 @@ dependencies {
     implementation(libs.ktor.server.engine.netty)
     implementation(libs.ktor.server.websockets)
     implementation(libs.ktor.content.negotiation.json)
+    implementation(libs.logback)
     implementation(libs.logging)
     implementation(libs.sl4j)
     testImplementation(libs.bundles.kotlin.testing)

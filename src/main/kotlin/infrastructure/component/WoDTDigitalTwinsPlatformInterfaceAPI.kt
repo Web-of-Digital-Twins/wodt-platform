@@ -19,6 +19,7 @@ package infrastructure.component
 import application.component.EcosystemRegistryCatalog
 import application.component.PlatformKnowledgeGraphEngineReader
 import entity.digitaltwin.DigitalTwinURI
+import io.github.oshai.kotlinlogging.KotlinLogging
 import io.ktor.http.ContentType
 import io.ktor.http.HttpHeaders
 import io.ktor.http.HttpStatusCode
@@ -35,7 +36,6 @@ import io.ktor.server.routing.post
 import io.ktor.server.routing.routing
 import io.ktor.server.websocket.webSocket
 import io.ktor.websocket.send
-import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 
 /**
@@ -51,6 +51,7 @@ fun Application.wodtDigitalTwinsPlatformInterfaceAPI(
         getLocalDigitalTwinKnowledgeGraph(platformKnowledgeGraphEngine)
         queryOnPlatformKnowledgeGraph(platformKnowledgeGraphEngine)
         observePlatformKnowledgeGraph(platformKnowledgeGraphEngine)
+        observeDigitalTwinKnowledgeGraph(platformKnowledgeGraphEngine)
         getDigitalTwinsFromPhysicalAssetId(platformKnowledgeGraphEngine)
         getDigitalTwins(ecosystemRegistryCatalog)
     }
@@ -83,7 +84,7 @@ private fun Route.getLocalDigitalTwinKnowledgeGraph(platformKnowledgeGraphEngine
         call.parameters.getAll("dtUri")?.also { pathParameters ->
             if (pathParameters.size >= 2) {
                 val dtUri = obtainDigitalTwinUriFromPathParameters(pathParameters)
-                platformKnowledgeGraphEngine.currentCachedDigitalTwinKnowledgeGraph(DigitalTwinURI(dtUri)).apply {
+                platformKnowledgeGraphEngine.currentCachedDigitalTwinKnowledgeGraph(dtUri).apply {
                     when (this) {
                         null -> call.respond(HttpStatusCode.NotFound)
                         else -> {
@@ -106,18 +107,28 @@ private fun Route.getLocalDigitalTwinKnowledgeGraph(platformKnowledgeGraphEngine
 
 private fun Route.queryOnPlatformKnowledgeGraph(platformKnowledgeGraphEngine: PlatformKnowledgeGraphEngineReader) =
     post("/wodt/sparql") {
+        val logger = KotlinLogging.logger {}
+        val startTime = System.currentTimeMillis()
+
         val acceptedContentType = call.request.header(HttpHeaders.Accept).toString()
         if (call.request.contentType().toString() == "application/sparql-query") {
             platformKnowledgeGraphEngine.query(call.receiveText(), acceptedContentType).apply {
+                val duration = System.currentTimeMillis() - startTime
                 when (this) {
-                    null -> call.respond(HttpStatusCode.BadRequest)
+                    null -> {
+                        logger.info { "[HWoDT logging] - SPARQL query handled in ${duration}ms - Response: BadRequest" }
+                        call.respond(HttpStatusCode.BadRequest)
+                    }
                     else -> {
+                        logger.info { "[HWoDT logging] - SPARQL query handled in ${duration}ms - Response: OK" }
                         call.response.headers.append(HttpHeaders.ContentType, acceptedContentType)
                         call.respond(HttpStatusCode.OK, this)
                     }
                 }
             }
         } else {
+            val duration = System.currentTimeMillis() - startTime
+            logger.info { "[HWoDT logging] - SPARQL query rejected in ${duration}ms - Invalid Content-Type" }
             call.respond(HttpStatusCode.BadRequest)
         }
     }
@@ -125,7 +136,26 @@ private fun Route.queryOnPlatformKnowledgeGraph(platformKnowledgeGraphEngine: Pl
 private fun Route.observePlatformKnowledgeGraph(platformKnowledgeGraphEngine: PlatformKnowledgeGraphEngineReader) =
     webSocket("/wodt") {
         platformKnowledgeGraphEngine.platformKnowledgeGraphs.collect {
-            send(it)
+            send(it.dtEcosystemKGPayload)
+            KotlinLogging.logger {}.info {
+                "[HWoDT logging] - ${it.dtMessageCounter}|${it.dtUri.uri} - OUTGOING PLATFORM KG"
+            }
+        }
+    }
+
+private fun Route.observeDigitalTwinKnowledgeGraph(platformKnowledgeGraphEngine: PlatformKnowledgeGraphEngineReader) =
+    webSocket("/wodt/{dtUri...}") {
+        call.parameters.getAll("dtUri")?.also { pathParameters ->
+            if (pathParameters.size >= 2) {
+                val dtUri = obtainDigitalTwinUriFromPathParameters(pathParameters)
+                send(platformKnowledgeGraphEngine.currentCachedDigitalTwinKnowledgeGraph(dtUri).orEmpty())
+                platformKnowledgeGraphEngine.currentCachedDigitalTwinKnowledgeGraphUpdates(dtUri)?.collect {
+                    send(it.dtkgPayload)
+                    KotlinLogging.logger {}.info {
+                        "[HWoDT logging] - ${it.dtMessageCounter}|${it.dtUri.uri} - OUTGOING DTKG"
+                    }
+                }
+            }
         }
     }
 
