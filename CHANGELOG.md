@@ -1,3 +1,23 @@
+## [2.2.7](https://github.com/Web-of-Digital-Twins/wodt-platform/compare/2.2.6...2.2.7) (2025-05-13)
+
+### Dependency updates
+
+* **core-deps:** update dependency org.jetbrains.kotlin:kotlin-stdlib to v2.1.21 ([745726f](https://github.com/Web-of-Digital-Twins/wodt-platform/commit/745726ff39a87eefd7365a28fd88d20e9c290487))
+* **deps:** update dependency com.tngtech.archunit:archunit-junit5 to v1.4.1 ([172646e](https://github.com/Web-of-Digital-Twins/wodt-platform/commit/172646ee0ec491e1c9c86fc92bd9dab06f4f4a22))
+* **deps:** update dependency io.github.oshai:kotlin-logging-jvm to v7.0.7 ([07a3080](https://github.com/Web-of-Digital-Twins/wodt-platform/commit/07a3080ec9c4bd057a8edeacad9383cfd1b1b5f3))
+* **deps:** update dependency org.apache.jena:apache-jena-libs to v5.4.0 ([6176831](https://github.com/Web-of-Digital-Twins/wodt-platform/commit/6176831e768f656afa9c021f64a0be9cba0e1876))
+* **deps:** update dependency semantic-release-preconfigured-conventional-commits to v1.1.126 ([13eba3a](https://github.com/Web-of-Digital-Twins/wodt-platform/commit/13eba3aa71832674adcbe39f79a03b41c2b4a981))
+* **deps:** update dependency semantic-release-preconfigured-conventional-commits to v1.1.127 ([1034268](https://github.com/Web-of-Digital-Twins/wodt-platform/commit/1034268fdc4cdfca30a90cee6439bec858bffbb2))
+* **deps:** update node.js to 22.15 ([9ed486a](https://github.com/Web-of-Digital-Twins/wodt-platform/commit/9ed486a18882f3b677ab194bf97a311034d9e441))
+* **deps:** update plugin com.gradle.develocity to v4 ([1903532](https://github.com/Web-of-Digital-Twins/wodt-platform/commit/1903532ae162cd3bd344231df4e820d751db2a04))
+* **deps:** update plugin com.gradle.develocity to v4.0.1 ([1b12ae6](https://github.com/Web-of-Digital-Twins/wodt-platform/commit/1b12ae688585d4719b4bf3eaffaacb93df85b8c6))
+* **deps:** update plugin org.danilopianini.gradle-pre-commit-git-hooks to v2.0.23 ([cafe156](https://github.com/Web-of-Digital-Twins/wodt-platform/commit/cafe156abefebbaf8c8fb777a8d8f587d602b04c))
+
+### Build and continuous integration
+
+* **deps:** update actions/setup-node action to v4.4.0 ([ea3c74d](https://github.com/Web-of-Digital-Twins/wodt-platform/commit/ea3c74dbfa332f685032ad5673633b04b7246b7c))
+* **deps:** update codecov/codecov-action action to v5.4.2 ([cffbfad](https://github.com/Web-of-Digital-Twins/wodt-platform/commit/cffbfad9bbaee68a991f94718297ebc5dbc3c97b))
+
 ## [2.2.6](https://github.com/Web-of-Digital-Twins/wodt-platform/compare/2.2.5...2.2.6) (2025-04-09)
 
 ### Dependency updates
