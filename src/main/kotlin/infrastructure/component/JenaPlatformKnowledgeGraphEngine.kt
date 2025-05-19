@@ -66,6 +66,7 @@ private data class NewDtkgModel(
     val dtUri: DigitalTwinURI,
     val dtkg: Model,
 ) : PlatformKGModelEvent
+
 private data class NewDtdModel(val dtUri: DigitalTwinURI, val dtd: Model) : PlatformKGModelEvent
 
 /**
@@ -75,10 +76,15 @@ class JenaPlatformKnowledgeGraphEngine(
     private val ecosystemRegistryMapper: EcosystemRegistryMapper,
     private val dispatcher: CoroutineDispatcher = Dispatchers.Default,
 ) : PlatformKnowledgeGraphEngine {
+    // TODO Configure backpressure?
+    // private val _platformKnowledgeGraphs = MutableSharedFlow<DTEcosystemKGEvent>(extraBufferCapacity = 1,
+    // onBufferOverflow = BufferOverflow.DROP_OLDEST);
     private val _platformKnowledgeGraphs = MutableSharedFlow<DTEcosystemKGEvent>()
-
     private val engineFlow = MutableSharedFlow<PlatformKGModelEvent>()
-    private val engineDispatcher = Executors.newSingleThreadExecutor().asCoroutineDispatcher()
+    private val engineDispatcher = Executors.newSingleThreadExecutor {
+            r ->
+        Thread(r, ENGINE_THREAD)
+    }.asCoroutineDispatcher()
 
     private val dtkgsModelMap: MutableMap<DigitalTwinURI, Model> = Collections.synchronizedMap(mutableMapOf())
     private val dtdsModelMap: MutableMap<DigitalTwinURI, Model> = Collections.synchronizedMap(mutableMapOf())
@@ -247,6 +253,7 @@ class JenaPlatformKnowledgeGraphEngine(
 
     private fun Model.toTurtle() = RDFWriter.create().lang(Lang.TTL).source(this).asString()
 
+    // TODO serializing the model to Turtle is the main performance bottleneck
     private fun emitPlatformKGEvent(
         originDtUri: DigitalTwinURI,
         originDTMessageCounter: Int? = null,
@@ -319,6 +326,7 @@ class JenaPlatformKnowledgeGraphEngine(
         private const val CONTENT_TYPE_TSV = "text/tab-separated-values"
         private const val CONTENT_TYPE_SPARQL_XML = "application/sparql-results+xml"
         private const val CONTENT_TYPE_SPARQL_JSON = "application/sparql-results+json"
-        private const val CACHE_SIZE = 100
+        private const val CACHE_SIZE = 50
+        private const val ENGINE_THREAD = "KG-Engine-Thread"
     }
 }

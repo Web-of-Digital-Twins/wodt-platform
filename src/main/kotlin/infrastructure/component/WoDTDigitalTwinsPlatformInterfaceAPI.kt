@@ -107,18 +107,28 @@ private fun Route.getLocalDigitalTwinKnowledgeGraph(platformKnowledgeGraphEngine
 
 private fun Route.queryOnPlatformKnowledgeGraph(platformKnowledgeGraphEngine: PlatformKnowledgeGraphEngineReader) =
     post("/wodt/sparql") {
+        val logger = KotlinLogging.logger {}
+        val startTime = System.currentTimeMillis()
+
         val acceptedContentType = call.request.header(HttpHeaders.Accept).toString()
         if (call.request.contentType().toString() == "application/sparql-query") {
             platformKnowledgeGraphEngine.query(call.receiveText(), acceptedContentType).apply {
+                val duration = System.currentTimeMillis() - startTime
                 when (this) {
-                    null -> call.respond(HttpStatusCode.BadRequest)
+                    null -> {
+                        logger.info { "[HWoDT logging] - SPARQL query handled in ${duration}ms - Response: BadRequest" }
+                        call.respond(HttpStatusCode.BadRequest)
+                    }
                     else -> {
+                        logger.info { "[HWoDT logging] - SPARQL query handled in ${duration}ms - Response: OK" }
                         call.response.headers.append(HttpHeaders.ContentType, acceptedContentType)
                         call.respond(HttpStatusCode.OK, this)
                     }
                 }
             }
         } else {
+            val duration = System.currentTimeMillis() - startTime
+            logger.info { "[HWoDT logging] - SPARQL query rejected in ${duration}ms - Invalid Content-Type" }
             call.respond(HttpStatusCode.BadRequest)
         }
     }

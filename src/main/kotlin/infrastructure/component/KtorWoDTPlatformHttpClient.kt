@@ -103,7 +103,7 @@ class KtorWoDTPlatformHttpClient(
     }
 
     companion object {
-        private const val WEBSOCKET_PING_INTERVAL = 1_000L
+        private const val WEBSOCKET_PING_INTERVAL = 5_000L
         private val logger = KotlinLogging.logger {}
     }
 }
