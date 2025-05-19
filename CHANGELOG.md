@@ -1,3 +1,52 @@
+## [2.3.0](https://github.com/Web-of-Digital-Twins/wodt-platform/compare/2.2.7...2.3.0) (2025-05-19)
+
+### Features
+
+* cache JSON-LD context ([63c7d18](https://github.com/Web-of-Digital-Twins/wodt-platform/commit/63c7d18947bc81fc80bc0c08812e1ecfcd22617a))
+* **logging:** improve logging by associating correlated events ([24591cc](https://github.com/Web-of-Digital-Twins/wodt-platform/commit/24591ccf275a5574e4dbb8dca5dc3940ecaaf249))
+* now it is possible to individually observe cached digital twins updates from the platform ([9df7ff5](https://github.com/Web-of-Digital-Twins/wodt-platform/commit/9df7ff5fbf505e7a871cf91186021c4ae30e2806))
+* sparql logs and longer ping interval ([c63ef0c](https://github.com/Web-of-Digital-Twins/wodt-platform/commit/c63ef0cfbb0c0f57bcc45486abf1186437ffe3c3))
+
+### Dependency updates
+
+* **deps:** add logback dependency ([1b0f2dd](https://github.com/Web-of-Digital-Twins/wodt-platform/commit/1b0f2dd0f52e44f75e3ddce1317630d3bbf2c4b2))
+* **deps:** update dependency ch.qos.logback:logback-classic to v1.5.18 ([07e4ca2](https://github.com/Web-of-Digital-Twins/wodt-platform/commit/07e4ca2ecefcc5dc59b6cdfb24867114ac3cbbf0))
+* **deps:** update dependency semantic-release-preconfigured-conventional-commits to v1.1.128 ([c477c0f](https://github.com/Web-of-Digital-Twins/wodt-platform/commit/c477c0fcbe69840e0503819cb661ebb4e270ca65))
+
+### Bug Fixes
+
+* concurrency in ecosystem registry ([f67fffc](https://github.com/Web-of-Digital-Twins/wodt-platform/commit/f67fffc1c8b3b66fdaf0807c012c8fb6b1a9e5c8))
+* concurrency in ecosystem registry ([0d4d4ae](https://github.com/Web-of-Digital-Twins/wodt-platform/commit/0d4d4aefae69787c327cfb3176e487c6d4311700))
+* dturi in logger ([06abae2](https://github.com/Web-of-Digital-Twins/wodt-platform/commit/06abae273e884d000027aaf3d9b24f37533e1eff))
+* ensure safe concurrency management ([f5581f9](https://github.com/Web-of-Digital-Twins/wodt-platform/commit/f5581f9332349166ed7417289fc271a624aafe76))
+
+### Tests
+
+* **fix:** avoid inserting elements before engine is started ([1974378](https://github.com/Web-of-Digital-Twins/wodt-platform/commit/1974378e5cd3eaaf58f38d40fed5599e44a7b4e1))
+* **fix:** avoid inserting elements before engine is started ([138c5b0](https://github.com/Web-of-Digital-Twins/wodt-platform/commit/138c5b02e92ff2206961fd0430280a7a299a5603))
+* increase time to halt test for kotest eventually ([4fd6e38](https://github.com/Web-of-Digital-Twins/wodt-platform/commit/4fd6e389f4beb54eb912bb81f4bdab5a98c1a528))
+
+### Build and continuous integration
+
+* **deps:** update codecov/codecov-action action to v5.4.3 ([5bfe4d3](https://github.com/Web-of-Digital-Twins/wodt-platform/commit/5bfe4d30678256d9f06ad82327afcab6f14ca344))
+
+### General maintenance
+
+* add docker-compose for easier deployment ([7e21067](https://github.com/Web-of-Digital-Twins/wodt-platform/commit/7e21067edd88cd5b0adb32ae4c8c79a4f5c868ba))
+* add logs when data is received from dts and sent to observers ([5520313](https://github.com/Web-of-Digital-Twins/wodt-platform/commit/55203137070e0fef785dd71db47f3072b1acfa63))
+* default values in docker-compose instead of hardcode ([83e5697](https://github.com/Web-of-Digital-Twins/wodt-platform/commit/83e5697c490f5ab6b9ea89ab88d79f179e101db0))
+* fix wrapper validation v4 ([858bbfa](https://github.com/Web-of-Digital-Twins/wodt-platform/commit/858bbfa23b8eaee4367cae3b0e2e93cf74032520))
+* **logback:** add logback configuration ([5685b33](https://github.com/Web-of-Digital-Twins/wodt-platform/commit/5685b3327908b96d341438039e306967de28f401))
+* **logback:** reduce noise during logging ([3e5058a](https://github.com/Web-of-Digital-Twins/wodt-platform/commit/3e5058a144bcbcca958172adb451cc4cfed4dcb7))
+* remove macos ([c61043f](https://github.com/Web-of-Digital-Twins/wodt-platform/commit/c61043fb21fd3f337dc33c248bc2328920f26c39))
+* wrapper validation v4 ([fcddf17](https://github.com/Web-of-Digital-Twins/wodt-platform/commit/fcddf17c582116fa24e87db461f3d20dad028757))
+
+### Refactoring
+
+* derivate field should be always computed ([9cc0004](https://github.com/Web-of-Digital-Twins/wodt-platform/commit/9cc0004e1e63a7fc446fb6615f80887d7b7e5eb9))
+* implementation draft of individual DTKG observation ([e73f6cd](https://github.com/Web-of-Digital-Twins/wodt-platform/commit/e73f6cd72210c2ed7dd88792f8fbcc2a24209bd7))
+* implementation draft of individual DTKG observation ([5adf461](https://github.com/Web-of-Digital-Twins/wodt-platform/commit/5adf461e45b878a7c91912ba7b3cf1b4740a33bb))
+
 ## [2.2.7](https://github.com/Web-of-Digital-Twins/wodt-platform/compare/2.2.6...2.2.7) (2025-05-13)
 
 ### Dependency updates
