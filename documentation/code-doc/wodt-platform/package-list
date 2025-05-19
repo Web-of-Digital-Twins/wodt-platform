@@ -19,8 +19,10 @@ $dokka.location:application.component/EcosystemRegistryMapper///PointingToDeclar
 $dokka.location:application.component/EcosystemRegistryMapper/getDigitalTwinUri/#kotlin.String/PointingToDeclaration/wodt-platform/application.component/-ecosystem-registry-mapper/get-digital-twin-uri.html
 $dokka.location:application.component/EcosystemRegistryMapper/getLocalUrl/#entity.digitaltwin.DigitalTwinURI/PointingToDeclaration/wodt-platform/application.component/-ecosystem-registry-mapper/get-local-url.html
 $dokka.location:application.component/PlatformKnowledgeGraphEngine///PointingToDeclaration/wodt-platform/application.component/-platform-knowledge-graph-engine/index.html
+$dokka.location:application.component/PlatformKnowledgeGraphEngine/start/#/PointingToDeclaration/wodt-platform/application.component/-platform-knowledge-graph-engine/start.html
 $dokka.location:application.component/PlatformKnowledgeGraphEngineReader///PointingToDeclaration/wodt-platform/application.component/-platform-knowledge-graph-engine-reader/index.html
 $dokka.location:application.component/PlatformKnowledgeGraphEngineReader/currentCachedDigitalTwinKnowledgeGraph/#entity.digitaltwin.DigitalTwinURI/PointingToDeclaration/wodt-platform/application.component/-platform-knowledge-graph-engine-reader/current-cached-digital-twin-knowledge-graph.html
+$dokka.location:application.component/PlatformKnowledgeGraphEngineReader/currentCachedDigitalTwinKnowledgeGraphUpdates/#entity.digitaltwin.DigitalTwinURI/PointingToDeclaration/wodt-platform/application.component/-platform-knowledge-graph-engine-reader/current-cached-digital-twin-knowledge-graph-updates.html
 $dokka.location:application.component/PlatformKnowledgeGraphEngineReader/currentPlatformKnowledgeGraph/#/PointingToDeclaration/wodt-platform/application.component/-platform-knowledge-graph-engine-reader/current-platform-knowledge-graph.html
 $dokka.location:application.component/PlatformKnowledgeGraphEngineReader/getDigitalTwinsFromPhysicalAsset/#kotlin.String/PointingToDeclaration/wodt-platform/application.component/-platform-knowledge-graph-engine-reader/get-digital-twins-from-physical-asset.html
 $dokka.location:application.component/PlatformKnowledgeGraphEngineReader/platformKnowledgeGraphs/#/PointingToDeclaration/wodt-platform/application.component/-platform-knowledge-graph-engine-reader/platform-knowledge-graphs.html
@@ -28,16 +30,30 @@ $dokka.location:application.component/PlatformKnowledgeGraphEngineReader/query/#
 $dokka.location:application.component/PlatformKnowledgeGraphEngineWriter///PointingToDeclaration/wodt-platform/application.component/-platform-knowledge-graph-engine-writer/index.html
 $dokka.location:application.component/PlatformKnowledgeGraphEngineWriter/deleteDigitalTwin/#entity.digitaltwin.DigitalTwinURI/PointingToDeclaration/wodt-platform/application.component/-platform-knowledge-graph-engine-writer/delete-digital-twin.html
 $dokka.location:application.component/PlatformKnowledgeGraphEngineWriter/mergeDigitalTwinDescription/#entity.digitaltwin.DigitalTwinDescription/PointingToDeclaration/wodt-platform/application.component/-platform-knowledge-graph-engine-writer/merge-digital-twin-description.html
-$dokka.location:application.component/PlatformKnowledgeGraphEngineWriter/mergeDigitalTwinKnowledgeGraphUpdate/#entity.digitaltwin.DigitalTwinURI#kotlin.String/PointingToDeclaration/wodt-platform/application.component/-platform-knowledge-graph-engine-writer/merge-digital-twin-knowledge-graph-update.html
+$dokka.location:application.component/PlatformKnowledgeGraphEngineWriter/updateDigitalTwinKnowledgeGraph/#application.event.DtkgEvent/PointingToDeclaration/wodt-platform/application.component/-platform-knowledge-graph-engine-writer/update-digital-twin-knowledge-graph.html
 $dokka.location:application.component/WoDTDigitalTwinsObserver///PointingToDeclaration/wodt-platform/application.component/-wo-d-t-digital-twins-observer/index.html
-$dokka.location:application.component/WoDTDigitalTwinsObserver/dtkgRawEvents/#/PointingToDeclaration/wodt-platform/application.component/-wo-d-t-digital-twins-observer/dtkg-raw-events.html
 $dokka.location:application.component/WoDTDigitalTwinsObserver/observeDigitalTwin/#entity.digitaltwin.DigitalTwinDescription/PointingToDeclaration/wodt-platform/application.component/-wo-d-t-digital-twins-observer/observe-digital-twin.html
+$dokka.location:application.component/WoDTDigitalTwinsObserver/observedDigitalTwins/#/PointingToDeclaration/wodt-platform/application.component/-wo-d-t-digital-twins-observer/observed-digital-twins.html
 $dokka.location:application.component/WoDTDigitalTwinsObserver/stopObservationOfDigitalTwin/#entity.digitaltwin.DigitalTwinURI/PointingToDeclaration/wodt-platform/application.component/-wo-d-t-digital-twins-observer/stop-observation-of-digital-twin.html
 $dokka.location:application.component/WoDTDigitalTwinsObserverWsClient///PointingToDeclaration/wodt-platform/application.component/-wo-d-t-digital-twins-observer-ws-client/index.html
-$dokka.location:application.component/WoDTDigitalTwinsObserverWsClient/observeDigitalTwin/#kotlin.String#kotlin.coroutines.SuspendFunction1[kotlin.String,kotlin.Unit]#kotlin.coroutines.SuspendFunction0[kotlin.Unit]/PointingToDeclaration/wodt-platform/application.component/-wo-d-t-digital-twins-observer-ws-client/observe-digital-twin.html
+$dokka.location:application.component/WoDTDigitalTwinsObserverWsClient/observeDigitalTwin/#kotlin.String#kotlin.coroutines.SuspendFunction1[application.event.DtkgEvent,kotlin.Unit]#kotlin.coroutines.SuspendFunction0[kotlin.Unit]/PointingToDeclaration/wodt-platform/application.component/-wo-d-t-digital-twins-observer-ws-client/observe-digital-twin.html
 $dokka.location:application.component/WoDTDigitalTwinsObserverWsClient/stopObservationOfDigitalTwin/#kotlin.String/PointingToDeclaration/wodt-platform/application.component/-wo-d-t-digital-twins-observer-ws-client/stop-observation-of-digital-twin.html
 $dokka.location:application.component/WoDTPlatformWebServer///PointingToDeclaration/wodt-platform/application.component/-wo-d-t-platform-web-server/index.html
 $dokka.location:application.component/WoDTPlatformWebServer/start/#/PointingToDeclaration/wodt-platform/application.component/-wo-d-t-platform-web-server/start.html
+$dokka.location:application.event////PointingToDeclaration/wodt-platform/application.event/index.html
+$dokka.location:application.event/DTEcosystemKGEvent///PointingToDeclaration/wodt-platform/application.event/-d-t-ecosystem-k-g-event/index.html
+$dokka.location:application.event/DTEcosystemKGEvent/DTEcosystemKGEvent/#kotlin.Int?#entity.digitaltwin.DigitalTwinURI#kotlin.String/PointingToDeclaration/wodt-platform/application.event/-d-t-ecosystem-k-g-event/-d-t-ecosystem-k-g-event.html
+$dokka.location:application.event/DTEcosystemKGEvent/dtEcosystemKGPayload/#/PointingToDeclaration/wodt-platform/application.event/-d-t-ecosystem-k-g-event/dt-ecosystem-k-g-payload.html
+$dokka.location:application.event/DTEcosystemKGEvent/dtMessageCounter/#/PointingToDeclaration/wodt-platform/application.event/-d-t-ecosystem-k-g-event/dt-message-counter.html
+$dokka.location:application.event/DTEcosystemKGEvent/dtUri/#/PointingToDeclaration/wodt-platform/application.event/-d-t-ecosystem-k-g-event/dt-uri.html
+$dokka.location:application.event/DtkgEvent///PointingToDeclaration/wodt-platform/application.event/-dtkg-event/index.html
+$dokka.location:application.event/DtkgEvent/DtkgEvent/#kotlin.Int#entity.digitaltwin.DigitalTwinURI#kotlin.String/PointingToDeclaration/wodt-platform/application.event/-dtkg-event/-dtkg-event.html
+$dokka.location:application.event/DtkgEvent/dtMessageCounter/#/PointingToDeclaration/wodt-platform/application.event/-dtkg-event/dt-message-counter.html
+$dokka.location:application.event/DtkgEvent/dtUri/#/PointingToDeclaration/wodt-platform/application.event/-dtkg-event/dt-uri.html
+$dokka.location:application.event/DtkgEvent/dtkgPayload/#/PointingToDeclaration/wodt-platform/application.event/-dtkg-event/dtkg-payload.html
+$dokka.location:application.event/PlatformEvent///PointingToDeclaration/wodt-platform/application.event/-platform-event/index.html
+$dokka.location:application.event/PlatformEvent/dtMessageCounter/#/PointingToDeclaration/wodt-platform/application.event/-platform-event/dt-message-counter.html
+$dokka.location:application.event/PlatformEvent/dtUri/#/PointingToDeclaration/wodt-platform/application.event/-platform-event/dt-uri.html
 $dokka.location:application.presenter.api////PointingToDeclaration/wodt-platform/application.presenter.api/index.html
 $dokka.location:application.presenter.api/PlatformRegistration///PointingToDeclaration/wodt-platform/application.presenter.api/-platform-registration/index.html
 $dokka.location:application.presenter.api/PlatformRegistration/PlatformRegistration/#kotlin.String#kotlin.String/PointingToDeclaration/wodt-platform/application.presenter.api/-platform-registration/-platform-registration.html
@@ -60,13 +76,14 @@ $dokka.location:application.service/EcosystemRegistryService/getLocalUrl/#entity
 $dokka.location:application.service/EcosystemRegistryService/getRegisteredDigitalTwins/#/PointingToDeclaration/wodt-platform/application.service/-ecosystem-registry-service/get-registered-digital-twins.html
 $dokka.location:application.service/EcosystemRegistryService/signalDeletion/#entity.digitaltwin.DigitalTwinURI/PointingToDeclaration/wodt-platform/application.service/-ecosystem-registry-service/signal-deletion.html
 $dokka.location:application.service/EcosystemRegistryService/signalRegistration/#entity.digitaltwin.DigitalTwinURI/PointingToDeclaration/wodt-platform/application.service/-ecosystem-registry-service/signal-registration.html
+$dokka.location:application.service/WoDTDigitalTwinsObserverComponent.Companion///PointingToDeclaration/wodt-platform/application.service/-wo-d-t-digital-twins-observer-component/-companion/index.html
 $dokka.location:application.service/WoDTDigitalTwinsObserverComponent///PointingToDeclaration/wodt-platform/application.service/-wo-d-t-digital-twins-observer-component/index.html
 $dokka.location:application.service/WoDTDigitalTwinsObserverComponent/WoDTDigitalTwinsObserverComponent/#application.component.EcosystemRegistryDeletionSignaler#application.component.WoDTDigitalTwinsObserverWsClient/PointingToDeclaration/wodt-platform/application.service/-wo-d-t-digital-twins-observer-component/-wo-d-t-digital-twins-observer-component.html
-$dokka.location:application.service/WoDTDigitalTwinsObserverComponent/dtkgRawEvents/#/PointingToDeclaration/wodt-platform/application.service/-wo-d-t-digital-twins-observer-component/dtkg-raw-events.html
 $dokka.location:application.service/WoDTDigitalTwinsObserverComponent/observeDigitalTwin/#entity.digitaltwin.DigitalTwinDescription/PointingToDeclaration/wodt-platform/application.service/-wo-d-t-digital-twins-observer-component/observe-digital-twin.html
+$dokka.location:application.service/WoDTDigitalTwinsObserverComponent/observedDigitalTwins/#/PointingToDeclaration/wodt-platform/application.service/-wo-d-t-digital-twins-observer-component/observed-digital-twins.html
 $dokka.location:application.service/WoDTDigitalTwinsObserverComponent/stopObservationOfDigitalTwin/#entity.digitaltwin.DigitalTwinURI/PointingToDeclaration/wodt-platform/application.service/-wo-d-t-digital-twins-observer-component/stop-observation-of-digital-twin.html
 $dokka.location:application.service/WoDTPlatformEngine///PointingToDeclaration/wodt-platform/application.service/-wo-d-t-platform-engine/index.html
-$dokka.location:application.service/WoDTPlatformEngine/WoDTPlatformEngine/#application.component.EcosystemManagementInterface#application.component.WoDTDigitalTwinsObserver#application.component.PlatformKnowledgeGraphEngine#application.component.WoDTPlatformWebServer/PointingToDeclaration/wodt-platform/application.service/-wo-d-t-platform-engine/-wo-d-t-platform-engine.html
+$dokka.location:application.service/WoDTPlatformEngine/WoDTPlatformEngine/#application.component.EcosystemManagementInterface#application.component.WoDTDigitalTwinsObserver#application.component.PlatformKnowledgeGraphEngine#application.component.WoDTPlatformWebServer#kotlinx.coroutines.CoroutineDispatcher/PointingToDeclaration/wodt-platform/application.service/-wo-d-t-platform-engine/-wo-d-t-platform-engine.html
 $dokka.location:application.service/WoDTPlatformEngine/start/#/PointingToDeclaration/wodt-platform/application.service/-wo-d-t-platform-engine/start.html
 $dokka.location:config////PointingToDeclaration/wodt-platform/config/index.html
 $dokka.location:config/ConfigurationLoader///PointingToDeclaration/wodt-platform/config/-configuration-loader/index.html
@@ -92,6 +109,7 @@ $dokka.location:entity.digitaltwin/DigitalTwinDescriptionImplementationType/valu
 $dokka.location:entity.digitaltwin/DigitalTwinDescriptionImplementationType/values/#/PointingToDeclaration/wodt-platform/entity.digitaltwin/-digital-twin-description-implementation-type/values.html
 $dokka.location:entity.digitaltwin/DigitalTwinURI///PointingToDeclaration/wodt-platform/entity.digitaltwin/-digital-twin-u-r-i/index.html
 $dokka.location:entity.digitaltwin/DigitalTwinURI/DigitalTwinURI/#kotlin.String/PointingToDeclaration/wodt-platform/entity.digitaltwin/-digital-twin-u-r-i/-digital-twin-u-r-i.html
+$dokka.location:entity.digitaltwin/DigitalTwinURI/toString/#/PointingToDeclaration/wodt-platform/entity.digitaltwin/-digital-twin-u-r-i/to-string.html
 $dokka.location:entity.digitaltwin/DigitalTwinURI/uri/#/PointingToDeclaration/wodt-platform/entity.digitaltwin/-digital-twin-u-r-i/uri.html
 $dokka.location:entity.digitaltwin/Form///PointingToDeclaration/wodt-platform/entity.digitaltwin/-form/index.html
 $dokka.location:entity.digitaltwin/Form/Form/#kotlin.String#entity.digitaltwin.FormProtocol/PointingToDeclaration/wodt-platform/entity.digitaltwin/-form/-form.html
@@ -120,6 +138,7 @@ $dokka.location:entity.event/DigitalTwinDeleted/dtURI/#/PointingToDeclaration/w
 $dokka.location:entity.event/EcosystemEvent///PointingToDeclaration/wodt-platform/entity.event/-ecosystem-event/index.html
 $dokka.location:entity.event/NewDigitalTwinRegistered///PointingToDeclaration/wodt-platform/entity.event/-new-digital-twin-registered/index.html
 $dokka.location:entity.event/NewDigitalTwinRegistered/NewDigitalTwinRegistered/#entity.digitaltwin.DigitalTwinDescription/PointingToDeclaration/wodt-platform/entity.event/-new-digital-twin-registered/-new-digital-twin-registered.html
+$dokka.location:entity.event/NewDigitalTwinRegistered/dtURI/#/PointingToDeclaration/wodt-platform/entity.event/-new-digital-twin-registered/dt-u-r-i.html
 $dokka.location:entity.event/NewDigitalTwinRegistered/dtd/#/PointingToDeclaration/wodt-platform/entity.event/-new-digital-twin-registered/dtd.html
 $dokka.location:entity.ontology////PointingToDeclaration/wodt-platform/entity.ontology/index.html
 $dokka.location:entity.ontology/WoDTVocabulary///PointingToDeclaration/wodt-platform/entity.ontology/-wo-d-t-vocabulary/index.html
@@ -133,17 +152,19 @@ $dokka.location:infrastructure.component/JenaPlatformKnowledgeGraphEngine.Compan
 $dokka.location:infrastructure.component/JenaPlatformKnowledgeGraphEngine///PointingToDeclaration/wodt-platform/infrastructure.component/-jena-platform-knowledge-graph-engine/index.html
 $dokka.location:infrastructure.component/JenaPlatformKnowledgeGraphEngine/JenaPlatformKnowledgeGraphEngine/#application.component.EcosystemRegistryMapper#kotlinx.coroutines.CoroutineDispatcher/PointingToDeclaration/wodt-platform/infrastructure.component/-jena-platform-knowledge-graph-engine/-jena-platform-knowledge-graph-engine.html
 $dokka.location:infrastructure.component/JenaPlatformKnowledgeGraphEngine/currentCachedDigitalTwinKnowledgeGraph/#entity.digitaltwin.DigitalTwinURI/PointingToDeclaration/wodt-platform/infrastructure.component/-jena-platform-knowledge-graph-engine/current-cached-digital-twin-knowledge-graph.html
+$dokka.location:infrastructure.component/JenaPlatformKnowledgeGraphEngine/currentCachedDigitalTwinKnowledgeGraphUpdates/#entity.digitaltwin.DigitalTwinURI/PointingToDeclaration/wodt-platform/infrastructure.component/-jena-platform-knowledge-graph-engine/current-cached-digital-twin-knowledge-graph-updates.html
 $dokka.location:infrastructure.component/JenaPlatformKnowledgeGraphEngine/currentPlatformKnowledgeGraph/#/PointingToDeclaration/wodt-platform/infrastructure.component/-jena-platform-knowledge-graph-engine/current-platform-knowledge-graph.html
 $dokka.location:infrastructure.component/JenaPlatformKnowledgeGraphEngine/deleteDigitalTwin/#entity.digitaltwin.DigitalTwinURI/PointingToDeclaration/wodt-platform/infrastructure.component/-jena-platform-knowledge-graph-engine/delete-digital-twin.html
 $dokka.location:infrastructure.component/JenaPlatformKnowledgeGraphEngine/getDigitalTwinsFromPhysicalAsset/#kotlin.String/PointingToDeclaration/wodt-platform/infrastructure.component/-jena-platform-knowledge-graph-engine/get-digital-twins-from-physical-asset.html
 $dokka.location:infrastructure.component/JenaPlatformKnowledgeGraphEngine/mergeDigitalTwinDescription/#entity.digitaltwin.DigitalTwinDescription/PointingToDeclaration/wodt-platform/infrastructure.component/-jena-platform-knowledge-graph-engine/merge-digital-twin-description.html
-$dokka.location:infrastructure.component/JenaPlatformKnowledgeGraphEngine/mergeDigitalTwinKnowledgeGraphUpdate/#entity.digitaltwin.DigitalTwinURI#kotlin.String/PointingToDeclaration/wodt-platform/infrastructure.component/-jena-platform-knowledge-graph-engine/merge-digital-twin-knowledge-graph-update.html
 $dokka.location:infrastructure.component/JenaPlatformKnowledgeGraphEngine/platformKnowledgeGraphs/#/PointingToDeclaration/wodt-platform/infrastructure.component/-jena-platform-knowledge-graph-engine/platform-knowledge-graphs.html
 $dokka.location:infrastructure.component/JenaPlatformKnowledgeGraphEngine/query/#kotlin.String#kotlin.String?/PointingToDeclaration/wodt-platform/infrastructure.component/-jena-platform-knowledge-graph-engine/query.html
+$dokka.location:infrastructure.component/JenaPlatformKnowledgeGraphEngine/start/#/PointingToDeclaration/wodt-platform/infrastructure.component/-jena-platform-knowledge-graph-engine/start.html
+$dokka.location:infrastructure.component/JenaPlatformKnowledgeGraphEngine/updateDigitalTwinKnowledgeGraph/#application.event.DtkgEvent/PointingToDeclaration/wodt-platform/infrastructure.component/-jena-platform-knowledge-graph-engine/update-digital-twin-knowledge-graph.html
 $dokka.location:infrastructure.component/KtorWoDTPlatformHttpClient.Companion///PointingToDeclaration/wodt-platform/infrastructure.component/-ktor-wo-d-t-platform-http-client/-companion/index.html
 $dokka.location:infrastructure.component/KtorWoDTPlatformHttpClient///PointingToDeclaration/wodt-platform/infrastructure.component/-ktor-wo-d-t-platform-http-client/index.html
 $dokka.location:infrastructure.component/KtorWoDTPlatformHttpClient/KtorWoDTPlatformHttpClient/#java.net.URI#io.ktor.client.engine.HttpClientEngine/PointingToDeclaration/wodt-platform/infrastructure.component/-ktor-wo-d-t-platform-http-client/-ktor-wo-d-t-platform-http-client.html
-$dokka.location:infrastructure.component/KtorWoDTPlatformHttpClient/observeDigitalTwin/#kotlin.String#kotlin.coroutines.SuspendFunction1[kotlin.String,kotlin.Unit]#kotlin.coroutines.SuspendFunction0[kotlin.Unit]/PointingToDeclaration/wodt-platform/infrastructure.component/-ktor-wo-d-t-platform-http-client/observe-digital-twin.html
+$dokka.location:infrastructure.component/KtorWoDTPlatformHttpClient/observeDigitalTwin/#kotlin.String#kotlin.coroutines.SuspendFunction1[application.event.DtkgEvent,kotlin.Unit]#kotlin.coroutines.SuspendFunction0[kotlin.Unit]/PointingToDeclaration/wodt-platform/infrastructure.component/-ktor-wo-d-t-platform-http-client/observe-digital-twin.html
 $dokka.location:infrastructure.component/KtorWoDTPlatformHttpClient/sendRegistrationNotification/#kotlin.String/PointingToDeclaration/wodt-platform/infrastructure.component/-ktor-wo-d-t-platform-http-client/send-registration-notification.html
 $dokka.location:infrastructure.component/KtorWoDTPlatformHttpClient/stopObservationOfDigitalTwin/#kotlin.String/PointingToDeclaration/wodt-platform/infrastructure.component/-ktor-wo-d-t-platform-http-client/stop-observation-of-digital-twin.html
 $dokka.location:infrastructure.component/KtorWoDTPlatformWebServer///PointingToDeclaration/wodt-platform/infrastructure.component/-ktor-wo-d-t-platform-web-server/index.html
@@ -153,6 +174,7 @@ $dokka.location:utils////PointingToDeclaration/wodt-platform/utils/index.html
 $dokka.location:utils/UriUtil///PointingToDeclaration/wodt-platform/utils/-uri-util/index.html
 $dokka.location:utils/UriUtil/relativeResolve/java.net.URI#kotlin.String/PointingToDeclaration/wodt-platform/utils/-uri-util/relative-resolve.html
 application.component
+application.event
 application.presenter.api
 application.presenter.dtd
 application.service
