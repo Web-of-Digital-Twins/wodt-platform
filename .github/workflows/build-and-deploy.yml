@@ -25,7 +25,7 @@ jobs:
       - validation
     strategy:
         matrix:
-          os: [ubuntu, macos, windows]
+          os: [ubuntu, windows]
           java-version: [17, 21]
     runs-on: ${{ matrix.os }}-latest
     steps:
