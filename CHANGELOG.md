@@ -1,3 +1,18 @@
+## [2.3.1](https://github.com/Web-of-Digital-Twins/wodt-platform/compare/2.3.0...2.3.1) (2025-06-28)
+
+### Dependency updates
+
+* **core-deps:** update dependency org.jetbrains.kotlinx:kotlinx-serialization-json to v1.9.0 ([6e997aa](https://github.com/Web-of-Digital-Twins/wodt-platform/commit/6e997aa1a56852adab84f43ec74f39c6ef6991ff))
+* **deps:** update alpine docker tag to v3.22 ([d62d040](https://github.com/Web-of-Digital-Twins/wodt-platform/commit/d62d040680ee3b36ae0270707ecf02cce1e0087d))
+* **deps:** update dependency semantic-release-preconfigured-conventional-commits to v1.1.129 ([18b09f1](https://github.com/Web-of-Digital-Twins/wodt-platform/commit/18b09f11f713bee3dcbb70b56ce7c1f09c12aec2))
+* **deps:** update dependency semantic-release-preconfigured-conventional-commits to v1.1.130 ([fafb067](https://github.com/Web-of-Digital-Twins/wodt-platform/commit/fafb067c2e1f9fea797c94c77d692b0e76e562f7))
+* **deps:** update dependency semantic-release-preconfigured-conventional-commits to v1.1.131 ([42d0894](https://github.com/Web-of-Digital-Twins/wodt-platform/commit/42d08945af6f4bfc9ae451fbd56756d6b3c17128))
+* **deps:** update dependency semantic-release-preconfigured-conventional-commits to v1.1.132 ([324e498](https://github.com/Web-of-Digital-Twins/wodt-platform/commit/324e4982e8bee9eb369593f2c6f5f4f9f4980cc8))
+* **deps:** update dependency semantic-release-preconfigured-conventional-commits to v1.1.133 ([4cc7597](https://github.com/Web-of-Digital-Twins/wodt-platform/commit/4cc75977b5ea73263ed6a5f86d9a84c00b83433e))
+* **deps:** update dependency semantic-release-preconfigured-conventional-commits to v1.1.134 ([3fa1cdd](https://github.com/Web-of-Digital-Twins/wodt-platform/commit/3fa1cddd7004d65c4ace5e15afabf8f7cf6b07e7))
+* **deps:** update node.js to 22.16 ([f1ac6d2](https://github.com/Web-of-Digital-Twins/wodt-platform/commit/f1ac6d2778dac7935355112eea9ced75c3f2770a))
+* **deps:** update node.js to 22.17 ([b58110d](https://github.com/Web-of-Digital-Twins/wodt-platform/commit/b58110d4517561a1a3afa668c2c1f26510b87d2d))
+
 ## [2.3.0](https://github.com/Web-of-Digital-Twins/wodt-platform/compare/2.2.7...2.3.0) (2025-05-19)
 
 ### Features
