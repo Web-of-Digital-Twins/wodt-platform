@@ -24,7 +24,7 @@ ktor-server-engine-netty = { module = "io.ktor:ktor-server-netty", version.ref =
 ktor-server-test-host = { module = "io.ktor:ktor-server-test-host", version.ref = "ktor" }
 ktor-server-websockets = { module = "io.ktor:ktor-server-websockets", version.ref = "ktor" }
 logback = { module = "ch.qos.logback:logback-classic", version = "1.5.18" }
-logging = { module = "io.github.oshai:kotlin-logging-jvm", version = "7.0.11" }
+logging = { module = "io.github.oshai:kotlin-logging-jvm", version = "7.0.12" }
 sl4j = { module = "org.slf4j:slf4j-simple", version = "2.0.17" }
 
 [bundles]
